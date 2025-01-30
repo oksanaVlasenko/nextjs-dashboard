@@ -19,6 +19,8 @@ export default function LoginForm() {
     authenticate,
     undefined,
   );
+
+  console.log('Callback URL:', callbackUrl);
  
   return (
     <form action={formAction} className="space-y-3">
