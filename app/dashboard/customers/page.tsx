@@ -1,4 +1,3 @@
-import { lusitana } from '@/app/ui/fonts';
 import Table from '@/app/ui/customers/table';
 import { CustomersTableSkeleton } from '@/app/ui/skeletons';
 import { Metadata } from 'next';
