@@ -4,9 +4,86 @@ import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import bcrypt from 'bcrypt';
 
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
+
+//import { handlers } from "@/auth"
+//export const { GET, POST } = handlers
+
+const RegisterSchema = z.object({
+  id: z.string(),
+  email: z.string().email(),
+  password: z.string().min(6),
+  name: z.string().min(2),
+  image_url: z.string()
+});
+
+const CreateUser = RegisterSchema.omit({ id: true, image_url: true });
+
+export type UserState = {
+  errors?: {
+    email?: string[];
+    password?: string[];
+    name?: string[];
+  };
+  message?: string | null;
+};
+
+export async function createUser(prevState: UserState, formData: FormData) {
+  const validatedFields = CreateUser.safeParse({
+    email: formData.get('email'),
+    password: formData.get('password'),
+    name: formData.get('name'),
+  });
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Create User.',
+    };
+  }
+
+  const { email, password, name } = validatedFields.data;
+
+  const existingUser = await sql`SELECT * FROM users WHERE email=${email}`;
+  
+  if (existingUser && existingUser.rows[0]) {
+    return {
+      message: 'Email already in use',
+    };
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  try {
+    await sql`
+      INSERT INTO users (name, email, password)
+      VALUES ( ${name}, ${email}, ${hashedPassword})
+    `;
+
+    const newUser = await sql`SELECT * FROM users WHERE email=${email}`;
+
+    if (!newUser.rowCount) {
+      return { message: "User creation failed" };
+    }
+
+    await signIn("credentials", {
+      email,
+      password,
+      redirect: false, 
+    });
+
+  } catch (error) {
+    console.log(error, ' error creation')
+    return {
+      message: 'Database Error: Failed to Create User.',
+    };
+  }
+
+  redirect('/dashboard');
+}
 
 export async function authenticate(
   prevState: string | undefined,
