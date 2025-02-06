@@ -3,7 +3,7 @@ import { auth, signIn } from "@/auth"
 import { Button } from "./button"
 import { JSX, SVGProps } from "react"
  
-export default async function SignIn() {
+export default async function SignInGoogle() {
   const session = await auth()
   console.log(session, ' session')
 

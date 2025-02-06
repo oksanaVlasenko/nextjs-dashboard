@@ -4,7 +4,8 @@ import { Suspense } from 'react';
 import { Metadata } from 'next';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { signIn } from '@/auth';
-import SignIn from '../ui/signin-google';
+import SignInGoogle from '../ui/signin-google';
+import SignInGithub from '../ui/signin-github';
 
 export const metadata: Metadata = {
   title: 'Login',
@@ -14,7 +15,7 @@ export default function LoginPage() {
   return (
     <main className="flex items-center justify-center md:h-screen">
       <div className="relative mx-auto flex w-full max-w-[400px] flex-col space-y-2.5 p-4 md:-mt-32">
-        <div className="flex h-20 w-full items-end rounded-lg bg-blue-500 p-3 md:h-36">
+        <div className="flex h-16 w-full items-end rounded-lg bg-blue-500 p-3 md:h-28">
           <div className="w-32 text-white md:w-36">
             <AcmeLogo />
           </div>
@@ -26,7 +27,9 @@ export default function LoginPage() {
 
             <Divider text="or" />
 
-            <SignIn />
+            <SignInGoogle />
+
+            <SignInGithub />
           </div>
           
         </Suspense>

@@ -22,20 +22,22 @@ export const authConfig = {
     async session({ session, token }) {
       if (token) {
         session.user = {
-          id: token.id!,
+          id: token.id ? String(token.id) : "",
           name: token.name!,
           email: token.email!,
-          image: token.picture!
+          image: token.picture!,
+          emailVerified: null,
         };
       }
       return session;
     },
+
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
         token.name = user.name;
         token.email = user.email;
-        token.picture = user.image || user.picture;
+        token.picture = user.image;
       }
       return token;
     }

@@ -7,6 +7,7 @@ import type { User } from '@/app/lib/definitions';
 import bcrypt from 'bcrypt';
 import GoogleProvider from "next-auth/providers/google";
 import Google from "next-auth/providers/google"
+import GithubProviver from "next-auth/providers/github"
 
 async function getUser(email: string): Promise<User | undefined> {
   try {
@@ -21,6 +22,10 @@ async function getUser(email: string): Promise<User | undefined> {
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
   providers: [
+    GithubProviver({
+      clientId: process.env.AUTH_GITHUB_ID!,
+      clientSecret: process.env.AUTH_GITHUB_SECRET!,
+    }),
     GoogleProvider({
       clientId: process.env.AUTH_GOOGLE_ID!,
       clientSecret: process.env.AUTH_GOOGLE_SECRET!,
