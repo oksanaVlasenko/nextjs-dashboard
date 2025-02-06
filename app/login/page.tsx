@@ -19,12 +19,28 @@ export default function LoginPage() {
             <AcmeLogo />
           </div>
         </div>
-        <Suspense>
-          <LoginForm />
-        </Suspense>
 
-        <SignIn />
+        <Suspense>
+          <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
+            <LoginForm />
+
+            <Divider text="or" />
+
+            <SignIn />
+          </div>
+          
+        </Suspense>
       </div>
     </main>
   );
 }
+
+const Divider = ({ text }: { text: string }) => {
+  return (
+    <div className="flex items-center my-6 w-full">
+      <div className="flex-grow border-t border-gray-300"></div>
+      <span className="px-4 text-gray-500 text-sm font-medium">{text}</span>
+      <div className="flex-grow border-t border-gray-300"></div>
+    </div>
+  );
+};

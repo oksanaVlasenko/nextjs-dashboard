@@ -25,6 +25,7 @@ export const authConfig = {
           id: token.id!,
           name: token.name!,
           email: token.email!,
+          image: token.picture!
         };
       }
       return session;
@@ -34,6 +35,7 @@ export const authConfig = {
         token.id = user.id;
         token.name = user.name;
         token.email = user.email;
+        token.picture = user.image || user.picture;
       }
       return token;
     }

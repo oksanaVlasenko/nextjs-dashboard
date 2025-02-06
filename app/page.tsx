@@ -46,6 +46,14 @@ export default function Page() {
             className="block md:hidden"
             alt="Screenshots of the dashboard project showing desktop version"
           />
+
+          <Image
+            src="/default-avatar.jpg"
+            width={560}
+            height={620}
+            className="block md:hidden"
+            alt="Screenshots of the dashboard project showing desktop version"
+          />
         </div>
       </div>
     </main>
