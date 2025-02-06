@@ -4,8 +4,8 @@ import { WhiteButton } from "./button"
 import { JSX, SVGProps } from "react"
  
 export default async function SignInGoogle() {
-  const session = await auth()
-  console.log(session, ' session')
+  // const session = await auth()
+  // console.log(session, ' session')
 
   return (
     <form

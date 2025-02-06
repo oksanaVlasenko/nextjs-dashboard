@@ -109,7 +109,7 @@ export async function GET() {
   try {
     //await client.sql`ALTER TABLE users ADD COLUMN auth_method TEXT DEFAULT 'credentials';`
     await client.sql`BEGIN`;
-    await seedUsers();
+    //await seedUsers();
     await seedCustomers();
     await seedInvoices();
     await seedRevenue();

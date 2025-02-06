@@ -1,7 +1,10 @@
 import type { NextAuthConfig } from 'next-auth';
- 
+import { PrismaAdapter } from "@auth/prisma-adapter"
+import { prisma } from "@/prisma"
+
 export const authConfig = {
   secret: process.env.AUTH_SECRET,
+  adapter: PrismaAdapter(prisma),
   pages: {
     signIn: '/login',
   },
@@ -44,3 +47,4 @@ export const authConfig = {
   },
   providers: [], // Add providers with an empty array for now
 } satisfies NextAuthConfig;
+

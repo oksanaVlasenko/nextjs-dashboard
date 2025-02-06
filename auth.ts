@@ -6,9 +6,10 @@ import { sql } from '@vercel/postgres';
 import type { User } from '@/app/lib/definitions';
 import bcrypt from 'bcrypt';
 import GoogleProvider from "next-auth/providers/google";
-import Google from "next-auth/providers/google"
 import GithubProviver from "next-auth/providers/github"
 import DiscordProviver from "next-auth/providers/discord"
+
+
 
 async function getUser(email: string): Promise<User | undefined> {
   try {
@@ -57,3 +58,4 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
 });
+
