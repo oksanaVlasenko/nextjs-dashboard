@@ -8,6 +8,7 @@ import bcrypt from 'bcrypt';
 import GoogleProvider from "next-auth/providers/google";
 import Google from "next-auth/providers/google"
 import GithubProviver from "next-auth/providers/github"
+import DiscordProviver from "next-auth/providers/discord"
 
 async function getUser(email: string): Promise<User | undefined> {
   try {
@@ -22,6 +23,10 @@ async function getUser(email: string): Promise<User | undefined> {
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
   providers: [
+    DiscordProviver({
+      clientId: process.env.AUTH_DISCORD_ID!,
+      clientSecret: process.env.AUTH_DISCORD_SECRET!,
+    }),
     GithubProviver({
       clientId: process.env.AUTH_GITHUB_ID!,
       clientSecret: process.env.AUTH_GITHUB_SECRET!,

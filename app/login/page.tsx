@@ -4,6 +4,7 @@ import { Suspense } from 'react';
 import { Metadata } from 'next';
 import SignInGoogle from '../ui/signin-google';
 import SignInGithub from '../ui/signin-github';
+import SignInDiscord from '../ui/signin-discord';
 
 export const metadata: Metadata = {
   title: 'Login',
@@ -25,9 +26,15 @@ export default function LoginPage() {
 
             <Divider text="or" />
 
-            <SignInGoogle />
+            <div className='flex flex-row justify-between'>
+              <SignInGoogle />
 
-            <SignInGithub />
+              <SignInGithub />
+
+              <SignInDiscord />
+            </div>
+
+            
           </div>
           
         </Suspense>
