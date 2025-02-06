@@ -2,8 +2,6 @@ import AcmeLogo from '@/app/ui/acme-logo';
 import LoginForm from '@/app/ui/login-form';
 import { Suspense } from 'react';
 import { Metadata } from 'next';
-import { ArrowRightIcon } from '@heroicons/react/24/outline';
-import { signIn } from '@/auth';
 import SignInGoogle from '../ui/signin-google';
 import SignInGithub from '../ui/signin-github';
 
