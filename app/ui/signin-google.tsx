@@ -1,5 +1,5 @@
 
-import { auth, signIn } from "@/auth"
+import { signIn } from "@/auth"
 import { WhiteButton } from "./button"
 import { JSX, SVGProps } from "react"
  
