@@ -1,12 +1,12 @@
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
-  directUrl = env("PRISMA_DIRECT_URL")
+  url      = env("PRISMA_DIRECT_URL")
 }
  
 generator client {
   provider = "prisma-client-js"
-  engineType = "binary"
+  engineType = "library"
+  previewFeatures = ["driverAdapters"]
 }
  
 model User {

@@ -1,17 +1,18 @@
 {
   "private": true,
   "scripts": {
-    "build": "prisma generate && next build",
+    "build": "prisma generate --schema=prisma/schema.prisma --no-engine && next build",
     "dev": "next dev --turbopack",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate --schema=prisma/schema.prisma --no-engine"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.7.4",
     "@heroicons/react": "^2.2.0",
     "@next-auth/prisma-adapter": "^1.0.7",
     "@prisma/client": "^6.3.1",
+    "@prisma/extension-accelerate": "^1.2.1",
     "@tailwindcss/forms": "^0.5.9",
     "@vercel/postgres": "^0.10.0",
     "autoprefixer": "10.4.20",
