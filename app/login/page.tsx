@@ -2,9 +2,7 @@ import AcmeLogo from '@/app/ui/acme-logo';
 import LoginForm from '@/app/ui/login-form';
 import { Suspense } from 'react';
 import { Metadata } from 'next';
-import SignInGoogle from '../ui/signin-google';
-import SignInGithub from '../ui/signin-github';
-import SignInDiscord from '../ui/signin-discord';
+import SocialSignIn from '@/app/ui/social-signin';
 
 export const metadata: Metadata = {
   title: 'Login',
@@ -26,17 +24,8 @@ export default function LoginPage() {
 
             <Divider text="or" />
 
-            <div className='flex flex-row justify-between'>
-              <SignInGoogle />
-
-              <SignInGithub />
-
-              <SignInDiscord />
-            </div>
-
-            
+            <SocialSignIn />
           </div>
-          
         </Suspense>
       </div>
     </main>
