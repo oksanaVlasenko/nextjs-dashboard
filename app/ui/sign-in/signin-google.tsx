@@ -1,6 +1,6 @@
 
 import { signIn } from "@/auth"
-import { WhiteButton } from "./button"
+import { WhiteButton } from "../button"
 import { JSX, SVGProps } from "react"
  
 export default async function SignInGoogle() {
@@ -15,7 +15,7 @@ export default async function SignInGoogle() {
       }}
     >
       <WhiteButton className="w-full justify-center ">
-        <GoogleLogo />
+        <GoogleLogo className="mr-6 h-8" /> Continue with Google 
       </WhiteButton>
     </form>
   )

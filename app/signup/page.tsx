@@ -1,7 +1,9 @@
-import AcmeLogo from '@/app/ui/acme-logo';
-import SignUpForm from '@/app/ui/signup-form';
+import SocialSignIn from '@/app/ui/sign-in/social-signin';
+import SignUpForm from '@/app/ui/sign-in/signup-form';
 import { Suspense } from 'react';
 import { Metadata } from 'next';
+import AuthContainer from '@/app/ui/sign-in/auth-container';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Sign Up',
@@ -9,17 +11,25 @@ export const metadata: Metadata = {
 
 export default function SignupPage() {
   return (
-    <main className="flex items-center justify-center md:h-screen">
-      <div className="relative mx-auto flex w-full max-w-[400px] flex-col space-y-2.5 p-4 md:-mt-32">
-        <div className="flex h-20 w-full items-end rounded-lg bg-blue-500 p-3 md:h-36">
-          <div className="w-32 text-white md:w-36">
-            <AcmeLogo />
-          </div>
-        </div>
+    <main>
+      <AuthContainer>
+        <Suspense>
+          <SocialSignIn />
+        </Suspense>
+        
+        <p className="text-center text-neutral-600 font-medium tracking-tight mb-4">OR</p>
+
         <Suspense>
           <SignUpForm />
         </Suspense>
-      </div>
+
+        <Link
+          className="inline-block text-neutral-600 text-sm font-medium hover:text-neutral-800 tracking-tight transition duration-200" 
+          href="/login"
+        >
+          Already have an account? Log in
+        </Link>
+      </AuthContainer>
     </main>
   );
 }

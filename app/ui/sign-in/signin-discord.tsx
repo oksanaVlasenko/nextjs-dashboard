@@ -1,7 +1,7 @@
 
 import { signIn } from "@/auth"
 import { JSX, SVGProps } from "react"
-import { WhiteButton } from "./button"
+import { WhiteButton } from "../button"
  
 export default function SignInDiscord() {
   return (
@@ -12,7 +12,7 @@ export default function SignInDiscord() {
       }}
     >
       <WhiteButton className="w-full justify-center">
-        <DiscordLogo />
+        <DiscordLogo className="mr-6 h-8"/> Continue with Discord
       </WhiteButton>
     </form>
   )

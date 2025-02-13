@@ -1,8 +1,9 @@
-import AcmeLogo from '@/app/ui/acme-logo';
-import LoginForm from '@/app/ui/login-form';
+import AuthContainer from '@/app/ui/sign-in/auth-container';
+import LoginForm from '@/app/ui/sign-in/login-form';
 import { Suspense } from 'react';
 import { Metadata } from 'next';
-import SocialSignIn from '@/app/ui/social-signin';
+import SocialSignIn from '@/app/ui/sign-in/social-signin';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Login',
@@ -10,34 +11,25 @@ export const metadata: Metadata = {
 
 export default function LoginPage() {
   return (
-    <main className="flex items-center justify-center md:h-screen">
-      <div className="relative mx-auto flex w-full max-w-[400px] flex-col space-y-2.5 p-4 md:-mt-32">
-        <div className="flex h-16 w-full items-end rounded-lg bg-blue-500 p-3 md:h-28">
-          <div className="w-32 text-white md:w-36">
-            <AcmeLogo />
-          </div>
-        </div>
+    <main>
+      <AuthContainer>
+        <Suspense>
+          <SocialSignIn />
+        </Suspense>
+        
+        <p className="text-center text-neutral-600 font-medium tracking-tight mb-4">OR</p>
 
         <Suspense>
-          <div className="flex-1 rounded-lg bg-gray-50 px-6 pb-4 pt-8">
-            <LoginForm />
-
-            <Divider text="or" />
-
-            <SocialSignIn />
-          </div>
+          <LoginForm />
         </Suspense>
-      </div>
+
+        <Link
+          className="inline-block text-neutral-600 text-sm font-medium hover:text-neutral-800 tracking-tight transition duration-200" 
+          href="/signup"
+        >
+          Don't have an account? Sign up
+        </Link>
+      </AuthContainer>
     </main>
   );
 }
-
-const Divider = ({ text }: { text: string }) => {
-  return (
-    <div className="flex items-center my-6 w-full">
-      <div className="flex-grow border-t border-gray-300"></div>
-      <span className="px-4 text-gray-500 text-sm font-medium">{text}</span>
-      <div className="flex-grow border-t border-gray-300"></div>
-    </div>
-  );
-};

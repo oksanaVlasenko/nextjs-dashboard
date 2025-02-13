@@ -1,7 +1,7 @@
 
 import { signIn } from "@/auth"
 import { JSX, SVGProps } from "react"
-import { WhiteButton } from "./button"
+import { WhiteButton } from "../button"
  
 export default function SignInGithub() {
   return (
@@ -12,7 +12,7 @@ export default function SignInGithub() {
       }}
     >
       <WhiteButton className="w-full justify-center ">
-        <GithubLogo />
+        <GithubLogo className="mr-6 h-8" /> Continue with GitHub
       </WhiteButton>
     </form>
   )

@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .bg-gradient-custom {
+    background: linear-gradient(131deg, #fee4cf 26.82%, #ffd8ea 96.89%);
+  }
+}
+
 input[type='number'] {
   -moz-appearance: textfield;
   appearance: textfield;

@@ -7,7 +7,7 @@ import {
   ExclamationCircleIcon,
 } from '@heroicons/react/24/outline';
 import { ArrowRightIcon } from '@heroicons/react/20/solid';
-import { Button } from './button';
+import { Button } from '../button';
 import { useActionState } from 'react';
 import { authenticate } from '@/app/lib/actions';
 import { useSearchParams } from 'next/navigation';
@@ -23,56 +23,55 @@ export default function LoginForm() {
   console.log('Callback URL:', callbackUrl);
  
   return (
-    <form action={formAction} className="space-y-3">
-      <div >
-        <h1 className={`${lusitana.className} mb-3 text-2xl`}>
-          Please log in to continue.
-        </h1>
-        <div className="w-full">
+    <form action={formAction}>
+      <div className="flex flex-wrap -m-3 mb-3">
+        <div className="w-full p-3">
           <div>
             <label
-              className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+              className="block mb-3 text-neutral-600 font-medium tracking-tight"
               htmlFor="email"
             >
               Email
             </label>
-            <div className="relative">
+            <div className="w-full">
               <input
-                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className="w-full px-8 py-3 outline-none rounded-lg border border-neutral-100 focus:ring-0 focus:border-neutral-900 placeholder-neutral-300 font-medium transition duration-200"
                 id="email"
                 type="email"
                 name="email"
-                placeholder="Enter your email address"
+                placeholder="ex. d.duncan@email.com"
                 required
               />
-              <AtSymbolIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>
           </div>
           <div className="mt-4">
             <label
-              className="mb-3 mt-5 block text-xs font-medium text-gray-900"
+              className="block mb-3 text-neutral-600 font-medium tracking-tight"
               htmlFor="password"
             >
               Password
             </label>
-            <div className="relative">
+            <div className="w-full">
               <input
-                className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+                className="w-full px-8 py-3 outline-none rounded-lg border border-neutral-100 focus:ring-0 focus:border-neutral-900 placeholder-neutral-300 font-medium transition duration-200"
                 id="password"
                 type="password"
                 name="password"
-                placeholder="Enter password"
+                placeholder="******"
                 required
                 minLength={6}
               />
-              <KeyIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>
           </div>
         </div>
         <input type="hidden" name="redirectTo" value={callbackUrl} />
-        <Button className="mt-4 w-full" aria-disabled={isPending}>
-          Log in <ArrowRightIcon className="ml-auto h-5 w-5 text-gray-50" />
-        </Button>
+
+        <div className="w-full p-3">
+          <Button aria-disabled={isPending}>
+            Log in 
+          </Button>
+        </div>
+        
 
         {errorMessage && (
           <div 
