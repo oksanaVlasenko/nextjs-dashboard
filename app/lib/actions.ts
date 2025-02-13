@@ -9,8 +9,11 @@ import bcrypt from 'bcrypt';
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 
-//import { handlers } from "@/auth"
-//export const { GET, POST } = handlers
+import { signOut } from "@/auth";
+
+export async function logout() {
+  await signOut({ redirectTo: "/" });
+}
 
 const RegisterSchema = z.object({
   id: z.string(),

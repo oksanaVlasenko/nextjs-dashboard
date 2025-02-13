@@ -23,13 +23,13 @@ export default function Search({ placeholder }: { placeholder: string }) {
   }, 300)
 
   return (
-    <div className="relative flex flex-1 flex-shrink-0">
+    <div className="flex w-full items-center md:w-1/2 lg:w-auto py-1 px-4 mb-4 md:mb-0 md:mr-4 md:ml-auto border rounded bg-white">
       <label htmlFor="search" className="sr-only">
         Search
       </label>
 
       <input
-        className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+        className="text-sm outline-none focus:ring-0 placeholder-gray-500 placeholder-text-sm border-none"
         placeholder={placeholder}
         onChange={(e) => {
           handleSearch(e.target.value);
@@ -37,7 +37,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
         defaultValue={searchParams.get('query')?.toString()}
       />
 
-      <MagnifyingGlassIcon className="absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+      <MagnifyingGlassIcon className="ml-auto w-5 h-5 text-grey-900 peer-focus:text-gray-900" />
     </div>
   );
 }

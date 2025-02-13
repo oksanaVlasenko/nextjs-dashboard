@@ -1,44 +1,95 @@
-import SocialSignIn from '@/app/ui/sign-in/social-signin';
-import SignUpForm from '../ui/sign-in/signup-form';
-import { Suspense } from 'react';
-import Link from 'next/link';
-import SideImage from '@/app/ui/sign-in/side-image';
+import Search from "../ui/search";
+
 
 export default function NewLogin() {
   return (
-    <section className="bg-neutral-50 py-12 md:py-24">
-      <div className="container mx-auto px-4">
-        <div className="bg-white rounded-3xl">
-          <div className="flex flex-wrap">
-            <div className="w-full xl:w-1/2">
-              <div className="px-8 md:px-16 pt-16 pb-20">
-                <span className="inline-block text-neutral-600 text-xl font-semibold tracking-tight mb-4">Account</span>
-                <h5 className="text-6xl font-semibold mb-6 font-heading">Try a new learning way</h5>
-                <p className="text-neutral-600 font-medium tracking-tight mb-16">At the heart of our success is a diverse and talented team.</p>
+    <>
+      <section className="py-8 px-6 bg-white">
+        <div className="flex flex-wrap items-center">
+          <div className="w-full lg:w-auto flex items-center mb-4 lg:mb-0">
+            <h2 className="text-2xl font-bold">Project Name</h2>
+            <span className="inline-block py-1 px-2 ml-2 rounded-full text-xs text-white bg-indigo-500">56 Total</span>
+          </div>
+          <div className="w-full md:w-1/2 lg:w-auto flex py-2 px-4 mb-4 md:mb-0 md:mr-4 md:ml-auto border rounded bg-white">
+            <input className="text-sm placeholder-gray-500" type="text" placeholder="Type to search..."/>
+            <button className="ml-auto">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18.0921 16.9083L15.0004 13.8417C16.2005 12.3453 16.7817 10.4461 16.6244 8.53441C16.4672 6.62274 15.5835 4.84398 14.155 3.56386C12.7265 2.28375 10.8619 1.59958 8.94451 1.65205C7.02711 1.70452 5.20268 2.48963 3.84636 3.84594C2.49004 5.20226 1.70493 7.02669 1.65247 8.94409C1.6 10.8615 2.28416 12.7261 3.56428 14.1546C4.84439 15.583 6.62316 16.4668 8.53482 16.624C10.4465 16.7812 12.3457 16.2001 13.8421 15L16.9087 18.0667C16.9862 18.1448 17.0784 18.2068 17.1799 18.2491C17.2815 18.2914 17.3904 18.3132 17.5004 18.3132C17.6104 18.3132 17.7193 18.2914 17.8209 18.2491C17.9224 18.2068 18.0146 18.1448 18.0921 18.0667C18.2423 17.9113 18.3262 17.7036 18.3262 17.4875C18.3262 17.2714 18.2423 17.0637 18.0921 16.9083ZM9.16708 15C8.01335 15 6.88554 14.6579 5.92625 14.0169C4.96696 13.3759 4.21929 12.4649 3.77778 11.399C3.33627 10.3331 3.22075 9.16019 3.44583 8.02863C3.67091 6.89708 4.22648 5.85767 5.04229 5.04187C5.85809 4.22606 6.89749 3.67049 8.02905 3.44541C9.1606 3.22033 10.3335 3.33585 11.3994 3.77736C12.4653 4.21887 13.3763 4.96654 14.0173 5.92583C14.6583 6.88512 15.0004 8.01293 15.0004 9.16666C15.0004 10.7138 14.3858 12.1975 13.2919 13.2914C12.1979 14.3854 10.7142 15 9.16708 15Z" fill="#382CDD"></path>
+              </svg>
+            </button>
+          </div>
+          <a className="md:w-auto flex items-center py-2 px-4 rounded bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium" href="#">
+            <span className="inline-block mr-1">
+              <svg className="h-4 w-4 text-indigo-300" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12.6667 1.33334H3.33333C2.19999 1.33334 1.33333 2.20001 1.33333 3.33334V12.6667C1.33333 13.8 2.19999 14.6667 3.33333 14.6667H12.6667C13.8 14.6667 14.6667 13.8 14.6667 12.6667V3.33334C14.6667 2.20001 13.8 1.33334 12.6667 1.33334ZM10.6667 8.66668H8.66666V10.6667C8.66666 11.0667 8.4 11.3333 8 11.3333C7.6 11.3333 7.33333 11.0667 7.33333 10.6667V8.66668H5.33333C4.93333 8.66668 4.66666 8.40001 4.66666 8.00001C4.66666 7.60001 4.93333 7.33334 5.33333 7.33334H7.33333V5.33334C7.33333 4.93334 7.6 4.66668 8 4.66668C8.4 4.66668 8.66666 4.93334 8.66666 5.33334V7.33334H10.6667C11.0667 7.33334 11.3333 7.60001 11.3333 8.00001C11.3333 8.40001 11.0667 8.66668 10.6667 8.66668Z" fill="currentColor"></path>
+              </svg>
+            </span>
+            <span>Add Project</span>
+          </a>
+        </div>
+      </section>
 
-                <Suspense>
-                  <SocialSignIn />
-                </Suspense>
-                
-                <p className="text-center text-neutral-600 font-medium tracking-tight mb-4">OR</p>
+      <section className="py-5 px-6 bg-white shadow">
+          <nav className="relative">
+            <div className="flex items-center">
+              <div className="flex items-center mr-auto">
 
-                <Suspense>
-                  <SignUpForm />
-                </Suspense>
 
-                <Link
-                  className="inline-block text-neutral-600 text-sm font-medium hover:text-neutral-800 tracking-tight transition duration-200" 
-                  href="/login"
-                >
-                  Already have an account? Log in
-                </Link>
+                <Search placeholder="Type to search..." />
+              </div>
+              <div className="flex justify-end lg:hidden">
+                <button className="flex items-center">
+                  <svg className="text-indigo-500 bg-indigo-100 block h-8 w-8 p-2 rounded" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+                    <title>Mobile menu</title>
+                    <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+                  </svg>
+                </button>
+              </div>
+              <ul className="hidden lg:flex lg:justify-end lg:items-center lg:space-x-6 mr-6">
+                <li>
+                  <a className="flex p-2 rounded bg-indigo-500 hover:bg-indigo-600 text-white text-xs" href="#">
+                    <span className="inline-block mr-1">
+                      <svg className="text-indigo-300 h-4 w-4" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12.6667 1.33334H3.33333C2.19999 1.33334 1.33333 2.20001 1.33333 3.33334V12.6667C1.33333 13.8 2.19999 14.6667 3.33333 14.6667H12.6667C13.8 14.6667 14.6667 13.8 14.6667 12.6667V3.33334C14.6667 2.20001 13.8 1.33334 12.6667 1.33334ZM10.6667 8.66668H8.66666V10.6667C8.66666 11.0667 8.4 11.3333 8 11.3333C7.6 11.3333 7.33333 11.0667 7.33333 10.6667V8.66668H5.33333C4.93333 8.66668 4.66666 8.40001 4.66666 8.00001C4.66666 7.60001 4.93333 7.33334 5.33333 7.33334H7.33333V5.33334C7.33333 4.93334 7.6 4.66668 8 4.66668C8.4 4.66668 8.66666 4.93334 8.66666 5.33334V7.33334H10.6667C11.0667 7.33334 11.3333 7.60001 11.3333 8.00001C11.3333 8.40001 11.0667 8.66668 10.6667 8.66668Z" fill="currentColor"></path>
+                      </svg>
+                    </span>
+                    <span>Add note</span>
+                  </a>
+                </li>
+                <li>
+                  <a className="text-gray-200 hover:text-gray-300" href="#">
+                    <svg className="h-5 w-5" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M15 0H3C2.20435 0 1.44129 0.316071 0.87868 0.87868C0.316071 1.44129 0 2.20435 0 3V14C0 14.7956 0.316071 15.5587 0.87868 16.1213C1.44129 16.6839 2.20435 17 3 17H5.59L8.29 19.71C8.38344 19.8027 8.49426 19.876 8.61609 19.9258C8.73793 19.9755 8.86839 20.0008 9 20C9.23834 20 9.46886 19.9149 9.65 19.76L12.87 17H15C15.7956 17 16.5587 16.6839 17.1213 16.1213C17.6839 15.5587 18 14.7956 18 14V3C18 2.20435 17.6839 1.44129 17.1213 0.87868C16.5587 0.316071 15.7956 0 15 0ZM16 14C16 14.2652 15.8946 14.5196 15.7071 14.7071C15.5196 14.8946 15.2652 15 15 15H12.5C12.2617 15 12.0311 15.0851 11.85 15.24L9.05 17.64L6.71 15.29C6.61656 15.1973 6.50574 15.124 6.38391 15.0742C6.26207 15.0245 6.13161 14.9992 6 15H3C2.73478 15 2.48043 14.8946 2.29289 14.7071C2.10536 14.5196 2 14.2652 2 14V3C2 2.73478 2.10536 2.48043 2.29289 2.29289C2.48043 2.10536 2.73478 2 3 2H15C15.2652 2 15.5196 2.10536 15.7071 2.29289C15.8946 2.48043 16 2.73478 16 3V14Z" fill="currentColor"></path>
+                    </svg>
+                  </a>
+                </li>
+                <li>
+                  <a className="text-gray-200 hover:text-gray-300" href="#">
+                    <svg className="h-5 w-5" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M14 11.18V8C13.9986 6.58312 13.4958 5.21247 12.5806 4.13077C11.6655 3.04908 10.3971 2.32615 9 2.09V1C9 0.734784 8.89464 0.48043 8.70711 0.292893C8.51957 0.105357 8.26522 0 8 0C7.73478 0 7.48043 0.105357 7.29289 0.292893C7.10536 0.48043 7 0.734784 7 1V2.09C5.60294 2.32615 4.33452 3.04908 3.41939 4.13077C2.50425 5.21247 2.00144 6.58312 2 8V11.18C1.41645 11.3863 0.910998 11.7681 0.552938 12.2729C0.194879 12.7778 0.00173951 13.3811 0 14V16C0 16.2652 0.105357 16.5196 0.292893 16.7071C0.48043 16.8946 0.734784 17 1 17H4.14C4.37028 17.8474 4.873 18.5954 5.5706 19.1287C6.26819 19.6621 7.1219 19.951 8 19.951C8.8781 19.951 9.73181 19.6621 10.4294 19.1287C11.127 18.5954 11.6297 17.8474 11.86 17H15C15.2652 17 15.5196 16.8946 15.7071 16.7071C15.8946 16.5196 16 16.2652 16 16V14C15.9983 13.3811 15.8051 12.7778 15.4471 12.2729C15.089 11.7681 14.5835 11.3863 14 11.18ZM4 8C4 6.93913 4.42143 5.92172 5.17157 5.17157C5.92172 4.42143 6.93913 4 8 4C9.06087 4 10.0783 4.42143 10.8284 5.17157C11.5786 5.92172 12 6.93913 12 8V11H4V8ZM8 18C7.65097 17.9979 7.30857 17.9045 7.00683 17.7291C6.70509 17.5536 6.45451 17.3023 6.28 17H9.72C9.54549 17.3023 9.29491 17.5536 8.99317 17.7291C8.69143 17.9045 8.34903 17.9979 8 18ZM14 15H2V14C2 13.7348 2.10536 13.4804 2.29289 13.2929C2.48043 13.1054 2.73478 13 3 13H13C13.2652 13 13.5196 13.1054 13.7071 13.2929C13.8946 13.4804 14 13.7348 14 14V15Z" fill="currentColor"></path>
+                    </svg>
+                  </a>
+                </li>
+              </ul>
+              <div className="hidden lg:block">
+                <button className="flex items-center">
+                  <div className="mr-3">
+                    <p className="text-sm">Thomas Brown</p>
+                    <p className="text-sm text-gray-500">Developer</p>
+                  </div>
+                  <div className="mr-2">
+                    <img className="w-10 h-10 rounded-full object-cover object-right" src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1050&amp;q=80" alt=""/>
+                  </div>
+                  <span>
+                    <svg className="text-gray-400" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M9.08335 0.666657C8.75002 0.333323 8.25002 0.333323 7.91669 0.666657L5.00002 3.58332L2.08335 0.666657C1.75002 0.333323 1.25002 0.333323 0.916687 0.666657C0.583354 0.99999 0.583354 1.49999 0.916687 1.83332L4.41669 5.33332C4.58335 5.49999 4.75002 5.58332 5.00002 5.58332C5.25002 5.58332 5.41669 5.49999 5.58335 5.33332L9.08335 1.83332C9.41669 1.49999 9.41669 0.99999 9.08335 0.666657Z" fill="currentColor"></path>
+                    </svg>
+                  </span>
+                </button>
               </div>
             </div>
-            
-            <SideImage />
-          </div>
-        </div>
-      </div>
-    </section>
+          </nav>
+        </section>
+    </>
   )
 }

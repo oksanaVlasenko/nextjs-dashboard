@@ -13,8 +13,8 @@ export default function AcmeLogo() {
         className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24"
         alt="Logo"
       />
-      
-      <p className="inline-block text-black text-xl md:text-3xl font-semibold tracking-tight mb-4">LK</p>
+
+      <p className="hidden sm:inline-block text-black text-xl md:text-3xl font-semibold tracking-tight mb-4">LK</p>
     </div>
   );
 }
