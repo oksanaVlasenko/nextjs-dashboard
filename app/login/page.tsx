@@ -27,7 +27,7 @@ export default function LoginPage() {
           className="inline-block text-neutral-600 text-sm font-medium hover:text-neutral-800 tracking-tight transition duration-200" 
           href="/signup"
         >
-          Don't have an account? Sign up
+          Don&apos;t have an account? Sign up
         </Link>
       </AuthContainer>
     </main>
