@@ -6,10 +6,10 @@ import { auth } from '@/auth';
 
 export const metadata: Metadata = {
   title: {
-    template: '%s | Acme Dashboard',
-    default: 'Acme Dashboard',
+    template: '%s | Learning with AI',
+    default: 'Learning with AI',
   },
-  description: 'The official Next.js Learn Dashboard built with App Router.',
+  description: 'Learning languages with AI in a brand-new way!',
   metadataBase: new URL('https://next-learn-dashboard.vercel.sh'),
 };
 
