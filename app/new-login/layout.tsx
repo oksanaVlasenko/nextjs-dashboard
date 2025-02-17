@@ -10,7 +10,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       
       <SideNav />
 
-      <div className="mx-auto lg:ml-80">{children}</div>
+      <div className="mx-auto lg:ml-72">{children}</div>
     </div>
   );
 }

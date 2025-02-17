@@ -31,3 +31,17 @@ export function WhiteButton({ children, className, ...rest }: ButtonProps) {
     </button>
   );
 }
+
+export function OrangeButton({ children, className, ...rest }: ButtonProps) {
+  return (
+    <button
+      {...rest}
+      className={clsx(
+        'flex justify-center items-center text-center w-full px-4 py-2 font-semibold tracking-tight text-white bg-orange-500 hover:bg-orange-600 focus:bg-orange-600 rounded-lg focus:ring-4 focus:ring-neutral-400 transition duration-200',
+        className,
+      )}
+    >
+      {children}
+    </button>
+  );
+}

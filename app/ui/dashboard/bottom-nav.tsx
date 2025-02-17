@@ -4,7 +4,7 @@ import { logout } from '@/app/lib/actions';
 
 export default function BottomNav() {
   return (
-    <div className="pt-8">
+    <div className="mt-auto">
       <Link 
         href='#'
         className="flex items-center pl-3 py-3 pr-2 text-gray-500 hover:bg-orange-50 rounded"

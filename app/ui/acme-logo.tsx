@@ -14,7 +14,7 @@ export default function AcmeLogo() {
         alt="Logo"
       />
 
-      <p className="hidden sm:inline-block text-black text-xl md:text-3xl font-semibold tracking-tight mb-4">LK</p>
+      <p className="hidden sm:inline-block text-neutral-900 text-xl md:text-3xl font-semibold tracking-tight">LK</p>
     </div>
   );
 }
