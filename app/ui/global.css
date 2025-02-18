@@ -22,3 +22,26 @@ input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+.scrollbar::-webkit-scrollbar {
+  width: 4px; 
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2); 
+  border-radius: 4px; 
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  background: transparent; 
+}
+
+.scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+

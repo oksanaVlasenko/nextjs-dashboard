@@ -23,7 +23,7 @@ export function WhiteButton({ children, className, ...rest }: ButtonProps) {
     <button
       {...rest}
       className={clsx(
-        'flex justify-center items-center text-center w-full mb-6 px-4 py-2 font-semibold tracking-tight hover:text-white border border-neutral-900 bg-white hover:bg-neutral-900 focus:bg-neutral-900 rounded-lg focus:ring-4 focus:ring-neutral-400 transition duration-200',
+        'flex justify-center items-center text-center w-full px-4 py-3 font-semibold tracking-tight hover:text-white border border-neutral-900 bg-white hover:bg-neutral-900 focus:bg-neutral-900 rounded-lg  transition duration-200',
         className,
       )}
     >

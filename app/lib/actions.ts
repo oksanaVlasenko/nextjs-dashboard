@@ -206,3 +206,38 @@ export async function deleteInvoice(id: string) {
   await sql`DELETE FROM invoices WHERE id = ${id}`;
   revalidatePath('/dashboard/invoices');
 }
+
+export async function fetchCountriesByLanguage() {
+  try {
+    const response = await fetch(`https://restcountries.com/v3.1/all?fields=name,languages,flags`);
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch countries');
+    }
+    const countries = await response.json();
+
+    const filteredCountries = countries
+      .filter((country: any) => country.name.common.toLowerCase() !== 'russia' 
+        &&  country.name.common.toLowerCase() !== 'belarus' 
+        && Object.keys(country.languages).length > 0)
+      .map((country: any) => {
+        const entries = Object.entries(country.languages);
+        
+        const nonEnglish = entries.find(([code]) => code !== "eng");
+        
+        const mainLang = nonEnglish || entries[0];
+
+        return {
+          flag: country.flags.png,
+          id: mainLang[0],
+          label: mainLang[1]
+        }
+      })
+      .sort((a: any, b: any) => a.label.localeCompare(b.label));
+    
+    return filteredCountries;
+  } catch (error) {
+    console.error('Error fetching countries:', error);
+    return [];
+  }
+};
