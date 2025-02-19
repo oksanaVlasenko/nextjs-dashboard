@@ -18,7 +18,7 @@ interface DropdownProps {
   onSelect: (value: string) => void;
 }
 
-export default function dropdown({
+export default function Dropdown({
   selected, 
   options, 
   placeholder,

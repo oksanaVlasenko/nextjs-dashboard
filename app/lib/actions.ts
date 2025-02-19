@@ -259,7 +259,7 @@ export async function fetchCountriesByLanguage() {
 export async function getAvailableLanguages() {
   try {
     const baseUrl =
-      process.env.NEXT_PUBLIC_SITE_URL || // Використовуємо URL з .env, якщо є
+      process.env.NEXT_PUBLIC_SITE_URL ||
       (typeof window !== "undefined" ? window.location.origin : "http://localhost:3000");
 
     const response = await fetch(`${baseUrl}/api/dictionaries`);

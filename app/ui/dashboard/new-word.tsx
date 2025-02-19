@@ -2,10 +2,10 @@
 
 import clsx from "clsx";
 import { useEffect, useState } from "react";
-import Dropdown from "../dropdown";
-import { fetchCountriesByLanguage, getAvailableLanguages, convertISO3toISO1, checkWord } from "@/app/lib/actions";
+import Dropdown from "@/app/ui/dropdown";
+import { fetchCountriesByLanguage, checkWord } from "@/app/lib/actions";
 import { ArrowsRightLeftIcon, RocketLaunchIcon } from "@heroicons/react/24/outline";
-import { Button, WhiteButton } from "../button";
+import { Button, WhiteButton } from "@/app/ui/button";
 
 const options = [
   { id: "A1–Elementary", label: "A1 – Elementary" },
@@ -132,7 +132,7 @@ export default function AddWord() {
             </div>
             <div className="flex-1 p-2">
               <h3 className="font-heading mb-0.5 text-lg font-semibold">
-                To start, let's select languages from and to
+                To start, let&apos;s select languages from and to
               </h3>
               <p className="mb-7 text-neutral-500">
                 You could set these in general setting for future
