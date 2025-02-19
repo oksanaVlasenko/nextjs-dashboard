@@ -216,26 +216,40 @@ export async function fetchCountriesByLanguage() {
     }
     const countries = await response.json();
 
+    const uniqueLanguages = new Map();
+      
     const filteredCountries = countries
-      .filter((country: any) => country.name.common.toLowerCase() !== 'russia' 
-        &&  country.name.common.toLowerCase() !== 'belarus' 
-        && Object.keys(country.languages).length > 0)
+      .filter((country: any) => 
+        country.name.common.toLowerCase() !== 'russia' &&
+        country.name.common.toLowerCase() !== 'belarus' &&
+        Object.keys(country.languages).length > 0
+      )
       .map((country: any) => {
-        const entries = Object.entries(country.languages);
-        
-        const nonEnglish = entries.find(([code]) => code !== "eng");
-        
-        const mainLang = nonEnglish || entries[0];
-
+        const langEntries = Object.entries(country.languages);
+        const mainLang = langEntries.find(([code]) => code !== 'eng') || langEntries[0];
+  
         return {
           flag: country.flags.png,
           id: mainLang[0],
-          label: mainLang[1]
-        }
+          label: mainLang[1],
+          name: country.name.common
+        };
       })
       .sort((a: any, b: any) => a.label.localeCompare(b.label));
-    
-    return filteredCountries;
+
+      for (const country of filteredCountries) {
+        if (country.id === 'eng') {
+          if (country.name === 'United States') {
+            uniqueLanguages.set(country.id, country);
+          }
+        } else {
+          if (!uniqueLanguages.has(country.id)) {
+            uniqueLanguages.set(country.id, country);
+          }
+        }
+      }
+
+    return Array.from(uniqueLanguages.values());
   } catch (error) {
     console.error('Error fetching countries:', error);
     return [];
