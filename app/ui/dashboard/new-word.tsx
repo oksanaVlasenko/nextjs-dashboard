@@ -3,8 +3,8 @@
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 import Dropdown from "../dropdown";
-import { fetchCountriesByLanguage } from "@/app/lib/actions";
-import { ArrowsRightLeftIcon } from "@heroicons/react/24/outline";
+import { fetchCountriesByLanguage, getAvailableLanguages, convertISO3toISO1, checkWord } from "@/app/lib/actions";
+import { ArrowsRightLeftIcon, RocketLaunchIcon } from "@heroicons/react/24/outline";
 import { Button, WhiteButton } from "../button";
 
 const options = [
@@ -22,8 +22,45 @@ export default function AddWord() {
   const [fromLang, setFromLang] = useState<string>('eng')
   const [toLang, setToLang] = useState<string>('ukr')
   const [langList, setLangList] = useState<any[]>([])
+  const [word, setWord] = useState<string>('')
+  const [isCheckingWord, setIsCheckingWord] = useState<boolean>(false)
+  const [suggestions, setSuggestions] = useState<string[]>([])
+  const [isWordCorrect, setIsWordCorrect] = useState<boolean>(false)
 
   const [selected, setSelected] = useState<string>("B2–Upper-Intermediate");
+
+  const checkWordIsRight = async () => {
+    if (isWordCorrect) {
+      goToNextStep()
+
+      return
+    }
+
+    setIsCheckingWord(true)
+    const result = await checkWord(word, fromLang)
+
+    console.log(result)
+    if (result.correct.correct) {
+      goToNextStep()
+    }
+
+    setIsWordCorrect(result.correct.correct)
+    setSuggestions(result.suggestions)
+    setIsCheckingWord(false)
+  }
+
+  const handleWordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const query = e.target.value
+
+    setWord(query);
+  };
+
+  const selectSuggestions = (option: string) => {
+    setWord(option)
+    setSuggestions([])
+    setIsWordCorrect(true)
+    goToNextStep()
+  }
 
   const switchLanguages = () => {
     if (!fromLang && !toLang) return 
@@ -200,6 +237,7 @@ export default function AddWord() {
                       {options.map((option) => (
                         <label key={option.id} className="flex items-center cursor-pointer">
                           <input
+                            id={option.id}
                             type="radio"
                             name="radio"
                             value={option.id}
@@ -273,26 +311,55 @@ export default function AddWord() {
               </div>
             </div>
             <div className="flex-1 p-2">
-              <h3 className="font-heading mb-0.5 text-lg font-semibold">Generate your API Token</h3>
-              <p className="pb-12 text-neutral-500">Tokens are required for publishing events</p>
+              <h3 className="font-heading mb-0.5 text-lg font-semibold">Type a word or phrase to translate</h3>
+              <p className="pb-8 text-neutral-500">Up to 50 characters only! </p>
 
               {
                 activeStep === 3 && (
                   <>
-                    <div className="flex flex-wrap items-center max-w-xl pb-8 -m-1">
-                      <div className="w-full sm:flex-1">
+                    <div className="flex flex-wrap flex-col max-w-xl pb-8 -m-1">
+                      <div className="w-full max-w-sm sm:flex-1 pb-2">
                         <input
-                          className="px-8 py-3 outline-none rounded-lg border border-neutral-100 focus:ring-0 focus:border-neutral-900 placeholder-neutral-300 font-medium transition duration-200"
-                          id="text"
+                          value={word}
+                          className={clsx(
+                            'w-full px-8 py-3 outline-none rounded-lg border border-neutral-100 focus:ring-0 focus:border-neutral-900 placeholder-neutral-300 font-medium transition duration-200',
+                            {
+                              'border-red-500': suggestions.length > 0,
+                            }
+                          )}
                           type="text"
                           name="text"
                           placeholder="Type your word here"
                           required
+                          onChange={handleWordChange}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                              e.preventDefault(); 
+                              checkWordIsRight();
+                            }
+                          }}
                         />
-                      </div>
+                      </div>  
 
-
-                      
+                      {
+                        suggestions.length > 0 && (
+                          <>
+                            <small className="text-red-500">Please, change the word or select one of suggestions</small>
+                          
+                            <div className="flex flex-row flex-wrap gap-2 pt-6">
+                              {suggestions.map((option, ind) => (
+                                <span
+                                  key={ind}
+                                  className={`bg-white border cursor-pointer text-neutral-900 text-sm font-medium px-5 py-2 ring-2 ring-orange-500 rounded-lg transition-all `}
+                                  onClick={() => selectSuggestions(option)}
+                                >
+                                  {option}
+                                </span>
+                              ))}
+                            </div> 
+                          </>
+                        )
+                      }                                         
                     </div>
                       
                     <div className="flex flex-wrap gap-2 p-1 pb-11">
@@ -303,10 +370,20 @@ export default function AddWord() {
                       </div>
 
                       <div className="w-full max-w-sm sm:max-w-48">
-                        <Button onClick={goToNextStep}>
+                        <Button 
+                          disabled={suggestions.length > 0}
+                          className={clsx(
+                            {
+                              'pending-animation-white': isCheckingWord,
+                              'pointer-events-none opacity-30': suggestions.length > 0
+                            }
+                          )}
+                          onClick={checkWordIsRight} 
+                        >
                           Continue
                         </Button>
                       </div>
+
                       
                     </div>
                   </>
@@ -314,31 +391,7 @@ export default function AddWord() {
               }
             </div>
           </div>
-          <div className="flex flex-wrap -m-2">
-            <div className="w-auto p-2">
-              <div className="flex flex-col items-center justify-between h-full">
-                <div className="block pb-3">
-                  <div className="flex items-center justify-center w-10 h-10 border border-neutral-200 rounded-full">
-                    <span 
-                      className={clsx(
-                        'text-lg font-semibold',
-                        {
-                          'text-gray-500': !doneSteps.includes(2),
-                        }
-                      )}
-                    >
-                      4
-                    </span>
-                  </div>
-                </div>
-                <div className="w-px h-full border border-dashed"></div>
-              </div>
-            </div>
-            <div className="flex-1 p-2">
-              <h3 className="font-heading mb-0.5 text-lg font-semibold">Publish your first event</h3>
-              <p className="pb-12 text-neutral-500">Code or no code, we got you covered</p>
-            </div>
-          </div>
+          
           <div className="flex flex-wrap -m-2">
             <div className="w-auto p-2">
               <div className="flex flex-col items-center justify-between h-full">
@@ -354,7 +407,20 @@ export default function AddWord() {
             </div>
             <div className="flex-1 p-2">
               <h3 className="font-heading mb-0.5 text-lg font-semibold">You’re all set!</h3>
-              <p className="text-neutral-500">Happy event tracking</p>
+              <p className="text-neutral-500">Happy learning</p>
+
+              {
+                activeStep === 4 && (
+                  <>  
+                    <div className="w-full max-w-sm sm:max-w-48 sm:w-auto p-1 pt-11">
+                      <Button onClick={goToNextStep}>
+                        Go ahead
+                        <RocketLaunchIcon className="'w-5 h-5 text-white sm:mx-4 peer-focus:text-gray-900'"/>
+                      </Button>
+                    </div>
+                  </>
+                )
+              }
             </div>
           </div>
         </div>

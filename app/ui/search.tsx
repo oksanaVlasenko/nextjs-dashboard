@@ -29,6 +29,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
       </label>
 
       <input
+        id="search"
         className="text-sm outline-none focus:ring-0 placeholder-gray-500 placeholder-text-sm border-none"
         placeholder={placeholder}
         onChange={(e) => {

@@ -8,6 +8,95 @@
   }
 }
 
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.pending-animation {
+  position: relative;
+  color: transparent !important;
+  pointer-events: none;
+  opacity: 0.5;
+
+  & span {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  & svg {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    border: 2px solid transparent;
+    border-top-color: #171717;
+    border-left-color: #171717;
+    border-right-color: #171717;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+}
+
+.pending-animation-white {
+  position: relative;
+  color: transparent !important;
+  pointer-events: none;
+  opacity: 0.5;
+
+  & span {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  & svg {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    border: 2px solid transparent;
+    border-top-color: white;
+    border-left-color: white;
+    border-right-color: white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+}
+
+/* @layer utilities {
+  .animate-spin {
+    animation: spin 1s linear infinite;
+  }
+} */
+
 input[type='number'] {
   -moz-appearance: textfield;
   appearance: textfield;

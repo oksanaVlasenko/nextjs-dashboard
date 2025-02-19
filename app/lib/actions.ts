@@ -5,7 +5,7 @@ import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import bcrypt from 'bcrypt';
-
+import isoCodes from "./languages-code-list.json"; 
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 
@@ -255,3 +255,64 @@ export async function fetchCountriesByLanguage() {
     return [];
   }
 };
+
+export async function getAvailableLanguages() {
+  try {
+    const baseUrl =
+      process.env.NEXT_PUBLIC_SITE_URL || // Використовуємо URL з .env, якщо є
+      (typeof window !== "undefined" ? window.location.origin : "http://localhost:3000");
+
+    const response = await fetch(`${baseUrl}/api/dictionaries`);
+    
+    if (!response.ok) {
+      throw new Error(`Помилка отримання мов: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data.languages;
+  } catch (error) {
+    console.error("Не вдалося отримати список мов:", error);
+    return [];
+  }
+}
+
+
+
+export async function convertISO3toISO1(iso3: string) {
+  const iso1 = isoCodes.find((codes: any) => codes['alpha3-b'] === iso3);
+
+  return iso1?.alpha2 || null; 
+} 
+
+async function loadDictionary(langCode: string) {
+  try {
+    const baseUrl =
+      process.env.NEXT_PUBLIC_SITE_URL || 
+      (typeof window !== "undefined" ? window.location.origin : "http://localhost:3000");
+
+    const affRes = await fetch(`${baseUrl}/dictionaries/${langCode}/index.aff`);
+    const aff = await affRes.text(); 
+
+    const dicRes = await fetch(`${baseUrl}/dictionaries/${langCode}/index.dic`);
+    const dic = await dicRes.text();
+
+    const { default: Nspell } = await import("nspell");
+    return new Nspell(aff, dic);
+  } catch (error) {
+    console.error(`Словник для мови "${langCode}" не знайдено`, error);
+    return null;
+  }
+}
+
+
+export async function checkWord(word: string, langCode: string) {
+  const iso1Code = await convertISO3toISO1(langCode)
+  const dict = await loadDictionary(iso1Code || 'en');
+  
+  if (!dict) return { correct: false, suggestions: [] };
+
+  const isCorrect = await dict.spell(word);
+  const suggestions = isCorrect.correct ? [] : dict.suggest(word);
+
+  return { correct: isCorrect, suggestions };
+}
