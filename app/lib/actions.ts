@@ -5,7 +5,6 @@ import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import bcrypt from 'bcrypt';
-import isoCodes from "./languages-code-list.json"; 
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 
