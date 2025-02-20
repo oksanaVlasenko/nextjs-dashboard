@@ -34,8 +34,6 @@ export async function POST(req: Request) {
       const aff = fs.readFileSync(path.join(process.cwd(), 'public', affPath), "utf8");
       const dic = fs.readFileSync(path.join(process.cwd(), 'public', dicPath), "utf8");
 
-      console.log(aff,' aff')
-
     const dict = new Nspell(aff, dic);
 
     if (!dict) {
