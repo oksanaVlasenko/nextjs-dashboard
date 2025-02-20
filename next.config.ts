@@ -1,5 +1,4 @@
 import type { NextConfig } from 'next';
-import path from 'path';
 
 const nextConfig: NextConfig = {
   experimental: {
@@ -7,6 +6,7 @@ const nextConfig: NextConfig = {
     
   },
   //outputFileTracingRoot: path.join(__dirname, '../../'),
+  output: 'standalone',
   images: {
     domains: [
       'lh3.googleusercontent.com', // Домен для Google аватарок
