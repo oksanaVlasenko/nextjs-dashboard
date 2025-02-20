@@ -2,19 +2,21 @@ import Nspell from "nspell";
 import fs from "fs";
 import path from "path";
 import { NextResponse } from "next/server";
+import isoCodes from '../../lib/languages-code-list.json'
 
 export async function POST(req: any) {
   const { word, langCode } = await req.json();
 
   console.log(word, langCode)
   
+  const iso1 = isoCodes.find((codes: any) => codes['alpha3-b'] === langCode);
 
   if (!word) {
     return NextResponse.json({ error: "Word is required" }, { status: 400 });
   }
 
-  const affPath = path.join(process.cwd(), `public/dictionaries/${langCode}/index.aff`);
-  const dicPath = path.join(process.cwd(), `public/dictionaries/${langCode}/index.dic`);
+  const affPath = path.join(process.cwd(), `public/dictionaries/${iso1}/index.aff`);
+  const dicPath = path.join(process.cwd(), `public/dictionaries/${iso1}/index.dic`);
 
   console.log(affPath, ' path')
   try {

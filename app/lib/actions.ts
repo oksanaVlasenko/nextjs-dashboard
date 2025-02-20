@@ -256,11 +256,11 @@ export async function fetchCountriesByLanguage() {
   }
 };
 
-export async function convertISO3toISO1(iso3: string) {
-  const iso1 = isoCodes.find((codes: any) => codes['alpha3-b'] === iso3);
+// export async function convertISO3toISO1(iso3: string) {
+//   const iso1 = isoCodes.find((codes: any) => codes['alpha3-b'] === iso3);
 
-  return iso1?.alpha2 || null; 
-} 
+//   return iso1?.alpha2 || null; 
+// } 
 
 // async function loadDictionary(langCode: string) {
 //   const inDevEnvironment = !!process && process.env.NODE_ENV === 'development';
@@ -288,9 +288,9 @@ export async function convertISO3toISO1(iso3: string) {
 export async function checkWord(word: string, langCode: string) {
   const inDevEnvironment = !!process && process.env.NODE_ENV === 'development';
 
-  const iso1Code = await convertISO3toISO1(langCode)
+  // const iso1Code = await convertISO3toISO1(langCode)
 
-  console.log(iso1Code, ' iso code')
+  // console.log(iso1Code, ' iso code')
   // const dict = await loadDictionary(iso1Code || 'en');
   
   // if (!dict) return { correct: false, suggestions: [] };
@@ -310,7 +310,7 @@ const baseUrl = !inDevEnvironment ?
   const res = await fetch(`${baseUrl}/api/spellcheck`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ word, langCode: iso1Code }),
+      body: JSON.stringify({ word, langCode }),
   });
 
   console.log(res, ' rs')
