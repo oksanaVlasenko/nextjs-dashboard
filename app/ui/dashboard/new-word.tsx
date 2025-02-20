@@ -33,23 +33,25 @@ export default function AddWord() {
   const checkWordIsRight = async () => {
     console.log(isWordCorrect, ' console test')
     setIsCheckingWord(true)
-    // if (isWordCorrect) {
-    //   goToNextStep()
+    if (isWordCorrect) {
+      goToNextStep()
 
-    //   return
-    // }
+      setIsCheckingWord(false)
+      
+      return
+    }
 
-    // setIsCheckingWord(true)
+    setIsCheckingWord(true)
      const result = await checkWord(word, fromLang)
 
      console.log(result)
-    // if (result.correct.correct) {
-    //   goToNextStep()
-    // }
+    if (result.correct.correct) {
+      goToNextStep()
+    }
 
-    // setIsWordCorrect(result.correct.correct)
-    // setSuggestions(result.suggestions)
-    // setIsCheckingWord(false)
+    setIsWordCorrect(result.correct.correct)
+    setSuggestions(result.suggestions)
+    setIsCheckingWord(false)
   }
 
   const handleWordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
