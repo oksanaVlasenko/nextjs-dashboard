@@ -1,9 +1,12 @@
 import type { NextConfig } from 'next';
+import path from 'path';
 
 const nextConfig: NextConfig = {
   experimental: {
-    ppr: 'incremental'
+    ppr: 'incremental',
+    
   },
+  //outputFileTracingRoot: path.join(__dirname, '../../'),
   images: {
     domains: [
       'lh3.googleusercontent.com', // Домен для Google аватарок

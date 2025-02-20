@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { useEffect, useState } from "react";
 import Dropdown from "@/app/ui/dropdown";
 // checkWord
-import { fetchCountriesByLanguage } from "@/app/lib/actions";
+import { checkWord, fetchCountriesByLanguage } from "@/app/lib/actions";
 import { ArrowsRightLeftIcon, RocketLaunchIcon } from "@heroicons/react/24/outline";
 import { Button, WhiteButton } from "@/app/ui/button";
 
@@ -32,6 +32,7 @@ export default function AddWord() {
 
   const checkWordIsRight = async () => {
     console.log(isWordCorrect, ' console test')
+    setIsCheckingWord(true)
     // if (isWordCorrect) {
     //   goToNextStep()
 
@@ -39,9 +40,9 @@ export default function AddWord() {
     // }
 
     // setIsCheckingWord(true)
-    // const result = await checkWord(word, fromLang)
+     const result = await checkWord(word, fromLang)
 
-    // console.log(result)
+     console.log(result)
     // if (result.correct.correct) {
     //   goToNextStep()
     // }
