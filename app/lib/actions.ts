@@ -286,13 +286,36 @@ async function loadDictionary(langCode: string) {
 
 
 export async function checkWord(word: string, langCode: string) {
+  const inDevEnvironment = !!process && process.env.NODE_ENV === 'development';
+
   const iso1Code = await convertISO3toISO1(langCode)
-  const dict = await loadDictionary(iso1Code || 'en');
+
+  console.log(iso1Code, ' iso code')
+  // const dict = await loadDictionary(iso1Code || 'en');
   
-  if (!dict) return { correct: false, suggestions: [] };
+  // if (!dict) return { correct: false, suggestions: [] };
 
-  const isCorrect = await dict.spell(word);
-  const suggestions = isCorrect.correct ? [] : dict.suggest(word);
+  // const isCorrect = await dict.spell(word);
+  // const suggestions = isCorrect.correct ? [] : dict.suggest(word);
 
-  return { correct: isCorrect, suggestions };
+  // return { correct: isCorrect, suggestions };
+  // const baseUrl =
+  //     process.env.NEXT_PUBLIC_SITE_URL || // Використовуємо URL з .env, якщо є
+  //     (typeof window !== "undefined" ? window.location.origin : "http://localhost:3000");
+const baseUrl = !inDevEnvironment ?
+      process.env.NEXT_PUBLIC_SITE_URL : "http://localhost:3000"
+
+      console.log(baseUrl, ' baser')
+
+  const res = await fetch(`${baseUrl}/api/spellcheck`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ word, langCode: iso1Code }),
+  });
+
+  console.log(res, ' rs')
+  //return res;
+  const data = await res.json();
+  console.log(data, ' data')
+  return data
 }
