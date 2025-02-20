@@ -256,28 +256,6 @@ export async function fetchCountriesByLanguage() {
   }
 };
 
-export async function getAvailableLanguages() {
-  try {
-    const baseUrl =
-      process.env.NEXT_PUBLIC_SITE_URL ||
-      (typeof window !== "undefined" ? window.location.origin : "http://localhost:3000");
-
-    const response = await fetch(`${baseUrl}/api/dictionaries`);
-    
-    if (!response.ok) {
-      throw new Error(`Помилка отримання мов: ${response.statusText}`);
-    }
-
-    const data = await response.json();
-    return data.languages;
-  } catch (error) {
-    console.error("Не вдалося отримати список мов:", error);
-    return [];
-  }
-}
-
-
-
 export async function convertISO3toISO1(iso3: string) {
   const iso1 = isoCodes.find((codes: any) => codes['alpha3-b'] === iso3);
 
@@ -285,10 +263,12 @@ export async function convertISO3toISO1(iso3: string) {
 } 
 
 async function loadDictionary(langCode: string) {
+  const inDevEnvironment = !!process && process.env.NODE_ENV === 'development';
+
+  console.log(inDevEnvironment , ' dev ene ')
   try {
-    const baseUrl =
-      process.env.NEXT_PUBLIC_SITE_URL || 
-      (typeof window !== "undefined" ? window.location.origin : "http://localhost:3000");
+    const baseUrl = !inDevEnvironment ?
+      process.env.NEXT_PUBLIC_SITE_URL : "http://localhost:3000"
 
     const affRes = await fetch(`${baseUrl}/dictionaries/${langCode}/index.aff`);
     const aff = await affRes.text(); 
