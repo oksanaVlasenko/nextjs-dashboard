@@ -5,5 +5,13 @@
   ],
   "rules": {
     "@typescript-eslint/no-explicit-any": "off"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["node_modules/**"],
+      "rules": {
+        "all": "off"
+      }
+    }
+  ]
 }
