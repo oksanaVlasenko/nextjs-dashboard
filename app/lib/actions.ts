@@ -262,27 +262,27 @@ export async function convertISO3toISO1(iso3: string) {
   return iso1?.alpha2 || null; 
 } 
 
-async function loadDictionary(langCode: string) {
-  const inDevEnvironment = !!process && process.env.NODE_ENV === 'development';
+// async function loadDictionary(langCode: string) {
+//   const inDevEnvironment = !!process && process.env.NODE_ENV === 'development';
 
-  console.log(inDevEnvironment , ' dev ene ')
-  try {
-    const baseUrl = !inDevEnvironment ?
-      process.env.NEXT_PUBLIC_SITE_URL : "http://localhost:3000"
+//   console.log(inDevEnvironment , ' dev ene ')
+//   try {
+//     const baseUrl = !inDevEnvironment ?
+//       process.env.NEXT_PUBLIC_SITE_URL : "http://localhost:3000"
 
-    const affRes = await fetch(`${baseUrl}/dictionaries/${langCode}/index.aff`);
-    const aff = await affRes.text(); 
+//     const affRes = await fetch(`${baseUrl}/dictionaries/${langCode}/index.aff`);
+//     const aff = await affRes.text(); 
 
-    const dicRes = await fetch(`${baseUrl}/dictionaries/${langCode}/index.dic`);
-    const dic = await dicRes.text();
+//     const dicRes = await fetch(`${baseUrl}/dictionaries/${langCode}/index.dic`);
+//     const dic = await dicRes.text();
 
-    const { default: Nspell } = await import("nspell");
-    return new Nspell(aff, dic);
-  } catch (error) {
-    console.error(`Словник для мови "${langCode}" не знайдено`, error);
-    return null;
-  }
-}
+//     const { default: Nspell } = await import("nspell");
+//     return new Nspell(aff, dic);
+//   } catch (error) {
+//     console.error(`Словник для мови "${langCode}" не знайдено`, error);
+//     return null;
+//   }
+// }
 
 
 export async function checkWord(word: string, langCode: string) {
