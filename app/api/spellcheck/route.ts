@@ -1,3 +1,7 @@
+export const config = {
+  runtime: 'nodejs', // Вимкнути Edge Runtime
+}
+
 import Nspell from "nspell";
 import fs from "fs";
 import path from "path";
@@ -9,7 +13,9 @@ export async function POST(req: any) {
 
   console.log(word, langCode)
   
-  const iso1 = isoCodes.find((codes: any) => codes['alpha3-b'] === langCode);
+  const iso1 = isoCodes.find((codes: any) => codes['alpha3-b'] === langCode)?.alpha2;
+
+  console.log(iso1, ' iso 1')
 
   if (!word) {
     return NextResponse.json({ error: "Word is required" }, { status: 400 });
