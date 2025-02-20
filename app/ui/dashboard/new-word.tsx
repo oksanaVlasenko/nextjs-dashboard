@@ -3,7 +3,8 @@
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 import Dropdown from "@/app/ui/dropdown";
-import { fetchCountriesByLanguage, checkWord } from "@/app/lib/actions";
+// checkWord
+import { fetchCountriesByLanguage } from "@/app/lib/actions";
 import { ArrowsRightLeftIcon, RocketLaunchIcon } from "@heroicons/react/24/outline";
 import { Button, WhiteButton } from "@/app/ui/button";
 
@@ -30,23 +31,24 @@ export default function AddWord() {
   const [selected, setSelected] = useState<string>("B2–Upper-Intermediate");
 
   const checkWordIsRight = async () => {
-    if (isWordCorrect) {
-      goToNextStep()
+    console.log(isWordCorrect, ' console test')
+    // if (isWordCorrect) {
+    //   goToNextStep()
 
-      return
-    }
+    //   return
+    // }
 
-    setIsCheckingWord(true)
-    const result = await checkWord(word, fromLang)
+    // setIsCheckingWord(true)
+    // const result = await checkWord(word, fromLang)
 
-    console.log(result)
-    if (result.correct.correct) {
-      goToNextStep()
-    }
+    // console.log(result)
+    // if (result.correct.correct) {
+    //   goToNextStep()
+    // }
 
-    setIsWordCorrect(result.correct.correct)
-    setSuggestions(result.suggestions)
-    setIsCheckingWord(false)
+    // setIsWordCorrect(result.correct.correct)
+    // setSuggestions(result.suggestions)
+    // setIsCheckingWord(false)
   }
 
   const handleWordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
