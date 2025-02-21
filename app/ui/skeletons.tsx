@@ -2,6 +2,9 @@
 const shimmer =
   'before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/60 before:to-transparent';
 
+const orangeShimmer =
+  'before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-orange-50/50 before:to-transparent';
+
 export function CardSkeleton() {
   return (
     <div
@@ -17,6 +20,8 @@ export function CardSkeleton() {
     </div>
   );
 }
+
+
 
 export function CardsSkeleton() {
   return (
@@ -57,6 +62,27 @@ export function InvoiceSkeleton() {
       <div className="mt-2 h-4 w-12 rounded-md bg-gray-200" />
     </div>
   );
+}
+
+export function DropdownSkeleton() {
+  return (
+    <div className={`${orangeShimmer} max-w-sm overflow-hidden bg-white relative w-full rounded-t-lg`}>
+      <div className="group relative block px-3.5 py-1.5  border rounded-t-lg cursor-pointer">
+        <div className="flex flex-wrap items-center justify-between -m-2">
+          <div className="w-auto p-2">
+
+          </div>
+          <div className="w-auto p-2">
+            <span className='inline-block transform rotate-0'>
+              <svg className="relative -top-px text-neutral-300 group-hover:text-neutral-400" width="16" height="23" viewBox="0 0 16 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12.6673 9.5L8.00065 14.1667L3.33398 9.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+              </svg>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
 }
 
 export function LatestInvoicesSkeleton() {
