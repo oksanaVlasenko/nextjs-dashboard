@@ -6,13 +6,11 @@ import Step1 from "@/app/ui/new-word/step1";
 import Step2 from "@/app/ui/new-word/step2";
 import Step3 from "@/app/ui/new-word/step3";
 import Step4 from "@/app/ui/new-word/step4";
+import Step5 from "@/app/ui/new-word/step5";
 
-export type WordData = {
-  fromLang: string;
-  toLang: string;
-  word: string;
-  selected: string;
-};
+import { useLanguages } from "@/app/lib/useLanguages";
+import { generateWordTranslation } from "@/app/lib/actions";
+import { Examples, TranslationData, WordData } from "@/app/lib/definitions";
 
 export default function AddWord() {
   const [activeStep, setActiveStep] = useState<number>(1)
@@ -21,11 +19,37 @@ export default function AddWord() {
     fromLang: 'eng',
     toLang: 'ukr',
     word: '',
-    selected: 'B2–Upper-Intermediate'
+    level: 'B2–Upper-Intermediate'
   });
+
+  const [translationData, setTranslationData] = useState<TranslationData>({
+    translation: '',
+    explanation: '',
+    transcription: '',
+    examples: {
+      example1: '',
+      example2: ''
+    }
+  })
+
+  const { langList } = useLanguages()
 
   const handleFormDataChange = (newData: Partial<typeof formData>) => {
     setFormData({ ...formData, ...newData });
+  };
+
+  const handleTranslationDataChange = (newData: Partial<typeof translationData>) => {
+    setTranslationData({ ...translationData, ...newData });
+  };
+
+  const handleExampleChange = (exampleKey: keyof Examples, value: string) => {
+    setTranslationData(prevState => ({
+      ...prevState,
+      examples: {
+        ...prevState.examples,
+        [exampleKey]: value, 
+      }
+    }));
   };
 
   const goToNextStep = () => {
@@ -38,12 +62,29 @@ export default function AddWord() {
     setDoneSteps(doneSteps.filter(i => i !== (activeStep - 1)))
   }
 
-  const saveData = () => {
-    goToNextStep() 
+  const saveData = async () => {
+    const updatedData = { 
+      ...formData, 
+      fromLang: langList?.find(l => l.id === formData.fromLang)?.label, 
+      toLang: langList?.find(l => l.id === formData.toLang)?.label
+    };
 
-    console.log(formData, ' all data')
-  }
+    const result = await generateWordTranslation(updatedData)
 
+    console.log(result, ' result front')
+
+    setTranslationData({
+      translation: result.translation,
+      explanation: result.explanation,
+      transcription: result.transcription,
+      examples: result.examples
+    })
+
+    goToNextStep()
+}
+
+
+      
   return (
     <section className="py-4 overflow-hidden">
       <div className="container px-4 mx-auto">
@@ -69,12 +110,23 @@ export default function AddWord() {
             data={formData}
             activeStep={activeStep}
             doneSteps={doneSteps}
-            onNextStep={goToNextStep}
+            onNextStep={saveData}
             onPreviousStep={goToPreviousStep}
             onChange={handleFormDataChange}
           />
-          
+
           <Step4 
+            data={formData}
+            translationData={translationData}
+            activeStep={activeStep}
+            doneSteps={doneSteps}
+            onNextStep={goToNextStep}
+            onExampleChange={handleExampleChange}
+            onPreviousStep={goToPreviousStep}
+            onTranslationChange={handleTranslationDataChange}
+          />
+          
+          <Step5
             activeStep={activeStep}
             doneSteps={doneSteps}
             onPreviousStep={goToPreviousStep}

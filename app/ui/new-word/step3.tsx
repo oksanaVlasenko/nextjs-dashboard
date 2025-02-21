@@ -1,6 +1,5 @@
 'use client'
 
-import { WordData } from '@/app/ui/dashboard/new-word'
 import { Button, WhiteButton } from "@/app/ui/button";
 
 import StepNumber from "@/app/ui/new-word/step-number";
@@ -8,6 +7,7 @@ import StepHeader from "@/app/ui/new-word/step-header";
 import clsx from 'clsx';
 import { useState } from 'react';
 import { checkWord } from '@/app/lib/actions';
+import { WordData } from "@/app/lib/definitions";
 
 export default function Step3({ data, activeStep, doneSteps, onChange, onNextStep, onPreviousStep }: { 
   data: WordData, 

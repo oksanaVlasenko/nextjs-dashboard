@@ -7,8 +7,8 @@ import { redirect } from 'next/navigation';
 import bcrypt from 'bcrypt';
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
-
 import { signOut } from "@/auth";
+import { TranslationData, WordData } from './definitions';
 
 export async function logout() {
   await signOut({ redirectTo: "/" });
@@ -255,56 +255,11 @@ export async function fetchCountriesByLanguage() {
   }
 };
 
-// export async function convertISO3toISO1(iso3: string) {
-//   const iso1 = isoCodes.find((codes: any) => codes['alpha3-b'] === iso3);
-
-//   return iso1?.alpha2 || null; 
-// } 
-
-// async function loadDictionary(langCode: string) {
-//   const inDevEnvironment = !!process && process.env.NODE_ENV === 'development';
-
-//   console.log(inDevEnvironment , ' dev ene ')
-//   try {
-//     const baseUrl = !inDevEnvironment ?
-//       process.env.NEXT_PUBLIC_SITE_URL : "http://localhost:3000"
-
-//     const affRes = await fetch(`${baseUrl}/dictionaries/${langCode}/index.aff`);
-//     const aff = await affRes.text(); 
-
-//     const dicRes = await fetch(`${baseUrl}/dictionaries/${langCode}/index.dic`);
-//     const dic = await dicRes.text();
-
-//     const { default: Nspell } = await import("nspell");
-//     return new Nspell(aff, dic);
-//   } catch (error) {
-//     console.error(`Словник для мови "${langCode}" не знайдено`, error);
-//     return null;
-//   }
-// }
-
-
 export async function checkWord(word: string, langCode: string) {
   const inDevEnvironment = !!process && process.env.NODE_ENV === 'development';
 
-  // const iso1Code = await convertISO3toISO1(langCode)
-
-  // console.log(iso1Code, ' iso code')
-  // const dict = await loadDictionary(iso1Code || 'en');
-  
-  // if (!dict) return { correct: false, suggestions: [] };
-
-  // const isCorrect = await dict.spell(word);
-  // const suggestions = isCorrect.correct ? [] : dict.suggest(word);
-
-  // return { correct: isCorrect, suggestions };
-  // const baseUrl =
-  //     process.env.NEXT_PUBLIC_SITE_URL || // Використовуємо URL з .env, якщо є
-  //     (typeof window !== "undefined" ? window.location.origin : "http://localhost:3000");
-const baseUrl = !inDevEnvironment ?
+  const baseUrl = !inDevEnvironment ?
       process.env.NEXT_PUBLIC_SITE_URL : "http://localhost:3000"
-
-      console.log(baseUrl, ' baser')
 
   const res = await fetch(`${baseUrl}/api/spellcheck`, {
       method: "POST",
@@ -312,9 +267,44 @@ const baseUrl = !inDevEnvironment ?
       body: JSON.stringify({ word, langCode }),
   });
 
-  console.log(res, ' rs')
-  //return res;
   const data = await res.json();
-  console.log(data, ' data')
+
   return data
+}
+
+export async function generateWordTranslation(formData: WordData): Promise<TranslationData> {
+  const inDevEnvironment = !!process && process.env.NODE_ENV === 'development';
+
+  const baseUrl = !inDevEnvironment ?
+      process.env.NEXT_PUBLIC_SITE_URL : "http://localhost:3000"
+
+  const res = await fetch(`${baseUrl}/api/google-generative`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(formData),
+  });
+
+  const data = await res.json();
+
+  let jsonObject: TranslationData = {
+    translation: '',
+    explanation: '',
+    transcription: '',
+    examples: {
+      example1: '',
+      example2: ''
+    }
+  }
+  
+  const match = data.result.match(/```json\n([\s\S]*?)\n```/);
+  
+  if (match) {
+    try {
+      jsonObject = JSON.parse(match[1]);
+    } catch (error) {
+      console.error("Помилка парсингу JSON:", error);
+    }
+  }
+
+  return jsonObject
 }

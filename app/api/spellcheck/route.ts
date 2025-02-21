@@ -1,5 +1,5 @@
 export const config = {
-  runtime: 'nodejs', // Вимкнути Edge Runtime
+  runtime: 'nodejs',
 }
 
 import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
@@ -18,12 +18,8 @@ const s3Client = new S3Client({
 
 export async function POST(req: Request) {
   const { word, langCode } = await req.json();
-
-  console.log(word, langCode)
   
   const iso1 = isoCodes.find((codes: any) => codes['alpha3-b'] === langCode)?.alpha2;
-
-  console.log(iso1, ' iso 1')
 
   if (!word) {
     return NextResponse.json({ error: "Word is required" }, { status: 400 });

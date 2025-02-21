@@ -3,12 +3,12 @@ import { useLanguages } from "@/app/lib/useLanguages";
 
 import { ArrowsRightLeftIcon } from "@heroicons/react/24/outline";
 
-import { WordData } from '@/app/ui/dashboard/new-word'
 import { DropdownSkeleton } from "@/app/ui/skeletons";
 import { Button } from "@/app/ui/button";
 import Dropdown from "@/app/ui/dropdown";
 import StepNumber from "@/app/ui/new-word/step-number";
 import StepHeader from "@/app/ui/new-word/step-header";
+import { WordData } from "@/app/lib/definitions";
 
 export default function Step1({ data, activeStep, doneSteps, onChange, onNextStep }: { 
   data: WordData, 

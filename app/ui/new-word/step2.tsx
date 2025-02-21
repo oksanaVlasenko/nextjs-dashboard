@@ -1,9 +1,9 @@
-import { WordData } from '@/app/ui/dashboard/new-word'
 import { Button, WhiteButton } from "@/app/ui/button";
 
 import StepNumber from "@/app/ui/new-word/step-number";
 import StepHeader from "@/app/ui/new-word/step-header";
 import Badge from './badge';
+import { WordData } from "@/app/lib/definitions";
 
 const options = [
   { id: "A1–Elementary", label: "A1 – Elementary" },
@@ -45,8 +45,8 @@ export default function Step2({ data, activeStep, doneSteps, onChange, onNextSte
                   <Badge 
                     key={option.id}
                     option={option}
-                    selected={data.selected}
-                    onSelect={(id) => onChange({ selected: id })}
+                    selected={data.level}
+                    onSelect={(id) => onChange({ level: id })}
                   />
                 ))}
               </div>
