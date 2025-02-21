@@ -9,9 +9,10 @@ import { useState } from 'react';
 import { checkWord } from '@/app/lib/actions';
 import { WordData } from "@/app/lib/definitions";
 
-export default function Step3({ data, activeStep, doneSteps, onChange, onNextStep, onPreviousStep }: { 
+export default function Step3({ data, activeStep, isGenerate, doneSteps, onChange, onNextStep, onPreviousStep }: { 
   data: WordData, 
   activeStep: number,
+  isGenerate: boolean,
   doneSteps: number[],
   onNextStep: () => void,
   onPreviousStep: () => void,
@@ -126,7 +127,7 @@ export default function Step3({ data, activeStep, doneSteps, onChange, onNextSte
                     disabled={suggestions.length > 0}
                     className={clsx(
                       {
-                        'pending-animation-white': isCheckingWord,
+                        'pending-animation-white': isCheckingWord || isGenerate,
                         'pointer-events-none opacity-30': suggestions.length > 0
                       }
                     )}

@@ -5,6 +5,8 @@ import StepHeader from "@/app/ui/new-word/step-header";
 import clsx from 'clsx';
 import { SpeakerWaveIcon } from '@heroicons/react/24/outline';
 import { Examples, TranslationData, WordData } from "@/app/lib/definitions";
+import { useLanguages } from "@/app/lib/useLanguages";
+import { convertISO3toISO1 } from "@/app/lib/actions";
 
 export default function Step4({ data, translationData, activeStep, doneSteps, onTranslationChange, onExampleChange, onNextStep, onPreviousStep }: { 
   data: WordData, 
@@ -15,7 +17,17 @@ export default function Step4({ data, translationData, activeStep, doneSteps, on
   onPreviousStep: () => void,
   onExampleChange: (exampleKey: keyof Examples, value: string) => void,
   onTranslationChange: (newData: Partial<TranslationData>) => void 
-}) {
+}) {  
+  const speakText = async () => {
+    const iso1 = await convertISO3toISO1(data.fromLang)
+    const message = new SpeechSynthesisUtterance(data.word);
+    message.lang = iso1 || "en";
+    
+    const voices = speechSynthesis.getVoices().filter(voice => voice.lang === iso1);
+    message.voice = voices[0];
+
+    speechSynthesis.speak(message);
+  };
 
   return (
     <div className="flex flex-wrap -m-2">
@@ -68,7 +80,10 @@ export default function Step4({ data, translationData, activeStep, doneSteps, on
                 <div className="w-full flex items-center max-w-sm sm:flex-1 pb-6">
                   <p>{translationData.transcription}</p>
 
-                  <SpeakerWaveIcon className="'w-5 h-5 text-neutral-900 sm:mx-4 peer-focus:text-gray-900'"/>
+                  <SpeakerWaveIcon 
+                    className="'w-5 h-5 cursor-pointer text-neutral-900 sm:mx-4 peer-focus:text-gray-900'"
+                    onClick={speakText}
+                  />
                 </div>
 
                 

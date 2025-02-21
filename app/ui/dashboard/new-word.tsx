@@ -15,6 +15,7 @@ import { Examples, TranslationData, WordData } from "@/app/lib/definitions";
 export default function AddWord() {
   const [activeStep, setActiveStep] = useState<number>(1)
   const [doneSteps, setDoneSteps] = useState<number[]>([])
+  const [isGenerate, setIsGenerate] = useState<boolean>(false)
   const [formData, setFormData] = useState<WordData>({
     fromLang: 'eng',
     toLang: 'ukr',
@@ -62,7 +63,9 @@ export default function AddWord() {
     setDoneSteps(doneSteps.filter(i => i !== (activeStep - 1)))
   }
 
-  const saveData = async () => {
+  const getTranslation = async () => {
+    setIsGenerate(true)
+
     const updatedData = { 
       ...formData, 
       fromLang: langList?.find(l => l.id === formData.fromLang)?.label, 
@@ -81,9 +84,13 @@ export default function AddWord() {
     })
 
     goToNextStep()
-}
+    setIsGenerate(false)
+  }
 
-
+  const saveWord = () => {
+    setDoneSteps([...doneSteps, activeStep])
+    console.log(translationData, ' transl ')
+  }
       
   return (
     <section className="py-4 overflow-hidden">
@@ -109,8 +116,9 @@ export default function AddWord() {
           <Step3 
             data={formData}
             activeStep={activeStep}
+            isGenerate={isGenerate}
             doneSteps={doneSteps}
-            onNextStep={saveData}
+            onNextStep={getTranslation}
             onPreviousStep={goToPreviousStep}
             onChange={handleFormDataChange}
           />
@@ -130,7 +138,7 @@ export default function AddWord() {
             activeStep={activeStep}
             doneSteps={doneSteps}
             onPreviousStep={goToPreviousStep}
-            onSave={saveData}
+            onSave={saveWord}
           />
         </div>
       </div>

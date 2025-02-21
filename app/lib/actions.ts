@@ -9,6 +9,7 @@ import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 import { signOut } from "@/auth";
 import { TranslationData, WordData } from './definitions';
+import isoCodes from './languages-code-list.json'
 
 export async function logout() {
   await signOut({ redirectTo: "/" });
@@ -204,6 +205,11 @@ export async function updateInvoice(
 export async function deleteInvoice(id: string) {  
   await sql`DELETE FROM invoices WHERE id = ${id}`;
   revalidatePath('/dashboard/invoices');
+}
+
+export async function convertISO3toISO1(iso3: string): Promise<string | null> {
+  const iso1 =  isoCodes.find((codes: any) => codes['alpha3-b'] === iso3)?.alpha2;
+  return iso1 || null; 
 }
 
 export async function fetchCountriesByLanguage() {

@@ -15,7 +15,7 @@ export async function POST(req: Request) {
     const prompt = `Translate the word ${word} from ${fromLang} language to ${toLang} language. 
       Create two sentences with  ${word} word for ${level} level in english. 
       Add transcription for the word ${word}
-      Add explanation for B2 level in ${fromLang} language. 
+      Add explanation for ${word} word in ${level} level in ${fromLang} language. 
       Return answer in structure {translation: '', examples: {
       example1: '',
       example2: ''
