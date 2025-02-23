@@ -6,12 +6,12 @@ import Badge from './badge';
 import { WordData } from "@/app/lib/definitions";
 
 const options = [
-  { id: "A1–Elementary", label: "A1 – Elementary" },
-  { id: "A2–Pre-Intermediate", label: "A2 – Pre-Intermediate" },
-  { id: "B1–Intermediate", label: "B1 – Intermediate" },
-  { id: "B2–Upper-Intermediate", label: "B2 – Upper-Intermediate" },
-  { id: "C1–Advanced ", label: "C1 – Advanced" },
-  { id: "C2–Proficient", label: "C2 – Proficient" },
+  { id: "A1", label: "A1 – Elementary" },
+  { id: "A2", label: "A2 – Pre-Intermediate" },
+  { id: "B1", label: "B1 – Intermediate" },
+  { id: "B2", label: "B2 – Upper-Intermediate" },
+  { id: "C1", label: "C1 – Advanced" },
+  { id: "C2", label: "C2 – Proficient" },
 ];
 
 export default function Step2({ data, activeStep, doneSteps, onChange, onNextStep, onPreviousStep }: { 

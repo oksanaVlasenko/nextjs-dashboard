@@ -1,4 +1,16 @@
+import { convertISO3toISO1 } from './actions';
 import { Revenue } from './definitions';
+
+export const speakText = async (fromLang: string, word: string) => {
+  const iso1 = await convertISO3toISO1(fromLang)
+  const message = new SpeechSynthesisUtterance(word);
+  message.lang = iso1 || "en";
+  
+  const voices = speechSynthesis.getVoices().filter(voice => voice.lang === iso1);
+  message.voice = voices[0];
+
+  speechSynthesis.speak(message);
+}
 
 export const formatCurrency = (amount: number) => {
   return (amount / 100).toLocaleString('en-US', {

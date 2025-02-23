@@ -67,7 +67,7 @@ export async function POST(req: Request) {
     const dict = new Nspell(aff, dic);
 
     if (!dict) {
-      return NextResponse.json({ correct: false, suggestions: [] });
+      return NextResponse.json({ correct: true, suggestions: [] });
     }
 
     const isCorrect = dict.correct(word);

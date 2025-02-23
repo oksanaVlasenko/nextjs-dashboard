@@ -14,7 +14,7 @@ export default async function SignInGoogle() {
         await signIn("google")
       }}
     >
-      <WhiteButton className="w-full justify-center ">
+      <WhiteButton className="w-full justify-center mb-6">
         <GoogleLogo className="mr-6 h-8" /> Continue with Google 
       </WhiteButton>
     </form>

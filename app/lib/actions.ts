@@ -10,6 +10,8 @@ import { AuthError } from 'next-auth';
 import { signOut } from "@/auth";
 import { TranslationData, WordData } from './definitions';
 import isoCodes from './languages-code-list.json'
+import { prisma } from "@/prisma"
+import { Level, LearningProgress } from "@prisma/client";
 
 export async function logout() {
   await signOut({ redirectTo: "/" });
@@ -313,4 +315,65 @@ export async function generateWordTranslation(formData: WordData): Promise<Trans
   }
 
   return jsonObject
+}
+
+export async function createWordAction(wordData: {
+  userId: string;
+  word: string;
+  translation: string;
+  explanation: string;
+  transcription: string;
+  languageFrom: string;
+  languageTo: string;
+  level: Level;
+  learningProgress: LearningProgress;
+  examples: object;
+}) {
+  try {
+    await prisma.word.create({
+      data: { 
+        ...wordData 
+      },
+    });
+
+    //return { success: true, word: newWord };
+  } catch (error) {
+    console.error("Error adding word:", error);
+    return { success: false, error: "Failed to add word" };
+  }
+
+  revalidatePath('/dashboard');  
+  redirect('/dashboard'); 
+}
+
+const getProgressByLevel = (level: LearningProgress): number => {
+  switch (level) {
+    case LearningProgress.NOT_STARTED:
+      return 0;
+    case LearningProgress.IN_PROGRESS:
+      return Math.floor(Math.random() * (80 - 1 + 1)) + 1;  // Випадкове значення між 1 і 80
+    case LearningProgress.COMPLETED:
+      return Math.floor(Math.random() * (100 - 81 + 1)) + 81; // Випадкове значення між 81 і 100
+    default:
+      return 0;
+  }
+};
+
+export async function getUserWords(userId: string) {
+  try {
+    const words = await prisma.word.findMany({
+      where: {
+        userId: userId 
+      }
+    });
+
+    return words.map((word) => ({
+      ...word,
+      progress: getProgressByLevel(word.learningProgress),
+      selected: false  
+    }));
+  } catch (error) {
+    console.error('Error fetching user words:', error);
+    throw new Error('Failed to fetch user words');
+  }
 }

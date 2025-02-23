@@ -1,6 +1,9 @@
 // This file contains type definitions for your data.
 // It describes the shape of the data, and what data type each property should accept.
 // For simplicity of teaching, we're manually defining these types.
+
+import { Word } from "@prisma/client";
+
 // However, these types are generated automatically if you're using an ORM such as Prisma.
 export type WordData = {
   fromLang: string;
@@ -8,6 +11,11 @@ export type WordData = {
   word: string;
   level: string;
 };
+
+export interface AdvancedWord extends Word {
+  progress: number,
+  selected: boolean
+}
 
 export type Examples = {
   example1: string;

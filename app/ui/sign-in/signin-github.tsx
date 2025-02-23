@@ -11,7 +11,7 @@ export default function SignInGithub() {
         await signIn("github")
       }}
     >
-      <WhiteButton className="w-full justify-center ">
+      <WhiteButton className="w-full justify-center mb-6">
         <GithubLogo className="mr-6 h-8" /> Continue with GitHub
       </WhiteButton>
     </form>

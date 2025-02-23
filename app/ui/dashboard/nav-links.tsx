@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  PencilIcon,
   UserGroupIcon,
   HomeIcon,
   DocumentDuplicateIcon,
@@ -12,8 +13,9 @@ import clsx from 'clsx';
 // Map of links to display in the side navigation.
 // Depending on the size of the application, this would be stored in a database.
 const links = [
-  { name: 'New', href: '/new-login', icon: HomeIcon },
+  
   { name: 'Home', href: '/dashboard', icon: HomeIcon },
+  { name: 'Add word', href: '/dashboard/add-word', icon: PencilIcon },
   {
     name: 'Invoices',
     href: '/dashboard/invoices',

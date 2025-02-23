@@ -3,14 +3,14 @@ import AddWord from "@/app/ui/dashboard/new-word";
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Dashboard',
+  title: 'Add word',
 };
 
-export default function NewLogin() {
+export default async function Page() {
   return (
     <>
       <Header />
-
+      
       <AddWord />
     </>
   )

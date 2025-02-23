@@ -11,7 +11,7 @@ export default function SignInDiscord() {
         await signIn("discord")
       }}
     >
-      <WhiteButton className="w-full justify-center">
+      <WhiteButton className="w-full justify-center mb-6">
         <DiscordLogo className="mr-6 h-8"/> Continue with Discord
       </WhiteButton>
     </form>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 
 import Step1 from "@/app/ui/new-word/step1";
 import Step2 from "@/app/ui/new-word/step2";
@@ -9,8 +10,9 @@ import Step4 from "@/app/ui/new-word/step4";
 import Step5 from "@/app/ui/new-word/step5";
 
 import { useLanguages } from "@/app/lib/useLanguages";
-import { generateWordTranslation } from "@/app/lib/actions";
+import { createWordAction, generateWordTranslation } from "@/app/lib/actions";
 import { Examples, TranslationData, WordData } from "@/app/lib/definitions";
+import { Level, LearningProgress } from "@prisma/client";
 
 export default function AddWord() {
   const [activeStep, setActiveStep] = useState<number>(1)
@@ -20,7 +22,7 @@ export default function AddWord() {
     fromLang: 'eng',
     toLang: 'ukr',
     word: '',
-    level: 'B2–Upper-Intermediate'
+    level: 'B2'
   });
 
   const [translationData, setTranslationData] = useState<TranslationData>({
@@ -33,6 +35,7 @@ export default function AddWord() {
     }
   })
 
+  const { data: session, status } = useSession();
   const { langList } = useLanguages()
 
   const handleFormDataChange = (newData: Partial<typeof formData>) => {
@@ -87,9 +90,25 @@ export default function AddWord() {
     setIsGenerate(false)
   }
 
-  const saveWord = () => {
+  const saveWord = async () => {
     setDoneSteps([...doneSteps, activeStep])
-    console.log(translationData, ' transl ')
+
+    const wordData = {
+      userId: session?.user?.id!,
+      word: formData.word,
+      translation: translationData.translation,
+      explanation: translationData.explanation,
+      transcription: translationData.transcription,
+      languageFrom: formData.fromLang,
+      languageTo: formData.toLang,
+      level: formData.level as Level,
+      learningProgress: 'NOT_STARTED' as LearningProgress,
+      examples: translationData.examples
+    }
+
+    const newWord = await createWordAction(wordData)
+
+    console.log(newWord, ' result of savinf')
   }
       
   return (

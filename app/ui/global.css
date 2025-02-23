@@ -134,3 +134,19 @@ input[type='number']::-webkit-outer-spin-button {
   scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
 }
 
+.custom-line-clamp {
+  width: auto;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+.tooltip-line-clamp {
+  width: auto;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 10;
+  overflow: hidden;
+}
+

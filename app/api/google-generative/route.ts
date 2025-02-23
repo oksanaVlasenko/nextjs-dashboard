@@ -13,9 +13,9 @@ export async function POST(req: Request) {
     const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
     const prompt = `Translate the word ${word} from ${fromLang} language to ${toLang} language. 
-      Create two sentences with  ${word} word for ${level} level in english. 
+      Create two sentences as example of usage ${word} word for ${level} level in english. 
       Add transcription for the word ${word}
-      Add explanation for ${word} word in ${level} level in ${fromLang} language. 
+      Add explanation for ${word} word in ${level} level in ${fromLang} language from Cambridge dictionary. 
       Return answer in structure {translation: '', examples: {
       example1: '',
       example2: ''
