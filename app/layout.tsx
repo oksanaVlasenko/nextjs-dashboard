@@ -2,7 +2,7 @@ import '@/app/ui/global.css';
 import { inter } from '@/app/ui/fonts';
 import { Metadata } from 'next';
 import { NextAuthSessionProvider } from './auth-provider'
-import { auth } from '@/auth';
+import { getSession } from '@/app/lib/auth';
 
 export const metadata: Metadata = {
   title: {
@@ -18,7 +18,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await auth()
+  const session = await getSession() 
 
   return (
     <html lang="en">

@@ -1,7 +1,7 @@
 "use client";
 
 import clsx from "clsx";
-import { SpeakerButton } from "./buttons";
+import { DeleteWord, SpeakerButton } from "./buttons";
 import { AdvancedWord } from "@/app/lib/definitions";
 
 export default function TableRow({ word, ind }: { word: AdvancedWord, ind: number }) {
@@ -85,9 +85,10 @@ export default function TableRow({ word, ind }: { word: AdvancedWord, ind: numbe
               </div>
               <span className="block mt-2 text-sm text-darkBlueGray-400 font-heading">{word.progress}%</span>
             </div>
-            <a className="inline-block" href="#">
-              <svg width="13" height="3" viewBox="0 0 13 3" fill="none" xmlns="http://www.w3.org/2000/svg"><circle opacity="0.8" cx="1.5" cy="1.5" r="1.5" fill="#faaf7e"></circle><circle opacity="0.8" cx="6.5" cy="1.5" r="1.5" fill="#faaf7e"></circle><circle opacity="0.8" cx="11.5" cy="1.5" r="1.5" fill="#faaf7e"></circle></svg>
-            </a>
+
+            <DeleteWord 
+              id={word.id}
+            />
           </div>
         </td>
       </tr>

@@ -317,6 +317,16 @@ export async function generateWordTranslation(formData: WordData): Promise<Trans
   return jsonObject
 }
 
+export async function deleteWordAction(wordId: string) {
+  await prisma.word.delete({
+    where: {
+      id: wordId,
+    },
+  });
+
+  revalidatePath('/dashboard');
+}
+
 export async function createWordAction(wordData: {
   userId: string;
   word: string;
@@ -359,19 +369,72 @@ const getProgressByLevel = (level: LearningProgress): number => {
   }
 };
 
-export async function getUserWords(userId: string) {
+const ITEMS_PER_PAGE = 5;
+
+export async function getWordsTotalPages(query:string, userId: string) {
+  const totalWords = await prisma.word.count({
+    where: {
+      userId,
+      word: {
+        contains: query, 
+        mode: "insensitive", 
+      }
+    }
+  });
+
+  const totalPages = Math.ceil(totalWords / ITEMS_PER_PAGE);
+
+  return totalPages
+}
+
+export async function getUserWords({
+  userId,
+  page = 1,
+  search = ""
+
+}: {
+  userId: string;
+  page?: number;
+  search?: string;
+}) {
   try {
+
+    const totalWords = await prisma.word.count({
+      where: {
+        userId,
+        word: {
+          contains: search, 
+          mode: "insensitive", 
+        }
+      }
+    });
+  
+    const totalPages = Math.ceil(totalWords / ITEMS_PER_PAGE);
+
     const words = await prisma.word.findMany({
       where: {
-        userId: userId 
+        userId: userId, 
+        word: {
+          contains: search,
+          mode: "insensitive",
+        }
+      },
+      take: ITEMS_PER_PAGE, 
+      skip: (page - 1) * ITEMS_PER_PAGE, 
+      orderBy: {
+        createdAt: "desc", 
       }
     });
 
-    return words.map((word) => ({
+    let updatedWords =  words.map((word) => ({
       ...word,
       progress: getProgressByLevel(word.learningProgress),
       selected: false  
     }));
+
+    return {
+      updatedWords, totalPages, totalWords
+    }
   } catch (error) {
     console.error('Error fetching user words:', error);
     throw new Error('Failed to fetch user words');

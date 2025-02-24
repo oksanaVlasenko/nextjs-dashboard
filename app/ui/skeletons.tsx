@@ -128,6 +128,94 @@ export default function DashboardSkeleton() {
   );
 }
 
+export function TableWordRowSkeleton() {
+  return (
+    <tr className={`inline-flex flex-col md:table-row`}>
+      <td className="p-0">
+        <div 
+          className='flex items-center pl-9 p-5 h-20 min-w-max bg-gray-50 border-l border-t border-b border-gray-100 rounded-bl-xl rounded-tl-xl'
+        >
+
+          {/* <input className="border border-gray-200 focus:outline-0 focus:ring-offset-0 focus:ring-0 !focus:shadow-none focus:ring-transparent focus:ring-opacity-0 w-6 h-6 mr-9 text-orange-500 rounded-md" type="checkbox"/> */}
+          <div className="flex items-center justify-start">
+            <div>
+              <div className="flex items-center flex-row font-heading font-medium"></div>
+            </div>
+          </div>
+        </div>
+      </td>
+      <td className="p-0">
+        <div 
+          className='flex flex-col items-start justify-center p-5 h-20 text-center min-w-max bg-gray-50 border-t border-b border-gray-100'
+        >
+          <span className="font-heading font-medium custom-line-clamp cursor-pointer"></span>
+
+          <div className="absolute left-1/2 -translate-x-1/2 whitespace-normal break-words top-full z-40 mt-2 w-full text-sm text-white bg-gray-900 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        </div>
+      </td>
+      <td className="p-0">
+        <div 
+          className='flex flex-col items-start justify-center p-5 h-20 text-center min-w-max bg-gray-50 border-t border-b border-gray-100'
+        >
+          <span className="font-heading font-medium"></span>
+          <span className="text-sm text-darkBlueGray-400 font-heading"></span>
+        </div>
+      </td>
+      <td className="p-0">
+        <div 
+          className='flex items-center w-full p-5 pr-12 h-20 min-w-max bg-gray-50 border-t border-b border-r border-gray-100 rounded-br-xl rounded-tr-xl'
+        >
+          <div className="flex-1 pr-20">
+            <div className="relative w-full h-1 bg-orange-100 rounded-sm">
+              <div className={`absolute top-0 left-0 w-[15%]  h-full bg-orange-300 rounded-sm`}></div>
+            </div>
+            <span className="block mt-2 text-sm text-darkBlueGray-400 font-heading"></span>
+          </div>
+        </div>
+      </td>
+    </tr>
+  )
+}
+
+export function TableWordsSkeleton() {
+  return (
+    <>
+      <div className={`container px-4 mx-auto`}>
+        <div className="2xl:h-full bg-white rounded-3xl">
+          <div className="overflow-x-auto">
+            <div className="inline-block min-w-full overflow-hidden">
+              <table className={`table-auto w-full mb-8`}>
+                <thead>
+                  <tr className="hidden md:table-row">
+                    <th className="flex items-center pl-9 h-20 bg-white text-left">
+                      <span className="text-sm text-body text-opacity-40 font-heading font-semibold uppercase">Word</span>
+                    </th>
+                    <th className="p-5  h-20 text-left bg-white">
+                      <span className="text-sm text-body text-opacity-40 font-heading font-semibold uppercase">Explanation</span>
+                    </th>
+                    <th className="p-5  h-20 text-left bg-white">
+                      <span className="text-sm text-body text-opacity-40 font-heading font-semibold uppercase">Translation</span>
+                    </th>
+                    <th className="p-5 h-20 bg-white text-left">
+                      <span className="text-sm text-body text-opacity-40 font-heading font-semibold uppercase">Progress</span>
+                    </th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <TableWordRowSkeleton />
+                  <TableWordRowSkeleton />
+                  <TableWordRowSkeleton />
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  )
+}
+
 export function TableRowSkeleton() {
   return (
     <tr className="w-full border-b border-gray-100 last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg">

@@ -23,7 +23,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
   }, 300)
 
   return (
-    <div className="flex w-full items-center lg:w-auto py-1 px-4 mb-0 md:mb-0 md:mr-4 md:ml-auto border rounded bg-white">
+    <div className="flex w-full container items-center lg:w-auto py-1 px-4 mb-0 md:mb-0 border rounded bg-white">
       <label htmlFor="search" className="sr-only">
         Search
       </label>

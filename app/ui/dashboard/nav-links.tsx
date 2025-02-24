@@ -16,11 +16,7 @@ const links = [
   
   { name: 'Home', href: '/dashboard', icon: HomeIcon },
   { name: 'Add word', href: '/dashboard/add-word', icon: PencilIcon },
-  {
-    name: 'Invoices',
-    href: '/dashboard/invoices',
-    icon: DocumentDuplicateIcon,
-  },
+  { name: 'Invoices', href: '/dashboard/invoices', icon: DocumentDuplicateIcon },
   { name: 'Customers', href: '/dashboard/customers', icon: UserGroupIcon },
 ];
 
