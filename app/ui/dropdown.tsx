@@ -70,7 +70,7 @@ export default function Dropdown({
                       src={selectedFlag}
                       width={20}
                       height={20}
-                      priority={true}
+                      unoptimized
                       className="w-5 h-5 rounded-full"
                       alt="Flag Icon"
                     />
@@ -157,7 +157,7 @@ export default function Dropdown({
                             src={option.flag}
                             width={20}
                             height={20}
-                            priority={true}
+                            unoptimized
                             className="w-5 h-5 rounded-full"
                             alt="Flag Icon"
                           />
