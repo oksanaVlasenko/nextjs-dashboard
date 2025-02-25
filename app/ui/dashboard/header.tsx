@@ -1,4 +1,3 @@
-import { WhiteButton } from "@/app/ui/button";
 import UserCard from "@/app/ui/dashboard/user";
 import Search from "@/app/ui/search";
 import Link from "next/link";

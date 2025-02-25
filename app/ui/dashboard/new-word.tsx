@@ -35,7 +35,7 @@ export default function AddWord() {
     }
   })
 
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const { langList } = useLanguages()
 
   const handleFormDataChange = (newData: Partial<typeof formData>) => {
@@ -77,8 +77,6 @@ export default function AddWord() {
 
     const result = await generateWordTranslation(updatedData)
 
-    console.log(result, ' result front')
-
     setTranslationData({
       translation: result.translation,
       explanation: result.explanation,
@@ -106,7 +104,7 @@ export default function AddWord() {
       examples: translationData.examples
     }
 
-    const newWord = await createWordAction(wordData)
+    await createWordAction(wordData)
   }
       
   return (

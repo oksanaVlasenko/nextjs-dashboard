@@ -23,7 +23,7 @@ export function SpeakerButton({ word, language }: SpeakerButtonProps) {
   );
 }
 
-export function SelectAllWords({ words }: { words: AdvancedWord[] }) {
+export function SelectAllWords() {
   return (
     <div className="flex items-center pl-9 h-20 bg-white text-left">
       <input className="border border-gray-200 focus:outline-0 focus:ring-offset-0 focus:ring-0 !focus:shadow-none focus:ring-transparent focus:ring-opacity-0 w-6 h-6 mr-9 text-orange-500 rounded-md" type="checkbox"/>

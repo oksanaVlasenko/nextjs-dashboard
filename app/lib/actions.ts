@@ -426,7 +426,7 @@ export async function getUserWords({
       }
     });
 
-    let updatedWords =  words.map((word) => ({
+    const updatedWords =  words.map((word) => ({
       ...word,
       progress: getProgressByLevel(word.learningProgress),
       selected: false  

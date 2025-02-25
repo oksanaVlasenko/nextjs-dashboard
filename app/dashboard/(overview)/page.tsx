@@ -33,7 +33,6 @@ export default async function Page(props: {
           {/* <p className="text-darkBlueGray-400 font-heading font-normal">List of recent words.</p> */}
         </div>
         {/* <div className="w-full md:w-1/2 md:hidden  mb-6 max-w-max md:ml-auto">
-          <SelectAllWords words={userWords} />
         </div> */}
       </div>
 

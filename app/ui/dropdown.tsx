@@ -3,6 +3,7 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import { useRef, useState } from "react"
+import Image from 'next/image';
 
 interface Option {
   label: string;
@@ -65,10 +66,19 @@ export default function Dropdown({
                 {
                   selectedFlag && 
                   <div className="w-auto p-2">
-                    <img src={selectedFlag} alt="Flag icon" className="w-5 h-5 rounded-full" />
+                    <Image
+                      src={selectedFlag}
+                      width={20}
+                      height={20}
+                      priority={true}
+                      className="w-5 h-5 rounded-full"
+                      alt="Flag Icon"
+                    />
                   </div>
                 }
+
                 <span className="font-heading mb-0.5 text-sm font-medium">{selectedName}</span>
+
                 <button onClick={handleClear} className="text-sm text-neutral-500">
                   <svg
                     className="h-4 w-4"
@@ -143,7 +153,14 @@ export default function Dropdown({
                       {
                         option.flag && 
                         <div className="w-auto p-2">
-                          <img src={option.flag} alt="Flag icon" className="w-5 h-5 rounded-full" />
+                          <Image
+                            src={option.flag}
+                            width={20}
+                            height={20}
+                            priority={true}
+                            className="w-5 h-5 rounded-full"
+                            alt="Flag Icon"
+                          />
                         </div>
                       }
                       

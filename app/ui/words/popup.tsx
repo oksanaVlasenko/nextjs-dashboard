@@ -12,9 +12,7 @@ export default function Popup() {
             <div className="w-auto p-2"><a className="inline-block px-14 py-4 font-medium tracking-2xl border-2 border-green-400 bg-green-400 hover:bg-green-500 text-black focus:ring-4 focus:ring-green-500 focus:ring-opacity-40 rounded-full transition duration-300" href="#">Confirm</a></div>
           </div>
           {/* x-on:click.prevent="modal = false"  */}
-          <a className="absolute top-6 right-6" href="#">
-            <img src="nightsable-assets/images/modals/close-icon.png"/>
-          </a>
+          <a className="absolute top-6 right-6" href="#">+</a>
         </div>
       </div>
     </section>
