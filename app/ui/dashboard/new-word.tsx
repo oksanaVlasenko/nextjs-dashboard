@@ -107,8 +107,6 @@ export default function AddWord() {
     }
 
     const newWord = await createWordAction(wordData)
-
-    console.log(newWord, ' result of savinf')
   }
       
   return (

@@ -12,7 +12,9 @@ export const authConfig = {
     authorized({ auth, request: { nextUrl } }) {
       console.log(auth, ' auth')
       const isLoggedIn = !!auth?.user;
-      const isOnDashboard = nextUrl.pathname.startsWith('/dashboard');
+      const protectedPaths = ['/dashboard', '/learning', '/settings']
+
+      const isOnDashboard = protectedPaths.some(p => nextUrl.pathname.startsWith(p))
       
       if (isOnDashboard) {
         if (isLoggedIn) return true;
