@@ -36,6 +36,8 @@ export default function AddWord() {
   })
 
   const { data: session } = useSession();
+  const userId = session?.user?.id ?? '';
+
   const { langList } = useLanguages()
 
   const handleFormDataChange = (newData: Partial<typeof formData>) => {
@@ -92,7 +94,7 @@ export default function AddWord() {
     setDoneSteps([...doneSteps, activeStep])
 
     const wordData = {
-      userId: session?.user?.id!,
+      userId,
       word: formData.word,
       translation: translationData.translation,
       explanation: translationData.explanation,

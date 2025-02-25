@@ -10,9 +10,10 @@ export default async function WordsTable({
   currentPage: number;
 }) {
   const session = await getSession() 
+  const userId = session?.user?.id ?? '';
 
   const result = await getUserWords({
-    userId: session?.user?.id!,
+    userId,
     page: currentPage,
     search: query
   });

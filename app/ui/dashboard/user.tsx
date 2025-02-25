@@ -8,7 +8,6 @@ import clsx from "clsx";
 export default function UserCard({className, mobile}: {className?: string, mobile?: boolean}) {
   const { data: session, status } = useSession();
 
-   console.log(session?.user, ' usrs')
   if (status === "loading") return <p>Loading...</p>;
   if (!session) return <p>Please sign in</p>;
 

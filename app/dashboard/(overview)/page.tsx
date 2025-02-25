@@ -18,10 +18,12 @@ export default async function Page(props: {
   }>;
 }) {
   const session = await getSession() 
+  const userId = session?.user?.id ?? '';
+
   const searchParams = await props.searchParams;
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
-  const totalPages = await getWordsTotalPages(query, session?.user?.id!);
+  const totalPages = await getWordsTotalPages(query, userId);
 
   return (
     <>

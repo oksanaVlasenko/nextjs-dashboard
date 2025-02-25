@@ -10,9 +10,9 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   const session = await getSession() 
-  
+  const userId = session?.user?.id ?? '';
   const result = await getUserWords({
-    userId: session?.user?.id!
+    userId
   });
 
   const userWords = result.updatedWords

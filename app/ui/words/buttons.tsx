@@ -2,7 +2,6 @@
 
 import { speakText } from '@/app/lib/utils';
 import { PencilIcon, SpeakerWaveIcon, TrashIcon } from '@heroicons/react/24/outline';
-import { AdvancedWord } from "@/app/lib/definitions";
 import { useState } from 'react';
 import { deleteWordAction } from '@/app/lib/actions';
 
