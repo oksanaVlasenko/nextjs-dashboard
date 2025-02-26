@@ -2,11 +2,15 @@
 
 import { LightBulbIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
-import { Button } from '../button';
+import { Button } from '@/app/ui/button';
 import { AdvancedWord } from '@/app/lib/definitions';
-import { SpeakerButton } from '../words/buttons';
+import { SpeakerButton } from '@/app/ui/words/buttons';
 
-export default function FlipCard({ word, onDontKnow }: {word: AdvancedWord, onDontKnow: () => void}) {
+export default function FlipCard({ word, onDontKnow, onKnow }: {
+  word: AdvancedWord, 
+  onDontKnow: () => void, 
+  onKnow: () => void
+}) {
   const [flipped, setFlipped] = useState<boolean>(false);
   const [showTip, setShowTip] = useState<boolean>(false)
 
@@ -66,7 +70,7 @@ export default function FlipCard({ word, onDontKnow }: {word: AdvancedWord, onDo
               className='px-2 py-3 text-sm'
               onClick={(e) => {
                 e.stopPropagation()
-                onDontKnow()
+                onKnow()
               }}
             >
               Know

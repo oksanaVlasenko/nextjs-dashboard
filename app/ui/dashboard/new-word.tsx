@@ -103,7 +103,8 @@ export default function AddWord() {
       languageTo: formData.toLang,
       level: formData.level as Level,
       learningProgress: 'NOT_STARTED' as LearningProgress,
-      examples: translationData.examples
+      examples: translationData.examples,
+      progress: 0
     }
 
     await createWordAction(wordData)

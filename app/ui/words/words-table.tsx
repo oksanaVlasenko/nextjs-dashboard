@@ -1,24 +1,11 @@
-import { getUserWords } from "@/app/lib/actions";
 import TableRow from "./table-row";
-import { getSession } from "@/app/lib/auth";
+import { AdvancedWord } from "@/app/lib/definitions";
 
 export default async function WordsTable({
-  query,
-  currentPage,
+  userWords
 }: {
-  query: string;
-  currentPage: number;
+  userWords: AdvancedWord[]
 }) {
-  const session = await getSession() 
-  const userId = session?.user?.id ?? '';
-
-  const result = await getUserWords({
-    userId,
-    page: currentPage,
-    search: query
-  });
-
-  const userWords = result.updatedWords
 
   return (
     <section className="py-8 bg-blueGray-50" >

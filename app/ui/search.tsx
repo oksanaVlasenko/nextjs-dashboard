@@ -3,8 +3,9 @@
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { useDebouncedCallback } from 'use-debounce';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
+import clsx from 'clsx';
 
-export default function Search({ placeholder }: { placeholder: string }) {
+export default function Search({ placeholder, className }: { placeholder: string, className?: string }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -23,7 +24,12 @@ export default function Search({ placeholder }: { placeholder: string }) {
   }, 300)
 
   return (
-    <div className="flex w-full container items-center lg:w-auto py-1 px-4 mb-0 md:mb-0 border rounded bg-white">
+    <div 
+      className={clsx(
+        'flex w-full container items-center lg:w-auto py-1 px-4 mb-0 md:mb-0 border rounded bg-white',
+        className
+      )}
+    >
       <label htmlFor="search" className="sr-only">
         Search
       </label>

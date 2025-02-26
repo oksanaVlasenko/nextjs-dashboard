@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "User" ALTER COLUMN "languageFrom" DROP NOT NULL,
+ALTER COLUMN "languageTo" DROP NOT NULL,
+ALTER COLUMN "level" DROP NOT NULL;

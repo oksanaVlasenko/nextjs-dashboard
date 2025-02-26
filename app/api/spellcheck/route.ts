@@ -25,17 +25,10 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Word is required" }, { status: 400 });
   }
 
-  const affPath = `dictionaries/${iso1}/index.aff`;  // Шлях до файлів в S3
+  const affPath = `dictionaries/${iso1}/index.aff`;  
   const dicPath = `dictionaries/${iso1}/index.dic`;
-
-  console.log('Dictionary aff path:', affPath);
-  console.log('Dictionary dic path:', dicPath);
-
   
   try {
- 
-
-    // Отримання файлів з S3
     const bucketName = process.env.AWS_BUCKET_NAME;
 
     if (!bucketName) {
@@ -55,7 +48,6 @@ export async function POST(req: Request) {
     const affData = await s3Client.send(new GetObjectCommand(affParams));
     const dicData = await s3Client.send(new GetObjectCommand(dicParams));
 
-    // Читання вмісту файлів
     const aff = await streamToString(affData.Body);
     const dic = await streamToString(dicData.Body);
 
@@ -63,17 +55,29 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Dictionary files not found" }, { status: 404 });
     }
 
-
     const dict = new Nspell(aff, dic);
 
     if (!dict) {
       return NextResponse.json({ correct: true, suggestions: [] });
     }
 
-    const isCorrect = dict.correct(word);
-    const suggestions = isCorrect ? [] : dict.suggest(word);
+    if (dict.correct(word)) {
+      return { isCorrect: true, suggestions: [] };
+    }
+  
+    const words = word.split(/\s+/);
+    
+    const correctedWords = words.map((w: string) =>
+      dict.correct(w) ? w : dict.suggest(w)[0] || w
+    );
+  
+    const correctedPhrase = correctedWords.join(" ");
+    const isCorrect = correctedPhrase === word;
 
-    return NextResponse.json({ correct: isCorrect, suggestions });
+    return NextResponse.json({ 
+      correct: isCorrect, 
+      suggestions: isCorrect ? [] : [correctedPhrase]
+    });
   } catch (error) {
     console.error("Error loading dictionary:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });

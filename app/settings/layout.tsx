@@ -6,11 +6,11 @@ import SideNav from '@/app/ui/dashboard/sidenav';
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div>
-      <MobileNav />
+      <MobileNav showSearch={false} />
       
       <SideNav />
 
-      <div className="mx-auto lg:ml-72 flex flex-col lg:min-h-screen">
+      <div className="mx-auto lg:ml-72">
         {children}
       </div>
     </div>

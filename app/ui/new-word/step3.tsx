@@ -46,9 +46,9 @@ export default function Step3({ data, activeStep, isGenerate, doneSteps, onChang
   }
 
   const selectSuggestions = (option: string) => {
+    onChange({ word: option })
     setIsWordCorrect(true)
     setSuggestions([])
-    onChange({ word: option })
     
     onNextStep()
   }

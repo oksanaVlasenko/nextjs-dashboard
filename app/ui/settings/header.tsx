@@ -1,17 +1,13 @@
-import UserCard from "@/app/ui/dashboard/user";
-import Search from "@/app/ui/search";
 import Link from "next/link";
 
 export default function Header() {
   return (
-    <section className="py-5 px-6 bg-white hidden lg:block">
+    <section className="py-6 px-6 bg-white hidden lg:block">
       <nav className="relative">
-        <div className="flex items-center">
-          <div className="flex items-center mr-auto">
-            <Search placeholder="Type to search..." className='max-w-[15rem] sm:max-w-xs' />
-          </div>
+        <div className="flex items-center justify-end">
 
-          <div className="hidden lg:flex lg:justify-end lg:items-center lg:space-x-6 mr-6">
+
+          <div className="hidden lg:flex lg:justify-end lg:items-center lg:space-x-6">
             <Link 
               href='/dashboard/add-word'
               className="flex justify-center items-center text-center w-full px-4 py-3 font-semibold tracking-tight hover:text-white border border-neutral-900 bg-white hover:bg-neutral-900 focus:bg-neutral-900 rounded-lg  transition duration-200"
@@ -24,8 +20,6 @@ export default function Header() {
               Add Word
             </Link>
           </div>
-
-          <UserCard className="hidden lg:block" />
         </div>
       </nav>
     </section>

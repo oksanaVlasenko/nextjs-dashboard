@@ -1,11 +1,14 @@
 'use client'
 
 import { AdvancedWord } from "@/app/lib/definitions";
-import FlipCard from "./flip-card";
+import FlipCard from "@/app/ui/learning/flip-card";
 import { useState } from "react";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
+import { updateWord } from "@/app/lib/actions";
 
-export default function FlippingModule({ words }: { words: AdvancedWord[] }) {
+export default function FlippingModule({ words }: { 
+  words: AdvancedWord[], 
+}) {
   const [activeWord, setActiveWord] = useState<AdvancedWord>(words[0])
   const [currentIndex, setCurrentIndex] = useState<number>(0)
 
@@ -21,6 +24,10 @@ export default function FlippingModule({ words }: { words: AdvancedWord[] }) {
     }
   }
 
+  const updateProgress = () => {
+    updateWord(activeWord.id, { progress: activeWord.progress + 3 })
+  }  
+
   return (
     <section className="py-4 overflow-hidden">
       <div className="container px-4 mx-auto">
@@ -28,6 +35,10 @@ export default function FlippingModule({ words }: { words: AdvancedWord[] }) {
           <FlipCard 
             word={activeWord}
             onDontKnow={() => updateActiveWord('next')}
+            onKnow={() => {
+              updateProgress()
+              updateActiveWord('next')
+            }}
           />
         </div>
 

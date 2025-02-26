@@ -338,6 +338,7 @@ export async function createWordAction(wordData: {
   level: Level;
   learningProgress: LearningProgress;
   examples: object;
+  progress: number
 }) {
   try {
     await prisma.word.create({
@@ -355,19 +356,6 @@ export async function createWordAction(wordData: {
   revalidatePath('/dashboard');  
   redirect('/dashboard'); 
 }
-
-const getProgressByLevel = (level: LearningProgress): number => {
-  switch (level) {
-    case LearningProgress.NOT_STARTED:
-      return 0;
-    case LearningProgress.IN_PROGRESS:
-      return Math.floor(Math.random() * (80 - 1 + 1)) + 1;  // Випадкове значення між 1 і 80
-    case LearningProgress.COMPLETED:
-      return Math.floor(Math.random() * (100 - 81 + 1)) + 81; // Випадкове значення між 81 і 100
-    default:
-      return 0;
-  }
-};
 
 const ITEMS_PER_PAGE = 5;
 
@@ -428,7 +416,6 @@ export async function getUserWords({
 
     const updatedWords =  words.map((word) => ({
       ...word,
-      progress: getProgressByLevel(word.learningProgress),
       selected: false  
     }));
 
@@ -438,5 +425,31 @@ export async function getUserWords({
   } catch (error) {
     console.error('Error fetching user words:', error);
     throw new Error('Failed to fetch user words');
+  }
+}
+
+export async function updateWord(id: string, 
+  newWordData: { 
+    translatio?: string;
+    explanation?: string;
+    learningProgress?: LearningProgress;
+    progress?: number
+  }) {
+  try {
+    const updatedWord = await prisma.word.update({
+      where: {
+        id: id, 
+      },
+      data: {
+        ...newWordData, 
+      },
+    });
+
+    console.log('Updated word:', updatedWord);
+    revalidatePath('/learning');
+    revalidatePath('/dashboard');
+  } catch (error) {
+    console.error('Error updating word:', error);
+    return null;
   }
 }
