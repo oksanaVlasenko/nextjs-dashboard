@@ -12,10 +12,12 @@ interface Option {
 }
 
 interface DropdownProps {
-  selected: string | null;
+  selected: string;
   options: Option[];
   placeholder?: string;
   disabledOption?: string;
+  className?: string;
+  id?: string;
   onSelect: (value: string) => void;
 }
 
@@ -24,11 +26,14 @@ export default function Dropdown({
   options, 
   placeholder,
   disabledOption,
+  className,
+  id,
   onSelect
 }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedInput, setSelectedInput] = useState(selected)
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value
@@ -38,12 +43,14 @@ export default function Dropdown({
    
 
   const handleSelect = (option: Option) => {
+    setSelectedInput(option.id)
     onSelect(option.id); 
     setSearchQuery('');
     setIsOpen(false);
   };
 
   const handleClear = () => {
+    setSelectedInput('')
     onSelect(''); 
     setSearchQuery('');
   };
@@ -54,11 +61,25 @@ export default function Dropdown({
   const filteredOptions = options.filter(option => option.label.toLowerCase().includes(searchQuery.toLowerCase()));
 
   return (
-    <div className="max-w-sm relative w-full rounded-t-lg">
+    <div 
+      className={clsx(
+        'relative w-full rounded-t-lg',
+        className
+      )}
+    >
       <div 
         className="group relative block px-3.5 py-1.5 bg-white border rounded-t-lg cursor-pointer"
         onClick={() => setIsOpen(!isOpen)}
       >
+        <input 
+          type="text" 
+          hidden 
+          value={selectedInput} 
+          id={id} 
+          name={id} 
+          readOnly
+        />
+
         <div className="flex flex-wrap items-center justify-between -m-2">
           <div className="w-auto p-2">
             {selected ? (
@@ -150,24 +171,24 @@ export default function Dropdown({
                   onClick={() => handleSelect(option)}
                 >
                   <div className="flex flex-wrap -m-2">
-                      {
-                        option.flag && 
-                        <div className="w-auto p-2">
-                          <Image
-                            src={option.flag}
-                            width={20}
-                            height={20}
-                            unoptimized
-                            className="w-5 h-5 rounded-full"
-                            alt="Flag Icon"
-                          />
-                        </div>
-                      }
-                      
+                    {
+                      option.flag && 
                       <div className="w-auto p-2">
-                        <h3 className="font-heading mb-0.5 text-sm font-medium">{option.label}</h3>
+                        <Image
+                          src={option.flag}
+                          width={20}
+                          height={20}
+                          unoptimized
+                          className="w-5 h-5 rounded-full"
+                          alt="Flag Icon"
+                        />
                       </div>
+                    }
+                    
+                    <div className="w-auto p-2">
+                      <h3 className="font-heading mb-0.5 text-sm font-medium">{option.label}</h3>
                     </div>
+                  </div>
                 </div>
               ))}
             </div>

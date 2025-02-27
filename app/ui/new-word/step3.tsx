@@ -41,7 +41,6 @@ export default function Step3({ data, activeStep, isGenerate, doneSteps, onChang
 
     if (result.correct) {
       onNextStep()
-      console.log('next 3 ')
     }
   }
 
@@ -75,7 +74,7 @@ export default function Step3({ data, activeStep, isGenerate, doneSteps, onChang
                   <input
                     value={data.word}
                     className={clsx(
-                      'w-full px-8 py-3 outline-none rounded-lg border border-neutral-100 focus:ring-0 focus:border-neutral-900 placeholder-neutral-300 font-medium transition duration-200',
+                      'w-full custom-input',
                       {
                         'border-red-500': suggestions.length > 0,
                       }

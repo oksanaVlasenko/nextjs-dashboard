@@ -30,7 +30,7 @@ export default function SignUpForm() {
             </label>
             <div className="w-full">
               <input
-                className="w-full px-8 py-3 outline-none rounded-lg border border-neutral-100 focus:ring-0 focus:border-neutral-900 placeholder-neutral-300 font-medium transition duration-200"
+                className="w-full custom-input"
                 id="name"
                 type="text"
                 name="name"
@@ -58,7 +58,7 @@ export default function SignUpForm() {
             </label>
             <div className="w-full">
               <input
-                className="w-full px-8 py-3 outline-none rounded-lg border border-neutral-100 focus:ring-0 focus:border-neutral-900 placeholder-neutral-300 font-medium transition duration-200"
+                className="w-full custom-input"
                 id="email"
                 type="email"
                 name="email"
@@ -86,7 +86,7 @@ export default function SignUpForm() {
             </label>
             <div className="w-full">
               <input
-                className="w-full px-8 py-3 outline-none rounded-lg border border-neutral-100 focus:ring-0 focus:border-neutral-900 placeholder-neutral-300 font-medium transition duration-200"
+                className="w-full custom-input"
                 id="password"
                 type="password"
                 name="password"

@@ -53,7 +53,7 @@ export default function Step4({ data, translationData, activeStep, doneSteps, on
                   <input
                     value={translationData.translation}
                     className={clsx(
-                      'w-full px-8 py-3 outline-none rounded-lg border border-neutral-100 focus:ring-0 focus:border-neutral-900 placeholder-neutral-300 font-medium transition duration-200',
+                      'w-full custom-input',
                       
                     )}
                     id="translation"
@@ -90,7 +90,7 @@ export default function Step4({ data, translationData, activeStep, doneSteps, on
                   <textarea 
                     value={translationData.explanation}
                     id="explanation"
-                    className='w-full resize-none h-[150px] max-h-[150px] scrollbar px-8 py-3 outline-none rounded-lg border border-neutral-100 focus:ring-0 focus:border-neutral-900 placeholder-neutral-300 font-medium transition duration-200'
+                    className='w-full resize-none h-[150px] max-h-[150px] scrollbar custom-input'
                     placeholder="Type your word here"
                     onChange={(e) => onTranslationChange({ explanation: e.target.value })}
                   />

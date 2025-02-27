@@ -1,4 +1,5 @@
 import Header from "@/app/ui/settings/header";
+import SettingsCard from "@/app/ui/settings/settings-card";
 
 export default function Page() {
 
@@ -8,9 +9,7 @@ export default function Page() {
 
       <section className="py-4 overflow-hidden">
         <div className="container px-4 mx-auto">
-          <div className="px-6 pt-5 pb-7 bg-white border rounded-xl">
-            <h1>Setting</h1>
-          </div>
+          <SettingsCard />
         </div>
       </section>
     </>

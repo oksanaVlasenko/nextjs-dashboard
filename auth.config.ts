@@ -1,6 +1,7 @@
 import type { NextAuthConfig } from 'next-auth';
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "@/prisma"
+import { Level } from "@prisma/client"; 
 
 export const authConfig = {
   secret: process.env.AUTH_SECRET,
@@ -33,6 +34,9 @@ export const authConfig = {
           email: token.email!,
           image: token.picture!,
           emailVerified: null,
+          languageFrom: token.languageFrom ? String(token.languageFrom) : '',
+          languageTo: token.languageTo ? String(token.languageTo) : '',
+          level: token.level ? token.level as Level : 'B1',
         };
       }
       return session;
@@ -44,7 +48,11 @@ export const authConfig = {
         token.name = user.name;
         token.email = user.email;
         token.picture = user.image;
+        token.languageFrom = user.languageFrom ?? '';
+        token.languageTo = user.languageTo ?? '';
+        token.level = user.level as Level ?? 'B1' as Level
       }
+
       return token;
     }
   },

@@ -2,7 +2,7 @@
 // It describes the shape of the data, and what data type each property should accept.
 // For simplicity of teaching, we're manually defining these types.
 
-import { Word } from "@prisma/client";
+import { Level, Word } from "@prisma/client";
 
 // However, these types are generated automatically if you're using an ORM such as Prisma.
 export type WordData = {
@@ -35,6 +35,9 @@ export type User = {
   email: string;
   password: string;
   image_url?: string;
+  languageFrom?:  string
+  languageTo?: string
+  level?: Level
 };
 
 export type Customer = {

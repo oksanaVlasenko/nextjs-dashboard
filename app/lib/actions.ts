@@ -5,13 +5,13 @@ import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import bcrypt from 'bcrypt';
-import { signIn } from '@/auth';
+import { auth, signIn } from '@/auth';
 import { AuthError } from 'next-auth';
 import { signOut } from "@/auth";
 import { TranslationData, WordData } from './definitions';
 import isoCodes from './languages-code-list.json'
 import { prisma } from "@/prisma"
-import { Level, LearningProgress } from "@prisma/client";
+import { Level, LearningProgress, User } from "@prisma/client";
 
 export async function logout() {
   await signOut({ redirectTo: "/" });
@@ -165,6 +165,77 @@ export async function createInvoice(prevState: State, formData: FormData) {
 
   revalidatePath('/dashboard/invoices');
   redirect('/dashboard/invoices');
+}
+
+const FormUserSchema = z.object({
+  id: z.string(),
+  languageFrom: z.string(),
+  name: z.string().min(2),
+  languageTo: z.string(),
+  level: z.enum([Level.A1, Level.A2, Level.B1, Level.B2, Level.C1, Level.C2])
+});
+ 
+const UpdateUserInfo = FormUserSchema.omit({ id: true });
+
+export type UserInfoState = {
+  errors?: {
+    languageFrom?: string[] | null;
+    name?: string[] | null;
+    languageTo?: string[] | null;
+    level?: string[] | null;
+  };
+  message?: string | null;
+  user?: User | null
+};
+
+export async function updateUser(
+  id: string, 
+  prevState: UserInfoState, 
+  formData: FormData
+) {  
+  const validatedFields = UpdateUserInfo.safeParse({
+    name: formData.get('name'),
+    languageFrom: formData.get('languageFrom'),
+    languageTo: formData.get('languageTo'),
+    level: formData.get('level')
+  });
+ 
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Update Invoice.',
+      user: null
+    };
+  }
+ 
+  try {
+    const updatedUser = await prisma.user.update({
+      where: {
+        id: id, 
+      },
+      data: {
+        ...validatedFields.data, 
+      } 
+    });
+
+    revalidatePath('/settings');
+
+    const session = await auth();
+    
+    if (session) {
+      session.user = {
+        ...session.user,
+        ...validatedFields.data
+      };
+    }
+
+    return { errors: {}, message: 'Success', user: updatedUser }
+  } catch (error) {
+    console.error('Error updating word:', error);
+    return { message: 'Database Error: Failed to Update Invoice.', errors: {}, user: null }
+  }
+
+  
 }
 
 const UpdateInvoice = FormSchema.omit({ id: true, date: true });
@@ -430,7 +501,7 @@ export async function getUserWords({
 
 export async function updateWord(id: string, 
   newWordData: { 
-    translatio?: string;
+    translation?: string;
     explanation?: string;
     learningProgress?: LearningProgress;
     progress?: number

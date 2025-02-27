@@ -66,7 +66,7 @@ export function InvoiceSkeleton() {
 
 export function DropdownSkeleton() {
   return (
-    <div className={`${orangeShimmer} max-w-sm overflow-hidden bg-white relative w-full rounded-t-lg`}>
+    <div className={`${orangeShimmer} max-w-xs h-[52px] overflow-hidden bg-white relative w-full rounded-t-lg`}>
       <div className="group relative block px-3.5 py-1.5  border rounded-t-lg cursor-pointer">
         <div className="flex flex-wrap items-center justify-between -m-2">
           <div className="w-auto p-2">
