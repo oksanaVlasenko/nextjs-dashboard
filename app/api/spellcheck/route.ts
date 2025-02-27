@@ -62,7 +62,7 @@ export async function POST(req: Request) {
     }
 
     if (dict.correct(word)) {
-      return { isCorrect: true, suggestions: [] };
+      return NextResponse.json({ isCorrect: true, suggestions: [] });
     }
   
     const words = word.split(/\s+/);
