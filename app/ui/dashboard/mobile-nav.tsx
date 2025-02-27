@@ -7,7 +7,6 @@ import BottomNav from '@/app/ui/dashboard/bottom-nav';
 import { useState } from 'react';
 import Search from '@/app/ui/search';
 import UserCard from '@/app/ui/dashboard/user';
-import { WhiteButton } from '@/app/ui/button';
 
 export default function MobileNav({ showSearch = true }: {showSearch?: boolean }) {
   const [isOpen, setIsOpen] = useState(false);

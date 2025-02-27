@@ -6,7 +6,7 @@ import UserAvatar from "@/app/ui/settings/user-avatar";
 import UserInfo from "@/app/ui/settings/user-info";
 
 export default function SettingsCard() {
-  const { data: session, status, update } = useSession();
+  const { data: session, update } = useSession();
 
   if (!session) return <p>Please sign in</p>;
 

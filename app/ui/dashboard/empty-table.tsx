@@ -17,7 +17,7 @@ export default function EmptyTable() {
           />
 
           <h2 className="py-8 text-2xl md:text-3xl font-heading font-medium">
-            It's a bit empty here
+            It&apos;s a bit empty here
           </h2>
 
           <div className="w-full max-w-sm sm:max-w-48 sm:w-auto ">
