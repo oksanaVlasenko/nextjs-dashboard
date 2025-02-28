@@ -18,7 +18,7 @@ export default function EditWord({ data }: {
     return updatedWord
   };
 
-  const [_, formAction, isPending] = useActionState(updateWordWithId, initialState);
+  const [state, formAction, isPending] = useActionState(updateWordWithId, initialState);
     
   return (
     <section className="py-4 overflow-hidden">
@@ -45,8 +45,21 @@ export default function EditWord({ data }: {
                     placeholder="Type your word here"
                     required
                     defaultValue={data.translation}
+                    aria-describedby="name-translation"
                   />
                 </div>
+
+                {
+                  state.errors?.translation && (
+                    <div id="translation-error" aria-live="polite" aria-atomic="true">
+                      {state.errors.translation.map((error: string) => (
+                        <p className="mt-2 text-sm text-red-500" key={error}>
+                          {error}
+                        </p>
+                      ))}
+                    </div>
+                  )
+                }
 
                 <div className="w-full flex items-center max-w-sm sm:flex-1 pb-6">
                   <p>{data.transcription}</p>
