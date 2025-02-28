@@ -4,7 +4,8 @@ import { AdvancedWord } from "@/app/lib/definitions";
 import FlipCard from "@/app/ui/learning/flip-card";
 import { useState } from "react";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
-import { updateWord } from "@/app/lib/actions";
+import { updateWordsProgress } from "@/app/lib/actions";
+import { LearningProgress } from "@prisma/client";
 
 export default function FlippingModule({ words }: { 
   words: AdvancedWord[], 
@@ -25,7 +26,10 @@ export default function FlippingModule({ words }: {
   }
 
   const updateProgress = () => {
-    updateWord(activeWord.id, { progress: activeWord.progress + 3 })
+    updateWordsProgress(activeWord.id, { 
+      progress: activeWord.progress + 3,
+      learningProgress: 'IN_PROGRESS' as LearningProgress
+    })
   }  
 
   return (

@@ -13,8 +13,12 @@ export default function SettingsCard() {
   return (
     <div className="p-12 bg-white border rounded-xl grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
       <UserAvatar 
-        imageSrc={session?.user?.image || ''} 
-        className="md:col-span-1 mx-auto "
+        className="md:col-span-1 "
+        userInfo={{
+          id: session.user.id,
+          image: session.user.image
+        }}
+        updateSession={update}
       />
 
       <UserInfo 

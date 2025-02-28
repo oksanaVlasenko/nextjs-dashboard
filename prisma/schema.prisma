@@ -111,7 +111,8 @@ model Word {
   level                Level
   learningProgress     LearningProgress
   progress             Int
-  examples             Json
+  example1             String
+  example2             String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

@@ -1,7 +1,7 @@
 "use client";
 
 import clsx from "clsx";
-import { DeleteWord, SpeakerButton } from "./buttons";
+import { DeleteWord, SpeakerButton, UpdateWord } from "./buttons";
 import { AdvancedWord } from "@/app/lib/definitions";
 
 export default function TableRow({ word, ind }: { word: AdvancedWord, ind: number }) {
@@ -86,9 +86,9 @@ export default function TableRow({ word, ind }: { word: AdvancedWord, ind: numbe
               <span className="block mt-2 text-sm text-darkBlueGray-400 font-heading">{word.progress}%</span>
             </div>
 
-            <DeleteWord 
-              id={word.id}
-            />
+            <UpdateWord id={word.id} />
+            
+            <DeleteWord id={word.id} />
           </div>
         </td>
       </tr>

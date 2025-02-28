@@ -11,7 +11,7 @@ import { signOut } from "@/auth";
 import { TranslationData, WordData } from './definitions';
 import isoCodes from './languages-code-list.json'
 import { prisma } from "@/prisma"
-import { Level, LearningProgress, User } from "@prisma/client";
+import { Level, LearningProgress, User, Word } from "@prisma/client";
 
 export async function logout() {
   await signOut({ redirectTo: "/" });
@@ -231,8 +231,8 @@ export async function updateUser(
 
     return { errors: {}, message: 'Success', user: updatedUser }
   } catch (error) {
-    console.error('Error updating word:', error);
-    return { message: 'Database Error: Failed to Update Invoice.', errors: {}, user: null }
+    console.error('Error updating user:', error);
+    return { message: 'Database Error: Failed to Update User.', errors: {}, user: null }
   }
 
   
@@ -369,10 +369,8 @@ export async function generateWordTranslation(formData: WordData): Promise<Trans
     translation: '',
     explanation: '',
     transcription: '',
-    examples: {
-      example1: '',
-      example2: ''
-    }
+    example1: '',
+    example2: ''
   }
   
   const match = data.result.match(/```json\n([\s\S]*?)\n```/);
@@ -408,7 +406,8 @@ export async function createWordAction(wordData: {
   languageTo: string;
   level: Level;
   learningProgress: LearningProgress;
-  examples: object;
+  example1: string;
+  example2: string;
   progress: number
 }) {
   try {
@@ -499,10 +498,8 @@ export async function getUserWords({
   }
 }
 
-export async function updateWord(id: string, 
+export async function updateWordsProgress(id: string, 
   newWordData: { 
-    translation?: string;
-    explanation?: string;
     learningProgress?: LearningProgress;
     progress?: number
   }) {
@@ -522,5 +519,156 @@ export async function updateWord(id: string,
   } catch (error) {
     console.error('Error updating word:', error);
     return null;
+  }
+}
+
+const FormWordSchema = z.object({
+  id: z.string(),
+  translation: z.string(),
+  explanation: z.string(),
+  example1: z.string(),
+  example2: z.string()
+})
+
+const UpdateWordInfo = FormWordSchema.omit({ id: true })
+
+export type WordInfoState = {
+  errors?: {
+    translation?: string[] | null;
+    explanation?: string[] | null;
+    example1?: string[] | null;
+    example2?: string[] | null;
+  };
+  message?: string | null;
+  word?: Word | null
+};
+
+export async function updateWord(
+  id: string, 
+  prevState: WordInfoState, 
+  formData: FormData
+) {
+  const validatedFields = UpdateWordInfo.safeParse({
+    translation: formData.get('translation'),
+    explanation: formData.get('explanation'),
+    example1: formData.get('example1'),
+    example2: formData.get('example2')
+  });
+
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing Fields. Failed to Update Word.',
+      word: null
+    };
+  }
+
+  try {
+    const updatedWord = await prisma.word.update({
+      where: {
+        id: id, 
+      },
+      data: {
+        ...validatedFields.data
+      },
+    });
+
+    revalidatePath(`/dashboard/${id}/edit`)
+    
+    return { errors: {}, message: 'Success', word: updatedWord }
+  } catch (error) {
+    console.error('Error updating word:', error);
+    return { message: 'Database Error: Failed to Update Word.', errors: {}, word: null }
+  }
+}
+
+const imageSchema = z.instanceof(File).refine(
+  (file) => file.type.startsWith("image/"),
+  { message: "The file must be an image!" }
+);
+
+export type UserAvatarState = {
+  errors?: {
+    file?: string[] | null;
+  };
+  message?: string | null;
+  user?: User | null
+};
+
+export async function uploadPhoto(
+  id: string, 
+  file: File
+) {
+  if (!file) return {
+    message: 'Missing Fields. No file provided.'
+  };
+
+  const validateImage = imageSchema.safeParse(file);
+  
+  if (!validateImage.success) {
+    return {
+      message: validateImage.error.errors.map(err => err.message),
+    };
+  }
+
+  try {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const inDevEnvironment = !!process && process.env.NODE_ENV === 'development';
+
+    const baseUrl = !inDevEnvironment ?
+        process.env.NEXT_PUBLIC_SITE_URL : "http://localhost:3000"
+
+    const response = await fetch(`${baseUrl}/api/upload`, {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response.ok) return {
+      message: 'Upload failed',
+    };
+
+    const avatarUrl = await response.json();
+
+    const updatedUser = await prisma.user.update({
+      where: {
+        id: id, 
+      },
+      data: {
+        image: avatarUrl.url, 
+      } 
+    });
+
+    revalidatePath('/settings');
+
+    const session = await auth();
+    
+    if (session) {
+      session.user = {
+        ...session.user,
+        image: avatarUrl.url,
+      };
+    }
+
+    return { message: 'Success' }
+  } catch (error) {
+    console.error('Error updating user:', error);
+    return { message: 'Database Error: Failed to Update Avatar' }
+  } 
+}
+
+export async function fetchWordById(id: string) {
+  try {
+    const word = await prisma.word.findFirst({
+      where: {
+        id: id
+      },
+    })
+
+    return word
+  } catch (error) {
+    console.error("Error getting word:", error);
+    throw new Error('Failed to fetch word.');
   }
 }

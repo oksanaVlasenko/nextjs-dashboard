@@ -4,6 +4,7 @@ import { speakText } from '@/app/lib/utils';
 import { PencilIcon, SpeakerWaveIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 import { deleteWordAction } from '@/app/lib/actions';
+import Link from 'next/link';
 
 interface SpeakerButtonProps {
   word: string;
@@ -69,5 +70,16 @@ export function DeleteWord({ id }: { id: string }) {
         <TrashIcon className="w-5 text-red-500" />
       </button>
     </form>
+  );
+}
+
+export function UpdateWord({ id }: { id: string }) {
+  return (
+    <Link
+      href={`/dashboard/${id}/edit`}
+      className="rounded-md mr-4"
+    >
+      <PencilIcon className="w-5" />
+    </Link>
   );
 }

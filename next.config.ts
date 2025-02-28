@@ -12,6 +12,7 @@ const nextConfig: NextConfig = {
       'lh3.googleusercontent.com', // Домен для Google аватарок
       'avatars.githubusercontent.com', // Домен для GitHub аватарок (опціонально)
       'cdn.discordapp.com', // Домен для Discord аватарок (опціонально)
+      'my-avatars-files.s3.eu-north-1.amazonaws.com',
     ],
   },
 };

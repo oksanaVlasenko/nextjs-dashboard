@@ -48,7 +48,7 @@ export default function UserInfo({ className, userInfo, updateSession }: {
     return updatedUser
   };
 
-  const [state, formAction] = useActionState(updateUserWithId, initialState);
+  const [state, formAction, isPending] = useActionState(updateUserWithId, initialState);
 
   return (
     <form action={formAction} className={clsx(className)} aria-describedby="message-error">
@@ -136,11 +136,19 @@ export default function UserInfo({ className, userInfo, updateSession }: {
           />
         </ProfileRow>
 
-         <div className="w-full">
-            <Button type="submit">
-              Save
-            </Button>
-          </div>
+        <div className="w-full">
+          <Button 
+            type="submit" 
+            aria-disabled={isPending}
+            className={clsx(
+              {
+                'pending-animation-white': isPending,
+              }
+            )}
+          >
+            Save
+          </Button>
+        </div>
       </div>
     </form>
   )

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 
 import Step1 from "@/app/ui/new-word/step1";
@@ -29,10 +29,8 @@ export default function AddWord() {
     translation: '',
     explanation: '',
     transcription: '',
-    examples: {
-      example1: '',
-      example2: ''
-    }
+    example1: '',
+    example2: ''
   })
 
   const { data: session } = useSession();
@@ -40,22 +38,25 @@ export default function AddWord() {
 
   const { langList } = useLanguages()
 
+  useEffect(() => {
+    if (session && session.user.languageFrom && session.user.languageTo && session.user.level) {
+      handleFormDataChange({
+        fromLang: session.user.languageFrom,
+        toLang: session.user.languageTo,
+        level: session.user.level
+      })
+
+      setActiveStep(3)
+      setDoneSteps([...doneSteps, ...[1,2]])
+    }
+  }, [])
+
   const handleFormDataChange = (newData: Partial<typeof formData>) => {
     setFormData({ ...formData, ...newData });
   };
 
   const handleTranslationDataChange = (newData: Partial<typeof translationData>) => {
     setTranslationData({ ...translationData, ...newData });
-  };
-
-  const handleExampleChange = (exampleKey: keyof Examples, value: string) => {
-    setTranslationData(prevState => ({
-      ...prevState,
-      examples: {
-        ...prevState.examples,
-        [exampleKey]: value, 
-      }
-    }));
   };
 
   const goToNextStep = () => {
@@ -83,7 +84,8 @@ export default function AddWord() {
       translation: result.translation,
       explanation: result.explanation,
       transcription: result.transcription,
-      examples: result.examples
+      example1: result.example1,
+      example2: result.example2
     })
 
     goToNextStep()
@@ -103,7 +105,8 @@ export default function AddWord() {
       languageTo: formData.toLang,
       level: formData.level as Level,
       learningProgress: 'NOT_STARTED' as LearningProgress,
-      examples: translationData.examples,
+      example1: translationData.example1,
+      example2: translationData.example2,
       progress: 0
     }
 
@@ -147,7 +150,6 @@ export default function AddWord() {
             activeStep={activeStep}
             doneSteps={doneSteps}
             onNextStep={goToNextStep}
-            onExampleChange={handleExampleChange}
             onPreviousStep={goToPreviousStep}
             onTranslationChange={handleTranslationDataChange}
           />

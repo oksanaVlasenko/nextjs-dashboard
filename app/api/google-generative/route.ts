@@ -16,10 +16,7 @@ export async function POST(req: Request) {
       Create two sentences as example of usage ${word} word for ${level} level in english. 
       Add transcription for the word ${word}
       Add explanation for ${word} word in ${level} level in ${fromLang} language from Cambridge dictionary. 
-      Return answer in structure {translation: '', examples: {
-      example1: '',
-      example2: ''
-    }, explanation, transcription: ''}`
+      Return answer in structure {translation: '', example1: '', example2: '', explanation, transcription: ''}`
 
     const result = await model.generateContent(prompt);
    

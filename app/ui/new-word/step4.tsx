@@ -7,14 +7,13 @@ import { SpeakerWaveIcon } from '@heroicons/react/24/outline';
 import { Examples, TranslationData, WordData } from "@/app/lib/definitions";
 import { speakText } from "@/app/lib/utils";
 
-export default function Step4({ data, translationData, activeStep, doneSteps, onTranslationChange, onExampleChange, onNextStep, onPreviousStep }: { 
+export default function Step4({ data, translationData, activeStep, doneSteps, onTranslationChange, onNextStep, onPreviousStep }: { 
   data: WordData, 
   translationData: TranslationData,
   activeStep: number,
   doneSteps: number[],
   onNextStep: () => void,
   onPreviousStep: () => void,
-  onExampleChange: (exampleKey: keyof Examples, value: string) => void,
   onTranslationChange: (newData: Partial<TranslationData>) => void 
 }) {  
 
@@ -107,7 +106,7 @@ export default function Step4({ data, translationData, activeStep, doneSteps, on
                   </label>
 
                   <textarea
-                    value={translationData.examples.example1}
+                    value={translationData.example1}
                     className={clsx(
                       'w-full px-8 py-3 resize-none h-[100px] max-h-[100px] scrollbar outline-none rounded-lg border border-neutral-100 focus:ring-0 focus:border-neutral-900 placeholder-neutral-300 font-medium transition duration-200',
                       
@@ -115,8 +114,7 @@ export default function Step4({ data, translationData, activeStep, doneSteps, on
                     id="example1"
                     placeholder="Type your word here"
                     required
-                    onChange={(e) => onExampleChange('example1', e.target.value)}
-                    
+                    onChange={(e) => onTranslationChange({ example1: e.target.value })}
                   />
                 </div>
 
@@ -129,7 +127,7 @@ export default function Step4({ data, translationData, activeStep, doneSteps, on
                   </label>
 
                   <textarea
-                    value={translationData.examples.example2}
+                    value={translationData.example2}
                     className={clsx(
                       'w-full px-8 py-3 resize-none h-[100px] max-h-[100px] scrollbar outline-none rounded-lg border border-neutral-100 focus:ring-0 focus:border-neutral-900 placeholder-neutral-300 font-medium transition duration-200',
                       
@@ -137,8 +135,7 @@ export default function Step4({ data, translationData, activeStep, doneSteps, on
                     id="example2"
                     placeholder="Type your word here"
                     required
-                    onChange={(e) => onExampleChange('example2', e.target.value)}
-                    
+                    onChange={(e) => onTranslationChange({ example2: e.target.value })}                    
                   />
                 </div>
               </div>

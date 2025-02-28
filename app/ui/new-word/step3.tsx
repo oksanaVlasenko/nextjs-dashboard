@@ -127,7 +127,7 @@ export default function Step3({ data, activeStep, isGenerate, doneSteps, onChang
                     className={clsx(
                       {
                         'pending-animation-white': isCheckingWord || isGenerate,
-                        'pointer-events-none opacity-30': suggestions.length > 0
+                        'pointer-events-none opacity-30': suggestions.length > 0 || !data.word.length
                       }
                     )}
                     onClick={checkWordIsRight} 

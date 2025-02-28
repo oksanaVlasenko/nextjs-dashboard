@@ -26,7 +26,8 @@ export type TranslationData = {
   translation: string;
   explanation: string;
   transcription: string;
-  examples: Examples
+  example1: string;
+  example2: string;
 }
 
 export type User = {
