@@ -631,7 +631,7 @@ export async function uploadPhoto(
 
     const avatarUrl = await response.json();
 
-    const updatedUser = await prisma.user.update({
+    await prisma.user.update({
       where: {
         id: id, 
       },

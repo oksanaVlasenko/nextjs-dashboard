@@ -17,10 +17,10 @@ export default async function NotFound() {
         <div className="py-16 md:py-20 lg:py-40 max-w-sm text-center lg:text-left">
           <h3 className="text-7xl font-semibold text-neutral-900 mb-4">404</h3>
           <h4 className="font-heading text-4xl font-bold text-neutral-900 mb-6">
-            Oops! Can't Find That Page
+            Oops! Can&apos;t Find That Page
           </h4>
           <p className="text-xl font-semibold text-neutral-500 mb-14">
-            Sorry, the page you are looking for doesn't exist or has been moved. Try searching our site:
+            Sorry, the page you are looking for doesn&apos;t exist or has been moved. Try searching our site:
           </p>
 
           <Link

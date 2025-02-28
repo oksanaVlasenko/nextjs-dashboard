@@ -18,19 +18,13 @@ export default function EditWord({ data }: {
     return updatedWord
   };
 
-  const [state, formAction, isPending] = useActionState(updateWordWithId, initialState);
+  const [_, formAction, isPending] = useActionState(updateWordWithId, initialState);
     
   return (
     <section className="py-4 overflow-hidden">
-      <div className="container px-4 mx-auto">
+      <div className="container px-6 mx-auto">
         <div className="px-6 pt-5 pb-7 bg-white border rounded-xl">
           <form action={formAction}>
-            <div className="w-auto mb-12">
-              <h2 className="mb-3 text-3xl font-heading font-medium">
-                {data.word}
-              </h2>
-            </div>
-
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="flex flex-row lg:flex-col flex-wrap items-end lg:items-start gap-4 pb-8">
                 <div className="w-full flex flex-col max-w-sm sm:flex-1 pb-2">

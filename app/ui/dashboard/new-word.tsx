@@ -11,7 +11,7 @@ import Step5 from "@/app/ui/new-word/step5";
 
 import { useLanguages } from "@/app/lib/useLanguages";
 import { createWordAction, generateWordTranslation } from "@/app/lib/actions";
-import { Examples, TranslationData, WordData } from "@/app/lib/definitions";
+import { TranslationData, WordData } from "@/app/lib/definitions";
 import { Level, LearningProgress } from "@prisma/client";
 
 export default function AddWord() {

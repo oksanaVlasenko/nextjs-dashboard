@@ -4,7 +4,7 @@ import StepNumber from "@/app/ui/new-word/step-number";
 import StepHeader from "@/app/ui/new-word/step-header";
 import clsx from 'clsx';
 import { SpeakerWaveIcon } from '@heroicons/react/24/outline';
-import { Examples, TranslationData, WordData } from "@/app/lib/definitions";
+import { TranslationData, WordData } from "@/app/lib/definitions";
 import { speakText } from "@/app/lib/utils";
 
 export default function Step4({ data, translationData, activeStep, doneSteps, onTranslationChange, onNextStep, onPreviousStep }: { 
