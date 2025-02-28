@@ -39,7 +39,7 @@ export default function AddWord() {
   const { langList } = useLanguages()
 
   useEffect(() => {
-    if (session && session.user.languageFrom && session.user.languageTo && session.user.level) {
+    if (session && session?.user?.languageFrom && session.user.languageTo && session.user.level) {
       handleFormDataChange({
         fromLang: session.user.languageFrom,
         toLang: session.user.languageTo,
@@ -47,8 +47,9 @@ export default function AddWord() {
       })
 
       setActiveStep(3)
-      setDoneSteps([...doneSteps, ...[1,2]])
+      setDoneSteps(prevSteps => [...prevSteps, 1, 2])
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleFormDataChange = (newData: Partial<typeof formData>) => {

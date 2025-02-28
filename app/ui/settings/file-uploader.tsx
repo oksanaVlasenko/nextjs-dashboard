@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { WhiteButton } from "../button";
 import { ArrowUpTrayIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
