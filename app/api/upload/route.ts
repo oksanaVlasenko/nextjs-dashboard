@@ -11,10 +11,12 @@ const s3Client = new S3Client({
 });
 
 export async function POST(req: NextRequest) {
+  console.log('FormData received:', await req.formData());
+
   try {
     const formData = await req.formData();
     console.log(formData, ' form data')
-    
+
     const file = formData.get("file") as File;
     
     console.log(file, ' file')
