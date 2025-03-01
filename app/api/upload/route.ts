@@ -1,8 +1,7 @@
-export const config = { runtime: 'experimental-edge' }
-
 import { NextRequest, NextResponse } from "next/server";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import crypto from "crypto";
+
 
 const s3Client = new S3Client({
   region: process.env.AWS_REGION,
@@ -16,8 +15,10 @@ export async function POST(req: NextRequest) {
   //console.log('FormData received:', await req.formData());
 
   try {
-    const formData = await req.formData();
     console.log(req, ' REQUEST')
+    const formData = await req.formData();
+    console.log([...formData.entries()], ' ...formData.entries()'); //
+    
     console.log(formData, ' form data')
 
     const file = formData.get("file") as File;
