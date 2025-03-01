@@ -11,7 +11,7 @@ const s3Client = new S3Client({
   },
 });
 
-export async function POST(req: NextRequest) {
+export async function POST(req: Request) {
   //console.log('FormData received:', await req.formData());
 
   try {
