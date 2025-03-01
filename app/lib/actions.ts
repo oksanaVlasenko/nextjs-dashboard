@@ -615,6 +615,7 @@ export async function uploadPhoto(
     const formData = new FormData();
     formData.append("file", file);
 
+    console.log(formData , ' form data client')
     const inDevEnvironment = !!process && process.env.NODE_ENV === 'development';
 
     const baseUrl = !inDevEnvironment ?
