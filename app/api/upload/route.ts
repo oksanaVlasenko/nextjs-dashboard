@@ -1,47 +1,45 @@
+export const runtime = "nodejs";
+
 import { NextRequest, NextResponse } from "next/server";
-//import { S3Client,  } from "@aws-sdk/client-s3";
-// import crypto from "crypto"; PutObjectCommand
+import { S3Client, PutObjectCommand  } from "@aws-sdk/client-s3";
+import crypto from "crypto"; 
 
 export const config = {
   api: {
       bodyParser: false,
   },
 };
-// const s3Client = new S3Client({
-//   region: process.env.AWS_REGION,
-//   credentials: {
-//     accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-//     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
-//   },
-// });
+const s3Client = new S3Client({
+  region: process.env.AWS_REGION,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+  },
+});
 
 export async function POST(req: NextRequest) {
   //console.log('FormData received:', await req.formData());
 
   try {
-      console.log(req);
-    const request_data = await req.formData();
-    console.log(request_data, ' REQUSE DATA')
-    
-    return new Response(JSON.stringify({sucess: "Successful"}))
-    
+   
     // console.log(req, ' REQUEST')
-    // const formData = await req.formData();
-    // console.log([...formData.entries()], ' ...formData.entries()'); //
+    console.log("Headers:", Object.fromEntries(req.headers));
+    const formData = await req.formData();
+    console.log([...formData.entries()], ' ...formData.entries()'); //
     
-    // console.log(formData, ' form data')
+    console.log(formData, ' form data')
 
-    // const file = formData.get("file") as File;
+    const file = formData.get("file") as File;
     
-    // console.log(file, ' file')
+    console.log(file, ' file')
 
 
-    // if (!file) {
-    //   return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
-    // }
+    if (!file) {
+      return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
+    }
 
-    // const fileBuffer = await file.arrayBuffer();
-    // const fileName = generateFileName(file.name);
+    const fileBuffer = await file.arrayBuffer();
+    const fileName = generateFileName(file.name);
 
     // console.log('Received file:', file);
     // console.log('File size:', file.size);
@@ -50,20 +48,20 @@ export async function POST(req: NextRequest) {
     // console.log('AWS Bucket:', process.env.AWS_PHOTO_BUCKET_NAME);
 
 
-    // const uploadParams = {
-    //   Bucket: process.env.AWS_PHOTO_BUCKET_NAME!,
-    //   Key: fileName,
-    //   Body: Buffer.from(fileBuffer),
-    //   ContentType: file.type,
-    // };
+    const uploadParams = {
+      Bucket: process.env.AWS_PHOTO_BUCKET_NAME!,
+      Key: fileName,
+      Body: Buffer.from(fileBuffer),
+      ContentType: file.type,
+    };
 
-    // console.log(uploadParams, ' params')
+    console.log(uploadParams, ' params')
 
-    // await s3Client.send(new PutObjectCommand(uploadParams));
+    await s3Client.send(new PutObjectCommand(uploadParams));
 
-    // const fileUrl = `https://${process.env.AWS_PHOTO_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${fileName}`;
+    const fileUrl = `https://${process.env.AWS_PHOTO_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${fileName}`;
 
-    // return NextResponse.json({ url: fileUrl });
+    return NextResponse.json({ url: fileUrl });
   } catch (error) {
     console.error("❌ Помилка при завантаженні у S3:", error);
 
@@ -71,11 +69,11 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// const generateFileName = (originalName: string) => {
-//   const timestamp = Date.now(); 
+const generateFileName = (originalName: string) => {
+  const timestamp = Date.now(); 
 
-//   const hash = crypto.createHash("sha256").update(originalName + timestamp).digest("hex").substring(0, 8);
-//   const extension = originalName.split(".").pop(); 
+  const hash = crypto.createHash("sha256").update(originalName + timestamp).digest("hex").substring(0, 8);
+  const extension = originalName.split(".").pop(); 
 
-//   return `${timestamp}-${hash}.${extension}`;
-// };
+  return `${timestamp}-${hash}.${extension}`;
+};
