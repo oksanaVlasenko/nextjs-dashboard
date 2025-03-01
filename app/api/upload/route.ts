@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
 
   try {
    
-    // console.log(req, ' REQUEST')
+    console.log(req.body, ' REQUEST')
     console.log("Headers:", Object.fromEntries(req.headers));
     const formData = await req.formData();
     console.log([...formData.entries()], ' ...formData.entries()'); //
