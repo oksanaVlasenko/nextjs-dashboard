@@ -1,8 +1,12 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 //import { S3Client,  } from "@aws-sdk/client-s3";
 // import crypto from "crypto"; PutObjectCommand
 
-
+export const config = {
+  api: {
+      bodyParser: false,
+  },
+};
 // const s3Client = new S3Client({
 //   region: process.env.AWS_REGION,
 //   credentials: {
@@ -11,18 +15,13 @@ import { NextResponse } from "next/server";
 //   },
 // });
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   //console.log('FormData received:', await req.formData());
 
   try {
-    const formData = await req.formData();
-
-    const file = formData.get("file"); 
-
-    // Parse the formData but This file has no filePath --- if I have the filePath, the file could be upload anywhere.
-
-    console.log(file);
-
+      console.log(req);
+    const request_data = await req.formData();
+    console.log(request_data, ' REQUSE DATA')
     
     return new Response(JSON.stringify({sucess: "Successful"}))
     
