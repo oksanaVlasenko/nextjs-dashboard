@@ -34,7 +34,6 @@ export default function AddWord() {
   })
 
   const { data: session } = useSession();
-  const userId = session?.user?.id ?? '';
 
   const { langList } = useLanguages()
 

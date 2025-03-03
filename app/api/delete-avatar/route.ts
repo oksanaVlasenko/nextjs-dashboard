@@ -28,6 +28,7 @@ export async function DELETE(req: NextRequest) {
 
     return NextResponse.json({ status: 200 });
   } catch (error) {
+    console.error("Error delete avatar:", error);
     return NextResponse.json({ error: "Deleting failed" }, { status: 500 });
   }
 }
