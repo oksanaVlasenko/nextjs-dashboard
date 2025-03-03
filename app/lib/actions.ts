@@ -12,6 +12,8 @@ import { TranslationData, WordData } from './definitions';
 import isoCodes from './languages-code-list.json'
 import { prisma } from "@/prisma"
 import { Level, LearningProgress, User, Word } from "@prisma/client";
+import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import crypto from "crypto"; 
 
 export async function logout() {
   await signOut({ redirectTo: "/" });
@@ -612,32 +614,32 @@ export async function uploadPhoto(
   }
 
   try {
-    const formData = new FormData();
-    formData.append("file", file);
+    // const formData = new FormData();
+    // formData.append("file", file);
 
-    console.log(formData , ' form data client')
-    const inDevEnvironment = !!process && process.env.NODE_ENV === 'development';
+    // console.log(formData , ' form data client')
+    // const inDevEnvironment = !!process && process.env.NODE_ENV === 'development';
 
-    const baseUrl = !inDevEnvironment ?
-        process.env.NEXT_PUBLIC_SITE_URL : "http://localhost:3000"
+    // const baseUrl = !inDevEnvironment ?
+    //     process.env.NEXT_PUBLIC_SITE_URL : "http://localhost:3000"
 
-    const response = await fetch(`${baseUrl}/api/upload`, {
-      method: "POST",
-      body: formData,
-    });
+    // const response = await fetch(`${baseUrl}/api/upload`, {
+    //   method: "POST",
+    //   body: formData,
+    // });
 
-    if (!response.ok) return {
-      message: 'Upload failed',
-    };
+    // if (!response.ok) return {
+    //   message: 'Upload failed',
+    // };
 
-    const avatarUrl = await response.json();
+    const avatarUrl = await uploadToS3(file);
 
     await prisma.user.update({
       where: {
         id: id, 
       },
       data: {
-        image: avatarUrl.url, 
+        image: avatarUrl, 
       } 
     });
 
@@ -648,7 +650,7 @@ export async function uploadPhoto(
     if (session) {
       session.user = {
         ...session.user,
-        image: avatarUrl.url,
+        image: avatarUrl,
       };
     }
 
@@ -658,6 +660,43 @@ export async function uploadPhoto(
     return { message: 'Database Error: Failed to Update Avatar' }
   } 
 }
+
+async function uploadToS3(file: File) {
+  const s3Client = new S3Client({
+    region: process.env.AWS_REGION,
+    credentials: {
+      accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+    },
+  });
+  
+  const fileBuffer = await file.arrayBuffer();
+  const fileName = generateFileName(file.name);
+
+  const uploadParams = {
+    Bucket: process.env.AWS_PHOTO_BUCKET_NAME!,
+    Key: fileName,
+    Body: Buffer.from(fileBuffer),
+    ContentType: file.type,
+  };
+
+  console.log(uploadParams, ' params')
+
+  await s3Client.send(new PutObjectCommand(uploadParams));
+
+  const fileUrl = `https://${process.env.AWS_PHOTO_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${fileName}`;
+
+  return fileUrl
+}
+
+const generateFileName = (originalName: string) => {
+  const timestamp = Date.now(); 
+
+  const hash = crypto.createHash("sha256").update(originalName + timestamp).digest("hex").substring(0, 8);
+  const extension = originalName.split(".").pop(); 
+
+  return `${timestamp}-${hash}.${extension}`;
+};
 
 export async function fetchWordById(id: string) {
   try {

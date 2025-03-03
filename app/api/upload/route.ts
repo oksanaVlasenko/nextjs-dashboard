@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
   //console.log('FormData received:', await req.formData());
 
   try {
-   
+    
     console.log(req.body, ' REQUEST')
     console.log("Headers:", Object.fromEntries(req.headers));
     const formData = await req.formData();
@@ -40,13 +40,6 @@ export async function POST(req: NextRequest) {
 
     const fileBuffer = await file.arrayBuffer();
     const fileName = generateFileName(file.name);
-
-    // console.log('Received file:', file);
-    // console.log('File size:', file.size);
-    // console.log('File name:', file.name);
-    // console.log('File type:', file.type);
-    // console.log('AWS Bucket:', process.env.AWS_PHOTO_BUCKET_NAME);
-
 
     const uploadParams = {
       Bucket: process.env.AWS_PHOTO_BUCKET_NAME!,
