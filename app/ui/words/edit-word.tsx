@@ -4,9 +4,9 @@ import { Word } from "@prisma/client";
 import clsx from "clsx";
 import { SpeakerButton } from "@/app/ui/words/buttons";
 import { Button } from "@/app/ui/button";
-import { updateWord, WordInfoState } from "@/app/lib/actions";
 import { useActionState } from "react";
 import Link from "next/link";
+import { updateWord, WordInfoState } from "@/app/lib/words/actions";
 
 export default function EditWord({ data }: {
   data: Word,

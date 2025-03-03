@@ -4,8 +4,8 @@ import { AdvancedWord } from "@/app/lib/definitions";
 import FlipCard from "@/app/ui/learning/flip-card";
 import { useState } from "react";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
-import { updateWordsProgress } from "@/app/lib/actions";
 import { LearningProgress } from "@prisma/client";
+import { updateWordsProgress } from "@/app/lib/words/actions";
 
 export default function FlippingModule({ words }: { 
   words: AdvancedWord[], 

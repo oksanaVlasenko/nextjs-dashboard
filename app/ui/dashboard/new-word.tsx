@@ -9,10 +9,10 @@ import Step3 from "@/app/ui/new-word/step3";
 import Step4 from "@/app/ui/new-word/step4";
 import Step5 from "@/app/ui/new-word/step5";
 
-import { useLanguages } from "@/app/lib/useLanguages";
-import { createWordAction, generateWordTranslation } from "@/app/lib/actions";
+import { useLanguages } from "@/app/lib/words/useLanguages";
 import { TranslationData, WordData } from "@/app/lib/definitions";
 import { Level, LearningProgress } from "@prisma/client";
+import { createWordAction, generateWordTranslation } from "@/app/lib/words/actions";
 
 export default function AddWord() {
   const [activeStep, setActiveStep] = useState<number>(1)
@@ -97,7 +97,6 @@ export default function AddWord() {
     setDoneSteps([...doneSteps, activeStep])
 
     const wordData = {
-      userId,
       word: formData.word,
       translation: translationData.translation,
       explanation: translationData.explanation,

@@ -6,8 +6,8 @@ import StepNumber from "@/app/ui/new-word/step-number";
 import StepHeader from "@/app/ui/new-word/step-header";
 import clsx from 'clsx';
 import { useState } from 'react';
-import { checkWord } from '@/app/lib/actions';
 import { WordData } from "@/app/lib/definitions";
+import { checkWord } from "@/app/lib/words/actions";
 
 export default function Step3({ data, activeStep, isGenerate, doneSteps, onChange, onNextStep, onPreviousStep }: { 
   data: WordData, 

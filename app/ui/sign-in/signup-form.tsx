@@ -3,10 +3,10 @@
 import {
   ExclamationCircleIcon
 } from '@heroicons/react/24/outline';
-import { Button } from '../button';
+import { Button } from '@/app/ui/button';
 import { useActionState } from 'react';
-import { createUser, UserState } from '@/app/lib/actions';
 import { useSearchParams } from 'next/navigation';
+import { createUser, UserState } from '@/app/lib/user/actions';
 
 export default function SignUpForm() {
   const searchParams = useSearchParams();

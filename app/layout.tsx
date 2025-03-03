@@ -2,7 +2,7 @@ import '@/app/ui/global.css';
 import { inter } from '@/app/ui/fonts';
 import { Metadata } from 'next';
 import { NextAuthSessionProvider } from './auth-provider'
-import { getSession } from '@/app/lib/auth';
+import { getSession } from '@/app/lib/cacheSession';
 
 export const metadata: Metadata = {
   title: {

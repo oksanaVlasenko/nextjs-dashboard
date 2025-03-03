@@ -5,8 +5,8 @@ import {
 } from '@heroicons/react/24/outline';
 import { Button } from '../button';
 import { useActionState } from 'react';
-import { authenticate } from '@/app/lib/actions';
 import { useSearchParams } from 'next/navigation';
+import { authenticate } from '@/app/lib/user/actions';
 
 export default function LoginForm() {
   const searchParams = useSearchParams();

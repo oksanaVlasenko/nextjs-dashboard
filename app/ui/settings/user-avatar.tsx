@@ -5,10 +5,10 @@ import defaultAvatar from "@/public/default-avatar.jpg";
 import clsx from "clsx";
 import FileUploader from './file-uploader';
 import { useState } from 'react';
-import { uploadPhoto } from '@/app/lib/actions';
 import { Button, WhiteButton } from '../button';
 import { ArrowUpTrayIcon } from '@heroicons/react/24/outline';
 import { User } from '@prisma/client';
+import { uploadPhoto } from '@/app/lib/user/actions';
 
 export default function UserAvatar({ className, userInfo, updateSession }: { 
   className: string,

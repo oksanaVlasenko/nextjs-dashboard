@@ -1,10 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowRightStartOnRectangleIcon, Cog8ToothIcon } from '@heroicons/react/24/outline';
-import { logout } from '@/app/lib/actions';
+import { logout } from '@/app/lib/user/actions';
+
 import { usePathname } from 'next/navigation';
 import clsx from 'clsx';
+
+import { ArrowRightStartOnRectangleIcon, Cog8ToothIcon } from '@heroicons/react/24/outline';
 
 export default function BottomNav() {
   const pathname = usePathname();

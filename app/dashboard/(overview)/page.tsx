@@ -1,5 +1,4 @@
-import { getUserWords, getWordsTotalPages } from "@/app/lib/actions";
-import { getSession } from "@/app/lib/auth";
+import { getUserWords, getWordsTotalPages } from "@/app/lib/words/data";
 import EmptyTable from "@/app/ui/dashboard/empty-table";
 import Header from "@/app/ui/dashboard/header";
 import Pagination from "@/app/ui/invoices/pagination";
@@ -18,15 +17,11 @@ export default async function Page(props: {
     page?: string;
   }>;
 }) {
-  const session = await getSession() 
-  const userId = session?.user?.id ?? '';
-
   const searchParams = await props.searchParams;
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
-  const totalPages = await getWordsTotalPages(query, userId);
+  const totalPages = await getWordsTotalPages(query);
   const result = await getUserWords({
-    userId,
     page: currentPage,
     search: query
   });

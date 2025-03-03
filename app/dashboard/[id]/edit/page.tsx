@@ -1,4 +1,4 @@
-import { fetchWordById } from "@/app/lib/actions";
+import { fetchWordById } from "@/app/lib/words/data";
 import Header from "@/app/ui/dashboard/header";
 import EditWord from "@/app/ui/words/edit-word";
 import { Metadata } from 'next';

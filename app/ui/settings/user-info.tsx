@@ -2,13 +2,13 @@
 
 import clsx from "clsx";
 import ProfileRow from "@/app/ui/settings/profile-row";
-import { useLanguages } from "@/app/lib/useLanguages";
+import { useLanguages } from "@/app/lib/words/useLanguages";
 import { DropdownSkeleton } from "@/app/ui/skeletons";
 import Dropdown from "@/app/ui/dropdown";
 import { Button } from "@/app/ui/button";
-import { updateUser, UserInfoState } from "@/app/lib/actions";
 import { useActionState, useState } from "react";
 import { Level, User } from "@prisma/client";
+import { updateUser, UserInfoState } from "@/app/lib/user/actions";
 
 const options = [
   { id: "A1", label: "A1 – Elementary" },

@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { useLanguages } from "@/app/lib/useLanguages";
+import { useLanguages } from "@/app/lib/words/useLanguages";
 
 import { ArrowsRightLeftIcon } from "@heroicons/react/24/outline";
 

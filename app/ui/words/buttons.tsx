@@ -1,10 +1,10 @@
 'use client';
 
-import { speakText } from '@/app/lib/utils';
 import { PencilIcon, SpeakerWaveIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
-import { deleteWordAction } from '@/app/lib/actions';
 import Link from 'next/link';
+import { speakText } from '@/app/lib/words/wordUtils';
+import { deleteWordAction } from '@/app/lib/words/actions';
 
 interface SpeakerButtonProps {
   word: string;
