@@ -8,7 +8,8 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 export default function Input({ containerClassname, label, isControlled, ...rest }: InputProps) {
-  const inputId = rest.id ?? useId()
+  const generatedId = useId();
+  const inputId = rest.id ?? generatedId
 
   return (
     <div className={clsx(containerClassname)}>

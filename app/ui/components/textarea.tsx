@@ -8,7 +8,8 @@ interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement
 }
 
 export default function Textarea({ containerClassname, label, isControlled, ...rest }: TextareaProps) {
-  const inputId = rest.id ?? useId()
+  const generatedId = useId();
+  const inputId = rest.id ?? generatedId
 
   return (
     <div className={clsx(containerClassname)}>
