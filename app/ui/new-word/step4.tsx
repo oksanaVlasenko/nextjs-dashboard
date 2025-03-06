@@ -1,4 +1,4 @@
-import { Button, WhiteButton } from "@/app/ui/button";
+import { Button, WhiteButton } from "@/app/ui/components/button";
 
 import StepNumber from "@/app/ui/new-word/step-number";
 import StepHeader from "@/app/ui/new-word/step-header";
@@ -6,6 +6,8 @@ import clsx from 'clsx';
 import { SpeakerWaveIcon } from '@heroicons/react/24/outline';
 import { TranslationData, WordData } from "@/app/lib/definitions";
 import { speakText } from "@/app/lib/words/wordUtils";
+import Input from "@/app/ui/components/input";
+import Textarea from "@/app/ui/components/textarea";
 
 export default function Step4({ data, translationData, activeStep, doneSteps, onTranslationChange, onNextStep, onPreviousStep }: { 
   data: WordData, 
@@ -41,29 +43,19 @@ export default function Step4({ data, translationData, activeStep, doneSteps, on
               </div>
 
               <div className="flex  flex-wrap items-end gap-4 pb-8">
-                <div className="w-full flex flex-col max-w-sm sm:flex-1 pb-2">
-                  <label
-                    className="block mb-3 text-neutral-600 font-medium tracking-tight"
-                    htmlFor="translation"
-                  >
-                    Translation
-                  </label>
-
-                  <input
-                    value={translationData.translation}
-                    className={clsx(
-                      'w-full custom-input',
-                      
-                    )}
-                    id="translation"
-                    type="text"
-                    name="text"
-                    placeholder="Type your word here"
-                    required
-                    onChange={(e) => onTranslationChange({ translation: e.target.value })}
-                    
-                  />
-                </div>
+                <Input 
+                  isControlled={true}
+                  containerClassname="w-full flex flex-col max-w-sm sm:flex-1 pb-2"
+                  label="Translation"
+                  value={translationData.translation}
+                  className='w-full custom-input'
+                  id="translation"
+                  type="text"
+                  name="text"
+                  placeholder="Type your word here"
+                  required
+                  onChange={(e) => onTranslationChange({ translation: e.target.value })}
+                />
 
                 <div className="w-full flex items-center max-w-sm sm:flex-1 pb-6">
                   <p>{translationData.transcription}</p>
@@ -78,66 +70,48 @@ export default function Step4({ data, translationData, activeStep, doneSteps, on
               </div>
 
               <div className="flex flex-row flex-wrap items-center gap-4 pb-8">
-                <div className="w-full flex flex-col max-w-sm sm:max-w-xl sm:flex-1 pb-2">
-                  <label
-                    className="block mb-3 text-neutral-600 font-medium tracking-tight"
-                    htmlFor="explanation"
-                  >
-                    Explanation
-                  </label>
-
-                  <textarea 
-                    value={translationData.explanation}
-                    id="explanation"
-                    className='w-full resize-none h-[150px] max-h-[150px] scrollbar custom-input'
-                    placeholder="Type your word here"
-                    onChange={(e) => onTranslationChange({ explanation: e.target.value })}
-                  />
-                </div>
+                <Textarea 
+                  isControlled={true}
+                  containerClassname="w-full flex flex-col max-w-sm sm:max-w-xl sm:flex-1 pb-2"
+                  label="Explanation"
+                  value={translationData.explanation}
+                  id="explanation"
+                  className='w-full resize-none h-[150px] max-h-[150px] scrollbar custom-input'
+                  placeholder="Type your word here"
+                  onChange={(e) => onTranslationChange({ explanation: e.target.value })}
+                />
               </div>
 
               <div className="flex flex-col flex-wrap gap-4 pb-8">
-                <div className="w-full flex flex-col max-w-sm sm:max-w-xl sm:flex-1 pb-2">
-                  <label
-                    className="block mb-3 text-neutral-600 font-medium tracking-tight"
-                    htmlFor="example1"
-                  >
-                    Example 1
-                  </label>
-
-                  <textarea
-                    value={translationData.example1}
-                    className={clsx(
-                      'w-full px-8 py-3 resize-none h-[100px] max-h-[100px] scrollbar outline-none rounded-lg border border-neutral-100 focus:ring-0 focus:border-neutral-900 placeholder-neutral-300 font-medium transition duration-200',
-                      
-                    )}
-                    id="example1"
-                    placeholder="Type your word here"
-                    required
-                    onChange={(e) => onTranslationChange({ example1: e.target.value })}
-                  />
-                </div>
-
-                <div className="w-full flex flex-col max-w-sm sm:max-w-xl sm:flex-1 pb-2">
-                  <label
-                    className="block mb-3 text-neutral-600 font-medium tracking-tight"
-                    htmlFor="example2"
-                  >
-                    Example 2
-                  </label>
-
-                  <textarea
-                    value={translationData.example2}
-                    className={clsx(
-                      'w-full px-8 py-3 resize-none h-[100px] max-h-[100px] scrollbar outline-none rounded-lg border border-neutral-100 focus:ring-0 focus:border-neutral-900 placeholder-neutral-300 font-medium transition duration-200',
-                      
-                    )}
-                    id="example2"
-                    placeholder="Type your word here"
-                    required
-                    onChange={(e) => onTranslationChange({ example2: e.target.value })}                    
-                  />
-                </div>
+                <Textarea 
+                  isControlled={true}
+                  containerClassname="w-full flex flex-col max-w-sm sm:max-w-xl sm:flex-1 pb-2"
+                  label="Example 1"
+                  value={translationData.example1}
+                  className={clsx(
+                    'w-full px-8 py-3 resize-none h-[100px] max-h-[100px] scrollbar outline-none rounded-lg border border-neutral-100 focus:ring-0 focus:border-neutral-900 placeholder-neutral-300 font-medium transition duration-200',
+                    
+                  )}
+                  id="example1"
+                  placeholder="Type your word here"
+                  required
+                  onChange={(e) => onTranslationChange({ example1: e.target.value })}
+                />
+                
+                <Textarea 
+                  isControlled={true}
+                  containerClassname="w-full flex flex-col max-w-sm sm:max-w-xl sm:flex-1 pb-2"
+                  label="Example 2"
+                  value={translationData.example2}
+                  className={clsx(
+                    'w-full px-8 py-3 resize-none h-[100px] max-h-[100px] scrollbar outline-none rounded-lg border border-neutral-100 focus:ring-0 focus:border-neutral-900 placeholder-neutral-300 font-medium transition duration-200',
+                    
+                  )}
+                  id="example2"
+                  placeholder="Type your word here"
+                  required
+                  onChange={(e) => onTranslationChange({ example2: e.target.value })}
+                />
               </div>
                 
               <div className="flex flex-wrap gap-2 p-1 pb-11">

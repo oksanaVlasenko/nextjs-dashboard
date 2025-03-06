@@ -169,3 +169,7 @@ input[type='number']::-webkit-outer-spin-button {
 .custom-input {
   @apply px-8 py-3 outline-none rounded-lg border border-neutral-100 focus:ring-0 focus:border-neutral-900 placeholder-neutral-300 font-medium transition duration-200;
 }
+
+.custom-label {
+  @apply block mb-3 text-neutral-600 font-medium tracking-tight;
+}

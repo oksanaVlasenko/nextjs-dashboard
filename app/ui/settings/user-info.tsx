@@ -4,8 +4,8 @@ import clsx from "clsx";
 import ProfileRow from "@/app/ui/settings/profile-row";
 import { useLanguages } from "@/app/lib/words/useLanguages";
 import { DropdownSkeleton } from "@/app/ui/skeletons";
-import Dropdown from "@/app/ui/dropdown";
-import { Button } from "@/app/ui/button";
+import Dropdown from "@/app/ui/components/dropdown";
+import { Button } from "@/app/ui/components/button";
 import { useActionState, useState } from "react";
 import { Level, User } from "@prisma/client";
 import { updateUser, UserInfoState } from "@/app/lib/user/actions";
@@ -61,10 +61,9 @@ export default function UserInfo({ className, userInfo, updateSession }: {
             name="name" 
             className="w-auto md:w-full md:max-w-xs custom-input"
             aria-describedby="name-error"
-          />
-
-          
+          />       
         </ProfileRow>
+
         {
           state.errors?.name && (
             <div id="name-error" aria-live="polite" aria-atomic="true">

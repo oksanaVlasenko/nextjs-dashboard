@@ -1,7 +1,7 @@
 
 import { signIn } from "@/auth"
 import { JSX, SVGProps } from "react"
-import { WhiteButton } from "../button"
+import { WhiteButton } from "../components/button"
  
 export default function SignInGithub() {
   return (

@@ -3,10 +3,11 @@
 import {
   ExclamationCircleIcon,
 } from '@heroicons/react/24/outline';
-import { Button } from '../button';
+import { Button } from '../components/button';
 import { useActionState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { authenticate } from '@/app/lib/user/actions';
+import Input from '@/app/ui/components/input';
 
 export default function LoginForm() {
   const searchParams = useSearchParams();
@@ -22,43 +23,29 @@ export default function LoginForm() {
     <form action={formAction}>
       <div className="flex flex-wrap -m-3 mb-3">
         <div className="w-full p-3">
-          <div>
-            <label
-              className="block mb-3 text-neutral-600 font-medium tracking-tight"
-              htmlFor="email"
-            >
-              Email
-            </label>
-            <div className="w-full">
-              <input
-                className="w-full custom-input"
-                id="email"
-                type="email"
-                name="email"
-                placeholder="ex. d.duncan@email.com"
-                required
-              />
-            </div>
-          </div>
-          <div className="mt-4">
-            <label
-              className="block mb-3 text-neutral-600 font-medium tracking-tight"
-              htmlFor="password"
-            >
-              Password
-            </label>
-            <div className="w-full">
-              <input
-                className="w-full custom-input"
-                id="password"
-                type="password"
-                name="password"
-                placeholder="******"
-                required
-                minLength={6}
-              />
-            </div>
-          </div>
+          <Input 
+            isControlled={false}
+            label='Email'
+            className="w-full custom-input"
+            id="email"
+            type="email"
+            name="email"
+            placeholder="ex. d.duncan@email.com"
+            required
+          />
+
+          <Input 
+            isControlled={false}
+            containerClassname='mt-4'
+            label='Password'
+            className="w-full custom-input"
+            id="password"
+            type="password"
+            name="password"
+            placeholder="******"
+            required
+            minLength={6}
+          />
         </div>
         <input type="hidden" name="redirectTo" value={callbackUrl} />
 

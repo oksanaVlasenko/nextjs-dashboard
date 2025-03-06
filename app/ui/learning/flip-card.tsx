@@ -2,7 +2,7 @@
 
 import { LightBulbIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
-import { Button } from '@/app/ui/button';
+import { Button } from '@/app/ui/components/button';
 import { AdvancedWord } from '@/app/lib/definitions';
 import { SpeakerButton } from '@/app/ui/words/buttons';
 

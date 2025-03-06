@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, WhiteButton } from "@/app/ui/button";
+import { Button, WhiteButton } from "@/app/ui/components/button";
 
 import StepNumber from "@/app/ui/new-word/step-number";
 import StepHeader from "@/app/ui/new-word/step-header";
@@ -8,6 +8,7 @@ import clsx from 'clsx';
 import { useState } from 'react';
 import { WordData } from "@/app/lib/definitions";
 import { checkWord } from "@/app/lib/words/actions";
+import Input from "@/app/ui/components/input";
 
 export default function Step3({ data, activeStep, isGenerate, doneSteps, onChange, onNextStep, onPreviousStep }: { 
   data: WordData, 
@@ -34,7 +35,6 @@ export default function Step3({ data, activeStep, isGenerate, doneSteps, onChang
 
     const result = await checkWord(data.word, data.fromLang)
 
-    console.log(result)
     setIsWordCorrect(result.correct)
     setSuggestions(result.suggestions)
     setIsCheckingWord(false)
@@ -70,28 +70,28 @@ export default function Step3({ data, activeStep, isGenerate, doneSteps, onChang
           activeStep === 3 && (
             <>
               <div className="flex flex-wrap flex-col max-w-xl pb-8 -m-1">
-                <div className="w-full max-w-sm sm:flex-1 pb-2">
-                  <input
-                    value={data.word}
-                    className={clsx(
-                      'w-full custom-input',
-                      {
-                        'border-red-500': suggestions.length > 0,
-                      }
-                    )}
-                    type="text"
-                    name="text"
-                    placeholder="Type your word here"
-                    required
-                    onChange={(e) => onChange({ word: e.target.value })}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
-                        e.preventDefault(); 
-                        checkWordIsRight();
-                      }
-                    }}
-                  />
-                </div>  
+                <Input 
+                  containerClassname="w-full max-w-sm sm:flex-1 pb-2"
+                  isControlled={true}
+                  value={data.word}
+                  className={clsx(
+                    'w-full custom-input',
+                    {
+                      'border-red-500': suggestions.length > 0,
+                    }
+                  )}
+                  type="text"
+                  name="text"
+                  placeholder="Type your word here"
+                  required
+                  onChange={(e) => onChange({ word: e.target.value })}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault(); 
+                      checkWordIsRight();
+                    }
+                  }}
+                />
 
                 {
                   suggestions.length > 0 && (

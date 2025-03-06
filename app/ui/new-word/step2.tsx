@@ -1,4 +1,4 @@
-import { Button, WhiteButton } from "@/app/ui/button";
+import { Button, WhiteButton } from "@/app/ui/components/button";
 
 import StepNumber from "@/app/ui/new-word/step-number";
 import StepHeader from "@/app/ui/new-word/step-header";

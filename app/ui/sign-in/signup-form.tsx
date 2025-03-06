@@ -3,10 +3,11 @@
 import {
   ExclamationCircleIcon
 } from '@heroicons/react/24/outline';
-import { Button } from '@/app/ui/button';
+import { Button } from '@/app/ui/components/button';
 import { useActionState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { createUser, UserState } from '@/app/lib/user/actions';
+import Input from '@/app/ui/components/input';
 
 export default function SignUpForm() {
   const searchParams = useSearchParams();
@@ -21,93 +22,75 @@ export default function SignUpForm() {
     <form action={formAction}>
       <div className="flex flex-wrap -m-3 mb-3">
         <div className="w-full p-3">
-          <div>
-            <label
-              className="block mb-3 text-neutral-600 font-medium tracking-tight"
-              htmlFor="name"
-            >
-              Name
-            </label>
-            <div className="w-full">
-              <input
-                className="w-full custom-input"
-                id="name"
-                type="text"
-                name="name"
-                placeholder="ex. Jane Smith"
-                required
-                aria-describedby="name-error"
-              />
-            </div>
+          <Input 
+            isControlled={false}
+            label='Name'
+            className="w-full custom-input"
+            id="name"
+            type="text"
+            name="name"
+            placeholder="ex. Jane Smith"
+            required
+            aria-describedby="name-error"
+          />
 
-            <div id="name-error" aria-live="polite" aria-atomic="true">
-              {state.errors?.name &&
-                state.errors.name.map((error: string) => (
-                  <p className="mt-2 text-sm text-red-500" key={error}>
-                    {error}
-                  </p>
-                ))}
-            </div>
+          <div id="name-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.name &&
+              state.errors.name.map((error: string) => (
+                <p className="mt-2 text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
           </div>
-          <div className='mt-4'>
-            <label
-              className="block mb-3 text-neutral-600 font-medium tracking-tight"
-              htmlFor="email"
-            >
-              Email
-            </label>
-            <div className="w-full">
-              <input
-                className="w-full custom-input"
-                id="email"
-                type="email"
-                name="email"
-                placeholder="ex. d.duncan@email.com"
-                required
-                aria-describedby="email-error"
-              />
-            </div>
 
-            <div id="email-error" aria-live="polite" aria-atomic="true">
-              {state.errors?.email &&
-                state.errors.email.map((error: string) => (
-                  <p className="mt-2 text-sm text-red-500" key={error}>
-                    {error}
-                  </p>
-                ))}
-            </div>
+          <Input 
+            isControlled={false}
+            containerClassname='mt-4'
+            label='Email'
+            className="w-full custom-input"
+            id="email"
+            type="email"
+            name="email"
+            placeholder="ex. d.duncan@email.com"
+            required
+            aria-describedby="email-error"
+          />
+
+          <div id="email-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.email &&
+              state.errors.email.map((error: string) => (
+                <p className="mt-2 text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
           </div>
-          <div className="mt-4">
-            <label
-              className="block mb-3 text-neutral-600 font-medium tracking-tight"
-              htmlFor="password"
-            >
-              Password
-            </label>
-            <div className="w-full">
-              <input
-                className="w-full custom-input"
-                id="password"
-                type="password"
-                name="password"
-                placeholder="******"
-                required
-                minLength={6}
-                aria-describedby="password-error"
-              />
-            </div>
 
-            <div id="password-error" aria-live="polite" aria-atomic="true">
-              {state.errors?.password &&
-                state.errors.password.map((error: string) => (
-                  <p className="mt-2 text-sm text-red-500" key={error}>
-                    {error}
-                  </p>
-                ))}
-            </div>
+          <Input 
+            isControlled={false}
+            containerClassname='mt-4'
+            label='Password'
+            className="w-full custom-input"
+            id="password"
+            type="password"
+            name="password"
+            placeholder="******"
+            required
+            minLength={6}
+            aria-describedby="password-error"
+          />
+
+          <div id="password-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.password &&
+              state.errors.password.map((error: string) => (
+                <p className="mt-2 text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
           </div>
         </div>
+
         <input type="hidden" name="redirectTo" value={callbackUrl} />
+        
         <div className="w-full p-3">
           <Button aria-disabled={isPending}>
             Register now 

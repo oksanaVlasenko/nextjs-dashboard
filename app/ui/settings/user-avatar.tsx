@@ -5,7 +5,7 @@ import defaultAvatar from "@/public/default-avatar.jpg";
 import clsx from "clsx";
 import FileUploader from './file-uploader';
 import { useState } from 'react';
-import { Button, WhiteButton } from '../button';
+import { Button, WhiteButton } from '../components/button';
 import { ArrowUpTrayIcon } from '@heroicons/react/24/outline';
 import { User } from '@prisma/client';
 import { uploadPhoto } from '@/app/lib/user/actions';

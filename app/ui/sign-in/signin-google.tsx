@@ -1,6 +1,6 @@
 
 import { signIn } from "@/auth"
-import { WhiteButton } from "../button"
+import { WhiteButton } from "../components/button"
 import { JSX, SVGProps } from "react"
  
 export default async function SignInGoogle() {

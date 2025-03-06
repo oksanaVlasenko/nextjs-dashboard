@@ -4,8 +4,8 @@ import { useLanguages } from "@/app/lib/words/useLanguages";
 import { ArrowsRightLeftIcon } from "@heroicons/react/24/outline";
 
 import { DropdownSkeleton } from "@/app/ui/skeletons";
-import { Button } from "@/app/ui/button";
-import Dropdown from "@/app/ui/dropdown";
+import { Button } from "@/app/ui/components/button";
+import Dropdown from "@/app/ui/components/dropdown";
 import StepNumber from "@/app/ui/new-word/step-number";
 import StepHeader from "@/app/ui/new-word/step-header";
 import { WordData } from "@/app/lib/definitions";
