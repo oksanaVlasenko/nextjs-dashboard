@@ -1,13 +1,13 @@
 'use server';
 
-import { ArticleType, ExploreWord, TranslationData, WordData } from "@/app/lib/definitions";
+import { ArticleType, TranslationData, WordData } from "@/app/lib/definitions";
 import { auth } from "@/auth";
 import { prisma } from "@/prisma";
 import { LearningProgress, Level, Word } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
-import { isValidArticle, isValidArticleArray } from "./wordUtils";
+import { isValidArticleArray } from "./wordUtils";
 
 export async function checkWord(word: string, langCode: string) {
   const inDevEnvironment = !!process && process.env.NODE_ENV === 'development';
