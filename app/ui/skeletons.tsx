@@ -64,6 +64,50 @@ export function InvoiceSkeleton() {
   );
 }
 
+export function MediaContentSkeleton() {
+  return (
+    <div className={`${orangeShimmer} py-12 border-t-2 relative overflow-hidden border-gray-100`}>
+      <div className="flex flex-wrap lg:flex-nowrap items-center">
+        <div className={` w-[220px] h-[220px] lg:w-auto px-4 mb-8 lg:mb-0`}>
+          <div className="w-full h-full bg-gray-100 aspect-square overflow-hidden flex flex-col justify-center items-center border rounded-xl text-center"></div>
+        </div>
+
+        <div className="w-full lg:w-9/12 px-4 mb-10 lg:mb-0">
+          <div className="max-w-2xl">
+            <span className="block text-gray-400 h-5 bg-gray-100 mb-1"></span>
+            <p className="text-2xl font-semibold h-10 bg-gray-100 text-gray-900"></p>
+          </div>
+        </div>
+
+        <div className="w-full lg:w-auto px-4 ml-auto text-right">
+          <span className="mr-2 h-5 bg-gray-100"></span>
+          <svg className="animate-bounce" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.33301 14.6668L14.6663 1.3335" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
+            <path d="M1.33301 1.3335H14.6663V14.6668" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path>
+          </svg>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export function MediaTableSkeleton() {
+  return (
+    <section className="py-4 overflow-hidden">
+      <div className="container px-6 mx-auto">
+        <div className={`px-6 pt-5 pb-7 bg-white rounded-xl`}>
+          <MediaContentSkeleton />
+          <MediaContentSkeleton />
+          <MediaContentSkeleton />
+          <MediaContentSkeleton />
+          <MediaContentSkeleton />
+        </div>
+      </div>
+    </section>
+  )
+}
+
+
 export function DropdownSkeleton() {
   return (
     <div className={`${orangeShimmer} max-w-xs h-[52px] overflow-hidden bg-white relative w-full rounded-t-lg`}>

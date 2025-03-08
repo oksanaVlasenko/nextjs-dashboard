@@ -1,14 +1,32 @@
+import { Tab } from "@/app/lib/definitions";
 import { fetchWordById } from "@/app/lib/words/data";
 import Header from "@/app/ui/dashboard/header";
-import EditWord from "@/app/ui/words/edit-word";
+import TabContent from "@/app/ui/words/tab-content";
+import Tabs from "@/app/ui/words/tabs";
+import { ArrowUturnLeftIcon } from "@heroicons/react/24/outline";
 import { Metadata } from 'next';
+import Link from "next/link";
 import { notFound } from 'next/navigation';
 
 export const metadata: Metadata = {
   title: 'Edit Word',
 };
 
-export default async function Page(props: { params: Promise<{ id: string }> }) {
+const tabs = [
+  { label: 'Word', id: Tab.word },
+  { label: 'Articles', id: Tab.articles },
+  { label: 'Videos', id: Tab.videos },
+  { label: 'Songs', id: Tab.songs }
+]
+
+export default async function Page(props: { 
+  params: Promise<{ id: string }>,
+  searchParams?: Promise<{ tab?: Tab }>
+}) {
+  const searchParams = await props.searchParams;
+  
+  const activeTab: Tab = searchParams?.tab || Tab.word
+
   const params = await props.params;
   const id = params.id;
 
@@ -22,25 +40,27 @@ export default async function Page(props: { params: Promise<{ id: string }> }) {
     <main>
       <Header />
 
-      <div className="w-auto p-6">
-        <h2 className="mb-3 text-3xl font-heading font-medium">
+      <div className="w-auto p-6 mb-3 flex items-center">
+        <Link 
+          href='/dashboard'
+        >
+          <ArrowUturnLeftIcon className="w-7 h-7 mr-4 cursor-pointer" /> 
+        </Link>
+        
+        
+        <h2 className=" text-3xl font-heading font-medium">
           {word.word}
         </h2>
       </div>
 
-      <div className="px-6 mb-4">
-        <div className="border-b border-gray-100">
-          <p className="inline-block py-4 pr-16 mr-9 font-heading font-medium border-b-2 border-orange-500 text-orange-500 hover:text-orange-600">
-            Word
-          </p>
-        </div>
-      </div>
+      <Tabs 
+        tabs={tabs}
+      />
 
-      { word && 
-        <EditWord 
-          data={word}
-        />
-      }
+      <TabContent 
+        activeTab={activeTab} 
+        word={word} 
+      />
     </main>
   )
 }

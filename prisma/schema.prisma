@@ -119,3 +119,13 @@ model Word {
   
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
+
+model SearchCache {
+  word                 String   @unique @id
+  articles             Json? 
+  videos               Json? 
+  songs                Json?
+  general              Json?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}

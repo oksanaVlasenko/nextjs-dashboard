@@ -5,7 +5,6 @@ import clsx from "clsx";
 import { SpeakerButton } from "@/app/ui/words/buttons";
 import { Button } from "@/app/ui/components/button";
 import { useActionState } from "react";
-import Link from "next/link";
 import { updateWord, WordInfoState } from "@/app/lib/words/actions";
 import Input from "@/app/ui/components/input";
 import Textarea from "@/app/ui/components/textarea";
@@ -118,18 +117,13 @@ export default function EditWord({ data }: {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className='w-auto lg:w-full lg:max-w-xl'>
-                <Link 
-                  href='/dashboard'
-                  className="flex justify-center items-center text-center w-full px-4 py-3 font-semibold tracking-tight hover:text-white border border-neutral-900 bg-white hover:bg-neutral-900 focus:bg-neutral-900 rounded-lg  transition duration-200"
-                >
-                  Back
-                </Link>
+
               </div>
 
               <Button 
                 type="submit" 
                 className={clsx(
-                  'w-auto md:w-full lg:max-w-xl',
+                  'w-auto sm:w-full sm:max-w-xl',
                   {
                     'pending-animation-white': isPending,
                   }

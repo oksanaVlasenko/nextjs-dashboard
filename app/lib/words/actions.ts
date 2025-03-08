@@ -1,12 +1,13 @@
 'use server';
 
-import { TranslationData, WordData } from "@/app/lib/definitions";
+import { ArticleType, ExploreWord, TranslationData, WordData } from "@/app/lib/definitions";
 import { auth } from "@/auth";
 import { prisma } from "@/prisma";
 import { LearningProgress, Level, Word } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { isValidArticle, isValidArticleArray } from "./wordUtils";
 
 export async function checkWord(word: string, langCode: string) {
   const inDevEnvironment = !!process && process.env.NODE_ENV === 'development';
@@ -24,6 +25,74 @@ export async function checkWord(word: string, langCode: string) {
 
   return data
 }
+
+
+interface WordExpore extends WordData {
+  type: string
+}
+
+export async function generateExporeWord(formData: Partial<WordExpore>): Promise<ArticleType[]> {
+  const { word, type } = formData
+  
+  const cachedResult = await prisma.searchCache.findUnique({ 
+    where: { word } 
+  }); 
+
+  if (cachedResult && type && cachedResult[type as keyof typeof cachedResult]) {
+    const result = cachedResult[type as keyof typeof cachedResult]
+
+    if (result && isValidArticleArray(result)) {
+      return result;
+    }
+  }
+
+  const inDevEnvironment = !!process && process.env.NODE_ENV === 'development';
+
+  const baseUrl = !inDevEnvironment ?
+      process.env.NEXT_PUBLIC_SITE_URL : "http://localhost:3000"
+
+  const res = await fetch(`${baseUrl}/api/explore-word`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(formData)
+  });
+
+  const data = await res.json();
+
+  if (!word) {
+    throw new Error("Word is required for caching");
+  }
+
+  await prisma.searchCache.upsert({
+    where: { word },
+    update: { [type as keyof typeof cachedResult]: data.result, updatedAt: new Date() },
+    create: { word, [type as keyof typeof cachedResult]: data.result },
+  });
+
+  //const match = data.result.match(/```json\n([\s\S]*?)\n```/);
+
+  // let resultObject: ExploreWord = {
+  //   partOfLanguage: "",
+  //   context: "",
+  //   wordForms: [],
+  //   articlesLink: [],
+  //   songsLink: [],
+  //   videosLink: []
+  // }
+
+  // let resultObject = {}
+
+  // if (match) {
+  //   try {
+  //     resultObject = JSON.parse(match[1])
+  //   } catch (error) {
+  //     console.error("Помилка парсингу JSON:", error);
+  //   }
+  // }
+
+  return data.result
+}
+
 
 export async function generateWordTranslation(formData: WordData): Promise<TranslationData> {
   const inDevEnvironment = !!process && process.env.NODE_ENV === 'development';
@@ -61,6 +130,18 @@ export async function generateWordTranslation(formData: WordData): Promise<Trans
 }
 
 export async function deleteWordAction(wordId: string) {
+  const word = await prisma.word.findFirst({
+    where: {
+      id: wordId
+    },
+  })
+
+  await prisma.searchCache.delete({
+    where: {
+      word: word?.word
+    }
+  })
+
   await prisma.word.delete({
     where: {
       id: wordId,

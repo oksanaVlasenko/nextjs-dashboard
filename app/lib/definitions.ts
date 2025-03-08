@@ -5,6 +5,31 @@
 import { Level, Word } from "@prisma/client";
 
 // However, these types are generated automatically if you're using an ORM such as Prisma.
+
+export enum Tab {
+  word = 'word',
+  articles = 'articles',
+  videos = 'videos',
+  songs = 'songs'
+};
+
+export type ArticleType = {
+  title: string;
+  date: string;
+  snippet: string;
+  link: string;
+  image?: string;
+}
+
+export type ExploreWord = {
+  partOfLanguage: string;
+  context: string;
+  wordForms: string[];
+  articlesLink: ArticleType[];  
+  songsLink: string[];  
+  videosLink: string[]; 
+}
+
 export type WordData = {
   fromLang: string;
   toLang: string;
