@@ -217,6 +217,7 @@ export async function uploadPhoto(
       try {
         await api.delete('api/delete-avatar', { fileUrl: session.user.image })
       } catch(error) {
+        console.error('Failed to delete avatar', error)
         return {
           message: 'Upload failed',
         }
