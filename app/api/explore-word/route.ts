@@ -65,7 +65,7 @@ export async function POST(req: Request) {
       image: item.pagemap && item.pagemap.cse_image ? item.pagemap.cse_image[0].src : ''
     }));
 
-    return NextResponse.json({ result: articles })
+    return NextResponse.json(articles)
   } catch(error) {
     console.error("AI API error:", error);
     return NextResponse.json({ error: "Failed to generate response" }, { status: 500 });

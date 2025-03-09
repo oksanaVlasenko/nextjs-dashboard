@@ -11,6 +11,7 @@ import { prisma } from "@/prisma";
 import { Level, User } from "@prisma/client";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { generateFileName } from "./userUtils";
+import { api } from "@/app/lib/api";
 
 export async function logout() {
   await signOut({ redirectTo: "/" });
@@ -213,18 +214,12 @@ export async function uploadPhoto(
     const avatarUrl = await uploadToS3(file);
 
     if (session && session.user.image?.includes('my-avatars-files.s3')) {
-      const inDevEnvironment = !!process && process.env.NODE_ENV === 'development';
-
-      const baseUrl = !inDevEnvironment ?
-        process.env.NEXT_PUBLIC_SITE_URL : "http://localhost:3000"
-
-      const response = await fetch(`${baseUrl}/api/delete-avatar`, {
-        method: "DELETE",
-        body: JSON.stringify({ fileUrl: session.user.image }),
-      });
-
-      if (!response.ok) return {
-        message: 'Upload failed',
+      try {
+        await api.delete('api/delete-avatar', { fileUrl: session.user.image })
+      } catch(error) {
+        return {
+          message: 'Upload failed',
+        }
       }
     }
 

@@ -1,6 +1,6 @@
 'use server';
 
-import { ArticleType, TranslationData, WordData } from "@/app/lib/definitions";
+import { ArticleType, SpellCheckType, TranslationData, WordData } from "@/app/lib/definitions";
 import { auth } from "@/auth";
 import { prisma } from "@/prisma";
 import { LearningProgress, Level, Word } from "@prisma/client";
@@ -8,24 +8,18 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { isValidArticleArray } from "./wordUtils";
+import { api } from "@/app/lib/api";
 
-export async function checkWord(word: string, langCode: string) {
-  const inDevEnvironment = !!process && process.env.NODE_ENV === 'development';
+export async function checkWord(word: string, langCode: string): Promise<SpellCheckType> {
+  try {
+    const data: SpellCheckType = await api.post('api/spellcheck', { word, langCode })
 
-  const baseUrl = !inDevEnvironment ?
-      process.env.NEXT_PUBLIC_SITE_URL : "http://localhost:3000"
-
-  const res = await fetch(`${baseUrl}/api/spellcheck`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ word, langCode }),
-  });
-
-  const data = await res.json();
-
-  return data
+    return data
+  } catch (error) {
+    console.error("Error checkWord:", error);
+    throw error;
+  }
 }
-
 
 interface WordExpore extends WordData {
   type: string
@@ -34,6 +28,10 @@ interface WordExpore extends WordData {
 export async function generateExporeWord(formData: Partial<WordExpore>): Promise<ArticleType[]> {
   const { word, type } = formData
   
+  if (!word) {
+    throw new Error("Word is required for caching");
+  }
+
   const cachedResult = await prisma.searchCache.findUnique({ 
     where: { word } 
   }); 
@@ -46,67 +44,36 @@ export async function generateExporeWord(formData: Partial<WordExpore>): Promise
     }
   }
 
-  const inDevEnvironment = !!process && process.env.NODE_ENV === 'development';
+  let data: ArticleType[]
 
-  const baseUrl = !inDevEnvironment ?
-      process.env.NEXT_PUBLIC_SITE_URL : "http://localhost:3000"
-
-  const res = await fetch(`${baseUrl}/api/explore-word`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(formData)
-  });
-
-  const data = await res.json();
-
-  if (!word) {
-    throw new Error("Word is required for caching");
+  try {
+    data = await api.post('api/explore-word', formData)
+  } catch (error) {
+    console.error("Error explore-word:", error);
+    throw error;
   }
 
   await prisma.searchCache.upsert({
     where: { word },
-    update: { [type as keyof typeof cachedResult]: data.result, updatedAt: new Date() },
-    create: { word, [type as keyof typeof cachedResult]: data.result },
+    update: { [type as keyof typeof cachedResult]: data, updatedAt: new Date() },
+    create: { word, [type as keyof typeof cachedResult]: data },
   });
 
-  //const match = data.result.match(/```json\n([\s\S]*?)\n```/);
-
-  // let resultObject: ExploreWord = {
-  //   partOfLanguage: "",
-  //   context: "",
-  //   wordForms: [],
-  //   articlesLink: [],
-  //   songsLink: [],
-  //   videosLink: []
-  // }
-
-  // let resultObject = {}
-
-  // if (match) {
-  //   try {
-  //     resultObject = JSON.parse(match[1])
-  //   } catch (error) {
-  //     console.error("Помилка парсингу JSON:", error);
-  //   }
-  // }
-
-  return data.result
+  return data
 }
 
 
 export async function generateWordTranslation(formData: WordData): Promise<TranslationData> {
-  const inDevEnvironment = !!process && process.env.NODE_ENV === 'development';
+  let data : {
+    result: string
+  }
 
-  const baseUrl = !inDevEnvironment ?
-      process.env.NEXT_PUBLIC_SITE_URL : "http://localhost:3000"
-
-  const res = await fetch(`${baseUrl}/api/google-generative`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(formData),
-  });
-
-  const data = await res.json();
+  try {
+    data = await api.post('api/google-generative', formData);
+  } catch (error) {
+    console.error("Error google-generative:", error);
+    throw error;
+  }
 
   let jsonObject: TranslationData = {
     translation: '',
@@ -136,11 +103,19 @@ export async function deleteWordAction(wordId: string) {
     },
   })
 
-  await prisma.searchCache.delete({
+  const existingRecord = await prisma.searchCache.findUnique({
     where: {
-      word: word?.word
-    }
-  })
+      word: word?.word, 
+    },
+  });
+
+  if (existingRecord) {
+    await prisma.searchCache.delete({
+      where: {
+        word: word?.word
+      }
+    })
+  }
 
   await prisma.word.delete({
     where: {

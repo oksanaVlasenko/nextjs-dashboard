@@ -93,6 +93,7 @@ export default function AddWord() {
   }
 
   const saveWord = async () => {
+    setIsGenerate(true)
     setDoneSteps([...doneSteps, activeStep])
 
     const wordData = {
@@ -110,6 +111,8 @@ export default function AddWord() {
     }
 
     await createWordAction(wordData)
+
+    setIsGenerate(false)
   }
       
   return (
@@ -155,6 +158,7 @@ export default function AddWord() {
           
           <Step5
             activeStep={activeStep}
+            isGenerate={isGenerate}
             doneSteps={doneSteps}
             onPreviousStep={goToPreviousStep}
             onSave={saveWord}
