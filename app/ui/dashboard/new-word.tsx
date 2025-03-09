@@ -13,6 +13,7 @@ import { useLanguages } from "@/app/lib/words/useLanguages";
 import { TranslationData, WordData } from "@/app/lib/definitions";
 import { Level, LearningProgress } from "@prisma/client";
 import { createWordAction, generateWordTranslation } from "@/app/lib/words/actions";
+import Section from "@/app/ui/components/section-component";
 
 export default function AddWord() {
   const [activeStep, setActiveStep] = useState<number>(1)
@@ -116,55 +117,51 @@ export default function AddWord() {
   }
       
   return (
-    <section className="py-4 overflow-hidden">
-      <div className="container px-4 mx-auto">
-        <div className="px-6 pt-5 pb-7 bg-white border rounded-xl">
-          <Step1 
-            data={formData}
-            activeStep={activeStep}
-            doneSteps={doneSteps}
-            onNextStep={goToNextStep}
-            onChange={handleFormDataChange}
-          />
+    <Section className="border">
+      <Step1 
+        data={formData}
+        activeStep={activeStep}
+        doneSteps={doneSteps}
+        onNextStep={goToNextStep}
+        onChange={handleFormDataChange}
+      />
 
-          <Step2 
-            data={formData}
-            activeStep={activeStep}
-            doneSteps={doneSteps}
-            onNextStep={goToNextStep}
-            onPreviousStep={goToPreviousStep}
-            onChange={handleFormDataChange}
-          />
+      <Step2 
+        data={formData}
+        activeStep={activeStep}
+        doneSteps={doneSteps}
+        onNextStep={goToNextStep}
+        onPreviousStep={goToPreviousStep}
+        onChange={handleFormDataChange}
+      />
 
-          <Step3 
-            data={formData}
-            activeStep={activeStep}
-            isGenerate={isGenerate}
-            doneSteps={doneSteps}
-            onNextStep={getTranslation}
-            onPreviousStep={goToPreviousStep}
-            onChange={handleFormDataChange}
-          />
+      <Step3 
+        data={formData}
+        activeStep={activeStep}
+        isGenerate={isGenerate}
+        doneSteps={doneSteps}
+        onNextStep={getTranslation}
+        onPreviousStep={goToPreviousStep}
+        onChange={handleFormDataChange}
+      />
 
-          <Step4 
-            data={formData}
-            translationData={translationData}
-            activeStep={activeStep}
-            doneSteps={doneSteps}
-            onNextStep={goToNextStep}
-            onPreviousStep={goToPreviousStep}
-            onTranslationChange={handleTranslationDataChange}
-          />
-          
-          <Step5
-            activeStep={activeStep}
-            isGenerate={isGenerate}
-            doneSteps={doneSteps}
-            onPreviousStep={goToPreviousStep}
-            onSave={saveWord}
-          />
-        </div>
-      </div>
-    </section>
+      <Step4 
+        data={formData}
+        translationData={translationData}
+        activeStep={activeStep}
+        doneSteps={doneSteps}
+        onNextStep={goToNextStep}
+        onPreviousStep={goToPreviousStep}
+        onTranslationChange={handleTranslationDataChange}
+      />
+      
+      <Step5
+        activeStep={activeStep}
+        isGenerate={isGenerate}
+        doneSteps={doneSteps}
+        onPreviousStep={goToPreviousStep}
+        onSave={saveWord}
+      />
+    </Section>
   )
 }

@@ -6,6 +6,7 @@ import { useState } from "react";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import { LearningProgress } from "@prisma/client";
 import { updateWordsProgress } from "@/app/lib/words/actions";
+import Section from "@/app/ui/components/section-component";
 
 export default function FlippingModule({ words }: { 
   words: AdvancedWord[], 
@@ -33,36 +34,31 @@ export default function FlippingModule({ words }: {
   }  
 
   return (
-    <section className="py-4 overflow-hidden">
-      <div className="container px-4 mx-auto">
-        <div className="px-6 pt-5 pb-7 ">
-          <FlipCard 
-            word={activeWord}
-            onDontKnow={() => updateActiveWord('next')}
-            onKnow={() => {
-              updateProgress()
-              updateActiveWord('next')
-            }}
-          />
+    <Section>
+      <FlipCard 
+        word={activeWord}
+        onDontKnow={() => updateActiveWord('next')}
+        onKnow={() => {
+          updateProgress()
+          updateActiveWord('next')
+        }}
+      />
+
+      <div className="flex justify-center pt-7">
+        <div 
+          className="flex h-10 w-10 items-center mr-4 justify-center rounded-md border cursor-pointer"
+          onClick={() => updateActiveWord('previous')}
+        >
+          <ArrowLeftIcon className="w-4" />
         </div>
 
-        <div className="flex justify-center">
-          <div 
-            className="flex h-10 w-10 items-center mr-4 justify-center rounded-md border cursor-pointer"
-            onClick={() => updateActiveWord('previous')}
-          >
-            <ArrowLeftIcon className="w-4" />
-          </div>
-
-          <div 
-            className="flex h-10 w-10 items-center justify-center rounded-md border cursor-pointer"
-            onClick={() => updateActiveWord('next')}
-          >
-            <ArrowRightIcon className="w-4" />
-          </div>
+        <div 
+          className="flex h-10 w-10 items-center justify-center rounded-md border cursor-pointer"
+          onClick={() => updateActiveWord('next')}
+        >
+          <ArrowRightIcon className="w-4" />
         </div>
       </div>
-      
-    </section>
+    </Section>
   )
 }

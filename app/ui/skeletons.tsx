@@ -1,3 +1,5 @@
+import Section from "@/app/ui/components/section-component";
+
 // Loading animation
 const shimmer =
   'before:absolute before:inset-0 before:-translate-x-full before:animate-[shimmer_2s_infinite] before:bg-gradient-to-r before:from-transparent before:via-white/60 before:to-transparent';
@@ -93,17 +95,13 @@ export function MediaContentSkeleton() {
 
 export function MediaTableSkeleton() {
   return (
-    <section className="py-4 overflow-hidden">
-      <div className="container px-6 mx-auto">
-        <div className={`px-6 pt-5 pb-7 bg-white rounded-xl`}>
-          <MediaContentSkeleton />
-          <MediaContentSkeleton />
-          <MediaContentSkeleton />
-          <MediaContentSkeleton />
-          <MediaContentSkeleton />
-        </div>
-      </div>
-    </section>
+    <Section>
+      <MediaContentSkeleton />
+      <MediaContentSkeleton />
+      <MediaContentSkeleton />
+      <MediaContentSkeleton />
+      <MediaContentSkeleton />
+    </Section>
   )
 }
 
