@@ -4,7 +4,7 @@ interface SectionProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
 }
 
-export default function Section({ children, className, ...rest }: SectionProps) {
+export default function Section({ children, className }: SectionProps) {
   return (
     <section className="py-4 overflow-hidden">
       <div className="container px-4 mx-auto">
