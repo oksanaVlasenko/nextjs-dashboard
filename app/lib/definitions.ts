@@ -6,6 +6,11 @@ import { Level, Word } from "@prisma/client";
 
 // However, these types are generated automatically if you're using an ORM such as Prisma.
 
+export type TranslationOption = {
+  id: string,
+  translation: string
+}
+
 export type SpellCheckType = {
   correct: boolean, 
   suggestions: [] | string[]

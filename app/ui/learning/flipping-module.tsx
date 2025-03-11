@@ -3,10 +3,11 @@
 import { AdvancedWord } from "@/app/lib/definitions";
 import FlipCard from "@/app/ui/learning/flip-card";
 import { useState } from "react";
-import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 import { LearningProgress } from "@prisma/client";
 import { updateWordsProgress } from "@/app/lib/words/actions";
 import Section from "@/app/ui/components/section-component";
+import SliderArrows from "@/app/ui/learning/slider-arrows";
+import ControllButtons from "@/app/ui/learning/controll-buttons";
 
 export default function FlippingModule({ words }: { 
   words: AdvancedWord[], 
@@ -28,7 +29,7 @@ export default function FlippingModule({ words }: {
 
   const updateProgress = () => {
     updateWordsProgress(activeWord.id, { 
-      progress: activeWord.progress + 3,
+      progress: activeWord.progress + 2,
       learningProgress: 'IN_PROGRESS' as LearningProgress
     })
   }  
@@ -37,28 +38,17 @@ export default function FlippingModule({ words }: {
     <Section>
       <FlipCard 
         word={activeWord}
-        onDontKnow={() => updateActiveWord('next')}
-        onKnow={() => {
-          updateProgress()
-          updateActiveWord('next')
-        }}
-      />
+      >
+        <ControllButtons 
+          onDontKnow={() => updateActiveWord('next')}
+          onKnow={() => {
+            updateProgress()
+            updateActiveWord('next')
+          }}
+        />
+      </FlipCard>
 
-      <div className="flex justify-center pt-7">
-        <div 
-          className="flex h-10 w-10 items-center mr-4 justify-center rounded-md border cursor-pointer"
-          onClick={() => updateActiveWord('previous')}
-        >
-          <ArrowLeftIcon className="w-4" />
-        </div>
-
-        <div 
-          className="flex h-10 w-10 items-center justify-center rounded-md border cursor-pointer"
-          onClick={() => updateActiveWord('next')}
-        >
-          <ArrowRightIcon className="w-4" />
-        </div>
-      </div>
+      <SliderArrows onUpdate={(value: 'next' | 'previous') => updateActiveWord(value)} />
     </Section>
   )
 }

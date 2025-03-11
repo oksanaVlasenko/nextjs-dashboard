@@ -1,6 +1,5 @@
-import { getUserWords } from "@/app/lib/words/data";
 import Header from "@/app/ui/dashboard/header";
-import FlippingModule from "@/app/ui/learning/flipping-module";
+import LearningNav from "@/app/ui/learning/nav";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -8,15 +7,11 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const result = await getUserWords({});
-
-  const userWords = result.updatedWords
-
   return (
     <>
-      <Header />
+      <Header showSearch={false} />
 
-      <FlippingModule words={userWords} />
+      <LearningNav />
     </>
   )
 }
