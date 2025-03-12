@@ -36,6 +36,26 @@ export function CardsSkeleton() {
   );
 }
 
+export function ButtonSkeleton() {
+  return (
+    <button
+      className='flex justify-center h-11 items-center text-center w-full px-4 py-2 border font-semibold tracking-tight bg-gray-100  rounded-lg transition duration-200'
+    >
+    </button>
+  )
+}
+
+export function ButtonBlockSkeleton() {
+  return (
+    <div className={`${orangeShimmer} relative w-full overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-4 place-items-center`}>
+      <ButtonSkeleton />
+      <ButtonSkeleton />
+      <ButtonSkeleton />
+      <ButtonSkeleton />
+    </div>
+  )
+}
+
 export function RevenueChartSkeleton() {
   return (
     <div className={`${shimmer} relative w-full overflow-hidden md:col-span-4`}>

@@ -14,7 +14,7 @@ interface SpeakerButtonProps {
 export function SpeakerButton({ word, language }: SpeakerButtonProps) {
   return (
     <SpeakerWaveIcon
-      className="w-5 h-5 cursor-pointer text-neutral-900 sm:mx-4 peer-focus:text-gray-900"
+      className="w-5 h-5 cursor-pointer text-neutral-900 sm:mx-4 peer-focus:text-gray-900 flex-shrink-0"
       onClick={(e) => {
         e.stopPropagation()
         speakText(language, word)

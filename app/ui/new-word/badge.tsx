@@ -1,15 +1,24 @@
+import clsx from "clsx"
+
 type Option = {
   id: string,
   label: string
 }
 
-export default function Badge({ option, selected, onSelect }: { 
+export default function Badge({ option, selected, onSelect, className }: { 
   option: Option, 
   selected: string, 
-  onSelect: (value: string) => void 
+  className?: string,
+  onSelect: (value: string) => void, 
 }) {
   return (
-    <label key={option.id} className="flex items-center cursor-pointer">
+    <label 
+      key={option.id} 
+      className={clsx(
+        "flex items-center cursor-pointer",
+        className
+      )}
+    >
       <input
         id={option.id}
         type="radio"

@@ -129,3 +129,9 @@ model SearchCache {
   createdAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt
 }
+
+model WordOfTheDay {
+  id                   String @id @default(uuid())
+  date                 Int    @unique
+  word                 String
+}

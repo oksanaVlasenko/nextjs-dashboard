@@ -1,6 +1,6 @@
 'use server';
 
-import { ArticleType, SpellCheckType, TranslationData, WordData } from "@/app/lib/definitions";
+import { ArticleType, SpellCheckType, TranslationData, TranslationDataOfDayWord, WordData } from "@/app/lib/definitions";
 import { auth } from "@/auth";
 import { prisma } from "@/prisma";
 import { LearningProgress, Level, Word } from "@prisma/client";
@@ -9,6 +9,8 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { isValidArticleArray } from "./wordUtils";
 import { api } from "@/app/lib/api";
+import { getUnixTimestampForDate } from "../utils";
+import { fetchLanguagesList } from "../languages/actions";
 
 export async function checkWord(word: string, langCode: string): Promise<SpellCheckType> {
   try {
@@ -60,6 +62,56 @@ export async function generateExporeWord(formData: Partial<WordExpore>): Promise
   });
 
   return data
+}
+
+export async function getWordOfTheDay(): Promise<TranslationDataOfDayWord> {
+  console.log('getWordOfDay in actio')
+  const session = await auth()
+  const langList = await fetchLanguagesList()
+
+  
+  const todayTimestamp = getUnixTimestampForDate(new Date())
+
+  const cachedResult = await prisma.wordOfTheDay.findUnique({ 
+    where: { 
+      date: todayTimestamp
+    } 
+  }); 
+
+  const wordTranslationData: WordData = {
+    fromLang: session?.user.languageFrom ? langList?.find(l => l.id === session.user.languageFrom)?.label : langList?.find(l => l.id === 'eng')?.label, 
+    toLang: session?.user.languageTo ? langList?.find(l => l.id === session.user.languageTo)?.label : langList?.find(l => l.id === 'ukr')?.label,
+    level: session?.user.level ?? 'B2',
+    word: ''
+  }
+
+  if (cachedResult) {
+    wordTranslationData.word = cachedResult.word
+
+    const translation = await generateWordTranslation(wordTranslationData)
+
+    return {...translation, word: cachedResult.word}
+  } 
+
+  let word: string
+  
+  try {
+    word = await api.get('api/word-of-the-day')
+
+  } catch (error) {
+    console.error("Error explore-word:", error);
+    throw error;
+  }
+
+  await prisma.wordOfTheDay.create({
+    data: { date: todayTimestamp, word },
+  });
+
+  wordTranslationData.word = word
+    
+  const translation = await generateWordTranslation(wordTranslationData)
+
+  return {...translation, word: word}
 }
 
 

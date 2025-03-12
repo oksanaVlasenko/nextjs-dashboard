@@ -173,3 +173,15 @@ input[type='number']::-webkit-outer-spin-button {
 .custom-label {
   @apply block mb-3 text-neutral-600 font-medium tracking-tight;
 }
+
+.success-btn {
+  @apply flex justify-center items-center text-center w-full px-2 py-3 border font-semibold tracking-tight 
+  text-green-600 border-green-600 bg-white 
+  hover:bg-green-600 hover:text-white rounded-lg transition duration-200 outline-none focus:ring-0
+}
+
+.error-btn {
+  @apply flex justify-center items-center text-center w-full px-2 py-3 border font-semibold tracking-tight 
+  text-red-600 border-red-600 bg-white 
+  hover:bg-red-600 hover:text-white rounded-lg transition duration-200 outline-none focus:ring-0
+}

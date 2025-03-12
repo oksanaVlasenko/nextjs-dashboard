@@ -2,15 +2,15 @@
 
 import { LightBulbIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
-import { Button } from '@/app/ui/components/button';
 import { AdvancedWord } from '@/app/lib/definitions';
 import { SpeakerButton } from '@/app/ui/words/buttons';
 
-export default function FlipCard({ word, onDontKnow, onKnow }: {
+interface FlipCardButton extends React.HTMLAttributes<HTMLDivElement> {
+  children: React.ReactNode;
   word: AdvancedWord, 
-  onDontKnow: () => void, 
-  onKnow: () => void
-}) {
+}
+
+export default function FlipCard({ word, children }: FlipCardButton ) {
   const [flipped, setFlipped] = useState<boolean>(false);
   const [showTip, setShowTip] = useState<boolean>(false)
 
@@ -20,7 +20,7 @@ export default function FlipCard({ word, onDontKnow, onKnow }: {
 
   return (
     <div 
-      className="relative w-full h-[30rem] sm:w-[30rem] sm:h-[28rem] perspective mx-auto"
+      className="relative w-full h-[30rem] sm:w-[35rem] sm:h-[28rem] perspective mx-auto"
       onClick={() => setFlipped(!flipped)}
     >
       <div className={`relative w-full h-full transition-transform duration-500 transform-style-preserve-3d ${flipped ? 'rotate-y-180' : ''}`}>
@@ -55,27 +55,7 @@ export default function FlipCard({ word, onDontKnow, onKnow }: {
             {stringForLearning}
           </p>
 
-          <div className='flex justify-between my-4'>
-            <Button 
-              className='px-2 py-3 text-sm mr-4'
-              onClick={(e) => {
-                e.stopPropagation()
-                onDontKnow()
-              }}
-            >
-              Don&apos;t know
-            </Button>
-            
-            <Button 
-              className='px-2 py-3 text-sm'
-              onClick={(e) => {
-                e.stopPropagation()
-                onKnow()
-              }}
-            >
-              Know
-            </Button>
-          </div>
+          {children}
           
           <CardFooter />
         </div>

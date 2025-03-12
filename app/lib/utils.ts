@@ -1,5 +1,9 @@
 import { Revenue } from './definitions';
 
+export const getUnixTimestampForDate = (date: Date) => {
+  return Math.floor(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()) / 1000);
+}
+
 export const formatCurrency = (amount: number) => {
   return (amount / 100).toLocaleString('en-US', {
     style: 'currency',

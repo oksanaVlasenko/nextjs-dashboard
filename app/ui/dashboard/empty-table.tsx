@@ -22,7 +22,7 @@ export default function EmptyTable() {
 
           <div className="w-full max-w-sm sm:max-w-48 sm:w-auto ">
             <Link 
-              href='/dashboard/add-word'
+              href='/add-word'
               className="flex justify-center items-center text-center w-full px-4 py-3 font-semibold tracking-tight hover:text-white border border-neutral-900 bg-white hover:bg-neutral-900 focus:bg-neutral-900 rounded-lg  transition duration-200"
             >
               <span className="inline-block mr-1">

@@ -2,6 +2,8 @@
 
 import { auth } from "@/auth";
 import { prisma } from "@/prisma";
+import { Word } from "@prisma/client";
+import { TranslationOption } from "@/app/lib/definitions";
 
 const ITEMS_PER_PAGE = 5;
 
@@ -86,6 +88,29 @@ export async function fetchWordById(id: string) {
     })
 
     return word
+  } catch (error) {
+    console.error("Error getting word:", error);
+    throw new Error('Failed to fetch word.');
+  }
+}
+
+export async function getTranslationWords(word: {id: string, translation: string}): Promise<TranslationOption[]> {
+  try {
+    const randomWords: Word[] = await prisma.$queryRaw`
+      SELECT * FROM "Word" 
+      WHERE id <> ${word.id} 
+      ORDER BY RANDOM() 
+      LIMIT 3;
+    `;
+
+    const options = randomWords.map(word => {
+      return {
+        id: word.id,
+        translation: word.translation
+      }
+    })
+
+    return [...[word], ...options].sort(() => Math.random() - 0.5);
   } catch (error) {
     console.error("Error getting word:", error);
     throw new Error('Failed to fetch word.');
