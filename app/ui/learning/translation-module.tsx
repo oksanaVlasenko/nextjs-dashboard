@@ -121,7 +121,6 @@ export default function TranslationModule({ words }: {
               </div>
             )
         }
-
       </FlipCard>
 
       <SliderArrows onUpdate={(value: 'next' | 'previous') => updateActiveWord(value)} />
