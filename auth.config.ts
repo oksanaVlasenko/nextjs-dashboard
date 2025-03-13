@@ -3,7 +3,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "@/prisma"
 import { Level } from "@prisma/client"; 
 
-console.log(process.env.AUTH_SECRET, ' process.env.AUTH_SECRET', process.env.NODE_ENV)
+console.log(process.env.VERCEL_ENV, ' process.env.AUTH_SECRET', process.env.NODE_ENV)
 
 export const authConfig = {
   secret: process.env.AUTH_SECRET,
@@ -14,6 +14,7 @@ export const authConfig = {
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       console.log(auth, ' auth')
+      console.log(process.env.AUTH_SECRET, ' process.env.AUTH_SECRET', process.env.NODE_ENV)
       const isLoggedIn = !!auth?.user;
       const protectedPaths = ['/dashboard', '/learning', '/settings', '/add-word']
 
