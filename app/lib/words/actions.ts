@@ -10,7 +10,6 @@ import { z } from "zod";
 import { isValidArticleArray } from "./wordUtils";
 import { api } from "@/app/lib/api";
 import { getUnixTimestampForDate } from "../utils";
-import { fetchLanguagesList } from "../languages/actions";
 
 export async function checkWord(word: string, langCode: string): Promise<SpellCheckType> {
   try {
@@ -64,12 +63,13 @@ export async function generateExporeWord(formData: Partial<WordExpore>): Promise
   return data
 }
 
-export async function getWordOfTheDay(): Promise<TranslationDataOfDayWord> {
-  console.log('getWordOfDay in actio')
-  const session = await auth()
-  const langList = await fetchLanguagesList()
+export async function getWordOfTheDay(): Promise<TranslationDataOfDayWord | null> {
+  const session = await auth()  
 
-  
+  if (session?.user.languageFrom && session?.user.languageFrom !== 'eng') {
+    return null
+  }
+
   const todayTimestamp = getUnixTimestampForDate(new Date())
 
   const cachedResult = await prisma.wordOfTheDay.findUnique({ 
@@ -79,8 +79,8 @@ export async function getWordOfTheDay(): Promise<TranslationDataOfDayWord> {
   }); 
 
   const wordTranslationData: WordData = {
-    fromLang: session?.user.languageFrom ? langList?.find(l => l.id === session.user.languageFrom)?.label : langList?.find(l => l.id === 'eng')?.label, 
-    toLang: session?.user.languageTo ? langList?.find(l => l.id === session.user.languageTo)?.label : langList?.find(l => l.id === 'ukr')?.label,
+    fromLang: 'english', 
+    toLang: 'ukrainian',
     level: session?.user.level ?? 'B2',
     word: ''
   }

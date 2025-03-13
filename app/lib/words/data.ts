@@ -5,6 +5,20 @@ import { prisma } from "@/prisma";
 import { Word } from "@prisma/client";
 import { TranslationOption } from "@/app/lib/definitions";
 
+export async function findWordOfTheDay(query: string) {
+  const session = await auth();
+  const userId = session?.user?.id ?? '';
+
+  const word = await prisma.word.findFirst({
+    where: {
+      userId,
+      word: query
+    },
+  })
+
+  return word ? true : false
+}
+
 const ITEMS_PER_PAGE = 5;
 
 export async function getWordsTotalPages(query:string) {

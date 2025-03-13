@@ -1,3 +1,5 @@
+'use server';
+
 export async function fetchLanguagesList() {
   try {
     const res = await fetch('https://restcountries.com/v3.1/all?fields=name,languages,flags')
