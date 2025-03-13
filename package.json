@@ -5,7 +5,7 @@
     "dev": "next dev --turbopack",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "DATABASE_URL=$DATABASE_URL npx prisma migrate deploy && prisma generate --schema=prisma/schema.prisma --no-engine"
+    "postinstall": "npx prisma migrate deploy && prisma generate --schema=prisma/schema.prisma --no-engine"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.7.4",
