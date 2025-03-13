@@ -53,7 +53,7 @@ export async function createUser(prevState: UserState, formData: FormData) {
 
   const { email, password, name } = validatedFields.data;
 
-  const existingUser = await sql`SELECT * FROM users WHERE email=${email}`;
+  const existingUser = await sql`SELECT * FROM user WHERE email=${email}`;
   
   if (existingUser && existingUser.rows[0]) {
     return {
@@ -65,11 +65,11 @@ export async function createUser(prevState: UserState, formData: FormData) {
 
   try {
     await sql`
-      INSERT INTO users (name, email, password)
+      INSERT INTO user (name, email, password)
       VALUES ( ${name}, ${email}, ${hashedPassword})
     `;
 
-    const newUser = await sql`SELECT * FROM users WHERE email=${email}`;
+    const newUser = await sql`SELECT * FROM user WHERE email=${email}`;
 
     if (!newUser.rowCount) {
       return { message: "User creation failed" };
