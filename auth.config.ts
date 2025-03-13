@@ -7,6 +7,7 @@ console.log(process.env.VERCEL_ENV, ' process.env.AUTH_SECRET', process.env.NODE
 
 export const authConfig = {
   secret: process.env.AUTH_SECRET,
+  debug: true,
   adapter: PrismaAdapter(prisma),
   pages: {
     signIn: '/login',
