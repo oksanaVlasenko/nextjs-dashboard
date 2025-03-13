@@ -14,13 +14,13 @@ export const authConfig = {
     signIn: '/login',
   },
   callbacks: {
-    async redirect({ url, baseUrl }) {
-      if (isPreview) {
-        return "https://nextjs-dashboard-git-dev-oksana-vlasenkos-projects.vercel.app/api/auth/callback/google";
-      }
-      return baseUrl;
-    },
-    
+    // async redirect({ url, baseUrl }) {
+    //   if (isPreview) {
+    //     return "https://nextjs-dashboard-git-dev-oksana-vlasenkos-projects.vercel.app/api/auth/callback/google";
+    //   }
+    //   return baseUrl;
+    // },
+
     authorized({ auth, request: { nextUrl } }) {
       console.log(auth, ' auth')
       console.log(process.env.AUTH_SECRET, ' process.env.AUTH_SECRET', process.env.NODE_ENV)
