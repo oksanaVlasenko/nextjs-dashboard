@@ -1,9 +1,9 @@
-import { getWordOfTheDay } from "@/app/lib/words/actions";
+// import { getWordOfTheDay } from "@/app/lib/words/actions";
 import { getUserWords, getWordsTotalPages } from "@/app/lib/words/data";
 import EmptyTable from "@/app/ui/dashboard/empty-table";
 import Header from "@/app/ui/dashboard/header";
 import Pagination from "@/app/ui/invoices/pagination";
-import WordOfTheDay from "@/app/ui/learning/word-of-the-day";
+// import WordOfTheDay from "@/app/ui/learning/word-of-the-day";
 import { TableWordsSkeleton } from "@/app/ui/skeletons";
 import WordsTable from "@/app/ui/words/words-table";
 import { Metadata } from 'next';
@@ -30,13 +30,13 @@ export default async function Page(props: {
 
   const userWords = result.updatedWords 
 
-  const wordOfDay = await getWordOfTheDay()
+  //const wordOfDay = await getWordOfTheDay()
   
   return (
     <>
       <Header />
 
-      <WordOfTheDay data={wordOfDay} />
+      {/* <WordOfTheDay data={wordOfDay} /> */}
 
       {
         userWords.length ? (
