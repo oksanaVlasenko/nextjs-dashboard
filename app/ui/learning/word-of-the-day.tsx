@@ -1,6 +1,5 @@
 'use client'
 
-import { getWordOfTheDay } from "@/app/lib/words/actions"
 import { Button } from "../components/button"
 import { SpeakerButton } from "../words/buttons"
 import { format } from "date-fns";

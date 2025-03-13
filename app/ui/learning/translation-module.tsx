@@ -11,7 +11,6 @@ import { OrangeButton } from "@/app/ui/components/button";
 import { useTranslationCache } from "@/app/lib/words/useTranslationCache";
 import clsx from "clsx";
 import { ButtonBlockSkeleton } from "@/app/ui/skeletons";
-import ControllButtons from "@/app/ui/learning/controll-buttons";
 
 export default function TranslationModule({ words }: { 
   words: AdvancedWord[], 
