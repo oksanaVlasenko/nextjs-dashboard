@@ -2,24 +2,12 @@ import NextAuth from 'next-auth';
 import { authConfig } from './auth.config';
 import Credentials from 'next-auth/providers/credentials';
 import { z } from 'zod';
-import { sql } from '@vercel/postgres';
-import type { User } from '@/app/lib/definitions';
 import bcrypt from 'bcrypt';
 import GoogleProvider from "next-auth/providers/google";
 import GithubProviver from "next-auth/providers/github"
 import DiscordProviver from "next-auth/providers/discord"
+import { prisma } from "@/prisma";
 
-
-
-async function getUser(email: string): Promise<User | undefined> {
-  try {
-    const user = await sql<User>`SELECT * FROM users WHERE email=${email}`;
-    return user.rows[0];
-  } catch (error) {
-    console.error('Failed to fetch user:', error);
-    throw new Error('Failed to fetch user.');
-  }
-}
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   ...authConfig,
@@ -37,21 +25,44 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       clientSecret: process.env.AUTH_GOOGLE_SECRET!,
     }),
     Credentials({
+      name: 'credentials',
+      credentials:{
+        email: { label: 'email', type: 'text' },
+        password: { label: 'password', type: 'password'}
+      },
+      // @ts-ignore
       async authorize(credentials) {
+        if (!credentials?.email || !credentials?.password) {
+          throw new Error(" Invalid credentials");  
+        }
+
         const parsedCredentials = z
           .object({ email: z.string().email(), password: z.string().min(6) })
           .safeParse(credentials);
  
         if (parsedCredentials.success) {
           const { email, password } = parsedCredentials.data;
-          const user = await getUser(email);
+          
+          const user = await prisma.user.findUnique({
+            where: {
+              email: email, 
+            },
+          })
+          
           if (!user) return null;
 
-          const passwordsMatch = await bcrypt.compare(password, user.password);
+          if (!user.hashedPassword) return null 
+
+          console.log(user, ' user ')
+
+          const passwordsMatch = await bcrypt.compare(password, user?.hashedPassword);
+
+          console.log(passwordsMatch, ' passwordsMatch')
           
           if (passwordsMatch) return user;
         }
  
+        console.log('AFTER RETURN USER ')
         return null;
       },
     }),

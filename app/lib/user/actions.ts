@@ -3,7 +3,6 @@
 import { auth, signIn, signOut } from "@/auth";
 import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
-import { sql } from '@vercel/postgres';
 import { z } from 'zod';
 import bcrypt from 'bcrypt';
 import { AuthError } from "next-auth";
@@ -53,9 +52,15 @@ export async function createUser(prevState: UserState, formData: FormData) {
 
   const { email, password, name } = validatedFields.data;
 
-  const existingUser = await sql`SELECT * FROM user WHERE email=${email}`;
+  //const existingUser = await sql`SELECT * FROM user WHERE email=${email}`;
+  const existingUser = await prisma.user.findUnique({
+    where: {
+      email: email, 
+    },
+  });
   
-  if (existingUser && existingUser.rows[0]) {
+  console.log(existingUser, ' exois')
+  if (existingUser) {
     return {
       message: 'Email already in use',
     };
@@ -64,14 +69,20 @@ export async function createUser(prevState: UserState, formData: FormData) {
   const hashedPassword = await bcrypt.hash(password, 10);
 
   try {
-    await sql`
-      INSERT INTO user (name, email, password)
-      VALUES ( ${name}, ${email}, ${hashedPassword})
-    `;
+    // await sql`
+    //   INSERT INTO user (name, email, password)
+    //   VALUES ( ${name}, ${email}, ${hashedPassword})
+    // `;
+    
+    const newUser = await prisma.user.create({
+      data:{
+        email, name, hashedPassword
+      }
+    }); 
 
-    const newUser = await sql`SELECT * FROM user WHERE email=${email}`;
+    console.log(newUser, ' new user ')
 
-    if (!newUser.rowCount) {
+    if (!newUser) {
       return { message: "User creation failed" };
     }
 

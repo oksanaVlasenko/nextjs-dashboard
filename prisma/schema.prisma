@@ -21,6 +21,7 @@ model User {
   level         Level?
   accounts      Account[]
   sessions      Session[]
+  hashedPassword String?
   // Optional for WebAuthn support
   Authenticator Authenticator[]
  

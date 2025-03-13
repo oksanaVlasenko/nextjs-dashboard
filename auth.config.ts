@@ -4,7 +4,6 @@ import { prisma } from "@/prisma"
 import { Level } from "@prisma/client"; 
 
 console.log(process.env.VERCEL_ENV, ' process.env.AUTH_SECRET', process.env.NODE_ENV)
-const isPreview = process.env.VERCEL_ENV === "preview";
 
 export const authConfig = {
   secret: process.env.AUTH_SECRET,
@@ -21,7 +20,7 @@ export const authConfig = {
     //   return baseUrl;
     // },
 
-    authorized({ auth, request: { nextUrl } }) {
+    async authorized({ auth, request: { nextUrl } }) {
       console.log(auth, ' auth')
       console.log(process.env.AUTH_SECRET, ' process.env.AUTH_SECRET', process.env.NODE_ENV)
       const isLoggedIn = !!auth?.user;
@@ -39,6 +38,9 @@ export const authConfig = {
     },
 
     async session({ session, token }) {
+      console.log('JUST SESSION CALLS')
+      console.log(session, ' sessionsessionsessionsession')
+      console.log(token , ' TOKEN')
       if (token) {
         session.user = {
           id: token.id ? String(token.id) : "",
@@ -51,10 +53,14 @@ export const authConfig = {
           level: token.level ? token.level as Level : 'B1',
         };
       }
+
+      console.log(session, '  SESSION')
       return session;
     },
 
     async jwt({ token, user }) {
+      console.log('JUST TOKEN CALLS')
+      console.log(token, ' TOKEN JWT')
       if (user) {
         token.id = user.id;
         token.name = user.name;
@@ -65,8 +71,14 @@ export const authConfig = {
         token.level = user.level as Level ?? 'B1' as Level
       }
 
+      console.log(token, '  TOKEN')
+
       return token;
     }
+  },
+  session: {
+    strategy: 'jwt',
+    maxAge: 1 * 24 * 60 * 60, // 1 day
   },
   providers: [], // Add providers with an empty array for now
 } satisfies NextAuthConfig;
