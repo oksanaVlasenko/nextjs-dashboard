@@ -4,6 +4,7 @@ export class ApiRequestFactory {
   private baseUrl: string;
 
   constructor(baseUrl?: string) {
+    console.log(process.env.NEXT_PUBLIC_VERCEL_URL, 'NEXT_PUBLIC_VERCEL_URL')
     this.baseUrl =
     baseUrl || 
     (process.env.NODE_ENV === "production"
