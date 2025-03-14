@@ -3,7 +3,7 @@
 import { ArticleType, SpellCheckType, TranslationData, TranslationDataOfDayWord, WordData } from "@/app/lib/definitions";
 import { auth } from "@/auth";
 import { prisma } from "@/prisma";
-import { LearningProgress, Level, Word } from "@prisma/client";
+import { ArticleOfTheDay, LearningProgress, Level, Word } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
@@ -114,6 +114,39 @@ export async function getWordOfTheDay(): Promise<TranslationDataOfDayWord | null
   const translation = await generateWordTranslation(wordTranslationData)
 
   return {...translation, word: word}
+}
+
+export async function getArticleOfTheDay(): Promise<ArticleOfTheDay | null> {
+  const todayTimestamp = getUnixTimestampForDate(new Date())
+
+  const cachedResult = await prisma.articleOfTheDay.findUnique({ 
+    where: { 
+      date: todayTimestamp
+    } 
+  }); 
+
+  if (cachedResult) {
+    return cachedResult
+  }
+
+  let article: ArticleOfTheDay
+
+  try {
+    article = await api.get('api/article-of-the-day')
+
+  } catch (error) {
+    console.error("Error word of the day:", error);
+
+    return null
+  }
+
+  article = { ...article, date: todayTimestamp }
+
+  await prisma.articleOfTheDay.create({
+    data: article,
+  });
+
+  return article
 }
 
 

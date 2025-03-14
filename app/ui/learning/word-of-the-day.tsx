@@ -66,7 +66,7 @@ export default function WordOfTheDay({ data, existInUser }: { data: TranslationD
 
   return (
     // lg:max-w-[50%]
-    <div className=" rounded-xl  py-5 px-6 w-auto ">
+    <div className=" rounded-xl py-12 px-6 w-auto ">
       <div className="flex justify-between items-center mb-6" onClick={() => setIsOpen(!isOpen)}>
         <h2 
           className=" text-3xl font-heading font-medium "

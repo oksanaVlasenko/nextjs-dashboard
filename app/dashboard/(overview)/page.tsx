@@ -1,6 +1,7 @@
 import { getUserWords, getWordsTotalPages } from "@/app/lib/words/data";
 import EmptyTable from "@/app/ui/dashboard/empty-table";
 import Header from "@/app/ui/dashboard/header";
+import ShowArticleOfTheDay from "@/app/ui/dashboard/show-article-of-the-day";
 import ShowWordOfTheDay from "@/app/ui/dashboard/show-word-of-the-day";
 import Pagination from "@/app/ui/invoices/pagination";
 import { TableWordsSkeleton } from "@/app/ui/skeletons";
@@ -33,7 +34,11 @@ export default async function Page(props: {
     <>
       <Header />
 
-      <ShowWordOfTheDay />
+      <div className="flex flex-col md:flex-row">
+        <ShowWordOfTheDay />
+
+        <ShowArticleOfTheDay />
+      </div>    
 
       {
         userWords.length ? (

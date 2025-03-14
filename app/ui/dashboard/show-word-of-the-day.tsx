@@ -4,7 +4,7 @@ import { findWordOfTheDay } from "@/app/lib/words/data";
 
 export default async function ShowWordOfTheDay() {
   const wordOfDay = await getWordOfTheDay()
-
+  
   if (!wordOfDay) {
     return null
   }

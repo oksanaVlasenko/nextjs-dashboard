@@ -137,3 +137,12 @@ model WordOfTheDay {
   date                 Int    @unique
   word                 String
 }
+
+model ArticleOfTheDay {
+  id                   String @id @default(uuid())
+  date                 Int    @unique
+  title                String
+  snippet              String
+  link                 String
+  image                String?
+}

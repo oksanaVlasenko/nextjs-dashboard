@@ -2,12 +2,15 @@ import { ArticleType, Tab } from '@/app/lib/definitions'
 import YoutubePlayer from '@/app/ui/words/youtube-player';
 import ImageContent from '@/app/ui/words/image-content';
 import { getYouTubeVideoId } from '@/app/lib/words/wordUtils';
+import { ArticleOfTheDay } from '@prisma/client';
+import { format, fromUnixTime } from 'date-fns';
+import clsx from 'clsx';
 
-export default function MediaContent({ article, type }: { article: ArticleType, type: Tab }) {
+export default function MediaContent({ article, type, className }: { article: ArticleType | ArticleOfTheDay, type: Tab, className?: string }) {
   const videoId = getYouTubeVideoId(article.link)
   
   return (
-    <div className="py-12 border-t-2 border-gray-100">
+    <div className={clsx('py-12 border-gray-100 ', className)}>
       <div className="flex flex-wrap lg:flex-nowrap items-center">
         {
           type === Tab.articles ? (
@@ -24,7 +27,7 @@ export default function MediaContent({ article, type }: { article: ArticleType, 
         <div className="w-full lg:w-9/12 px-4 mb-10 lg:mb-0">
           <div className="max-w-2xl">
             <span className="block text-gray-400 mb-1">
-              {article.date}
+              {typeof article.date === 'number' ? format(fromUnixTime(article.date), 'MMMM dd, yyyy') : article.date}
             </span>
             <p className="text-2xl font-semibold text-gray-900">
               {article.title}

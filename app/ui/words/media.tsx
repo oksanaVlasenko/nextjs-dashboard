@@ -25,6 +25,7 @@ export default async function Media({ data, type }: MediaProps) {
             key={article.title}
             type={type}
             article={article}
+            className="border-t-2"
           />
         ))
       } 
