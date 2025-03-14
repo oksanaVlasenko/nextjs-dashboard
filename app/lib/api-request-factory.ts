@@ -6,10 +6,9 @@ export class ApiRequestFactory {
   constructor(baseUrl?: string) {
     this.baseUrl =
       baseUrl || 
-       (process.env.NEXT_PUBLIC_SITE_URL || '')
-      // (process.env.NODE_ENV === "development"
-      //   ? "http://localhost:3000"
-      //   : process.env.NEXT_PUBLIC_SITE_URL || "");
+      (process.env.NODE_ENV === "development"
+        ? "http://localhost:3000"
+        : process.env.NEXT_PUBLIC_SITE_URL || "");
   }
 
   private async handleResponse<T>(res: Response): Promise<T> {

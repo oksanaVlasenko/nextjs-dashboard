@@ -22,7 +22,6 @@ export const authConfig = {
 
     async authorized({ auth, request: { nextUrl } }) {
       console.log(auth, ' auth')
-      console.log(process.env.AUTH_SECRET, ' process.env.AUTH_SECRET', process.env.NODE_ENV)
       const isLoggedIn = !!auth?.user;
       const protectedPaths = ['/dashboard', '/learning', '/settings', '/add-word']
 
@@ -38,9 +37,7 @@ export const authConfig = {
     },
 
     async session({ session, token }) {
-      console.log('JUST SESSION CALLS')
-      console.log(session, ' sessionsessionsessionsession')
-      console.log(token , ' TOKEN')
+      
       if (token) {
         session.user = {
           id: token.id ? String(token.id) : "",
@@ -54,13 +51,11 @@ export const authConfig = {
         };
       }
 
-      console.log(session, '  SESSION')
       return session;
     },
 
     async jwt({ token, user }) {
-      console.log('JUST TOKEN CALLS')
-      console.log(token, ' TOKEN JWT')
+     
       if (user) {
         token.id = user.id;
         token.name = user.name;
@@ -70,8 +65,6 @@ export const authConfig = {
         token.languageTo = user.languageTo ?? '';
         token.level = user.level as Level ?? 'B1' as Level
       }
-
-      console.log(token, '  TOKEN')
 
       return token;
     }

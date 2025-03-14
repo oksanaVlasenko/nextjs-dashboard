@@ -53,16 +53,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
           if (!user.hashedPassword) return null 
 
-          console.log(user, ' user ')
-
           const passwordsMatch = await bcrypt.compare(password, user?.hashedPassword);
-
-          console.log(passwordsMatch, ' passwordsMatch')
           
           if (passwordsMatch) return user;
         }
  
-        console.log('AFTER RETURN USER ')
         return null;
       },
     }),
