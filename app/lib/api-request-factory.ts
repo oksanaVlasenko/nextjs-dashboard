@@ -36,6 +36,7 @@ export class ApiRequestFactory {
   }
 
   private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
+    console.log(this.baseUrl, ' private async request ')
     try {
       const res = await fetch(`${this.baseUrl}/${endpoint}`, {
         headers: { "Content-Type": "application/json", ...options.headers },
