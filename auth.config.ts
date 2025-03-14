@@ -22,7 +22,7 @@ export const authConfig = {
 
     async authorized({ auth, request: { nextUrl } }) {
       console.log(auth, ' auth')
-      console.log(process.env.NEXT_PUBLIC_VERCEL_URL, 'NEXT_PUBLIC_VERCEL_URL')
+      console.log(process.env.VERCEL_URL, 'NEXT_PUBLIC_VERCEL_URL')
       const isLoggedIn = !!auth?.user;
       const protectedPaths = ['/dashboard', '/learning', '/settings', '/add-word']
 
