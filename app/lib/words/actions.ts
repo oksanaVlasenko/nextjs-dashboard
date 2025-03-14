@@ -100,7 +100,9 @@ export async function getWordOfTheDay(): Promise<TranslationDataOfDayWord | null
 
   } catch (error) {
     console.error("Error word of the day:", error);
-    throw error;
+    //throw error;
+
+    return null
   }
 
   await prisma.wordOfTheDay.create({

@@ -38,7 +38,7 @@ export default async function Page(props: {
       {
         userWords.length ? (
           <>
-            <div className="flex flex-row px-9 pt-4 mb-2">
+            <div className="flex flex-row px-6 pt-4 mb-2">
               <div className="w-full md:w-1/2 mb-6 md:mb-0">
                 <h2 className="mb-3 text-3xl font-heading font-medium">Recent Words</h2>
                 {/* <p className="text-darkBlueGray-400 font-heading font-normal">List of recent words.</p> */}
