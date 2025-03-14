@@ -1,7 +1,7 @@
 import { getUserWords, getWordsTotalPages } from "@/app/lib/words/data";
 import EmptyTable from "@/app/ui/dashboard/empty-table";
 import Header from "@/app/ui/dashboard/header";
-// import ShowWordOfTheDay from "@/app/ui/dashboard/show-word-of-the-day";
+import ShowWordOfTheDay from "@/app/ui/dashboard/show-word-of-the-day";
 import Pagination from "@/app/ui/invoices/pagination";
 import { TableWordsSkeleton } from "@/app/ui/skeletons";
 import WordsTable from "@/app/ui/words/words-table";
@@ -33,7 +33,7 @@ export default async function Page(props: {
     <>
       <Header />
 
-      {/* <ShowWordOfTheDay /> */}
+      <ShowWordOfTheDay />
 
       {
         userWords.length ? (

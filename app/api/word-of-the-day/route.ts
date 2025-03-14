@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const apiKey = process.env.GOOGLE_CUSTOM_SEARCH_API;
-  const searchEngineId = process.env.GOOGLE_CUSTOM_SEARCH_ENGINE_ID; 
-
   try {
+    const apiKey = process.env.GOOGLE_CUSTOM_SEARCH_API;
+    const searchEngineId = process.env.GOOGLE_CUSTOM_SEARCH_ENGINE_ID; 
+
     const date = new Date() 
     const formattedDate = date.toLocaleDateString()
 
@@ -23,8 +23,8 @@ export async function GET() {
 
     return NextResponse.json(wordItem)
   } catch(error) {
-    console.error("AI API error:", error);
-    return NextResponse.json({ error: "Failed to generate response" }, { status: 500 });
+    console.error("AI API error word of the day:", error);
+    return NextResponse.json({ error: "Failed to generate response word of the day" }, { status: 500 });
   }  
 }
 

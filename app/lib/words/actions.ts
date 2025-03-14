@@ -99,7 +99,7 @@ export async function getWordOfTheDay(): Promise<TranslationDataOfDayWord | null
     word = await api.get('api/word-of-the-day')
 
   } catch (error) {
-    console.error("Error explore-word:", error);
+    console.error("Error word of the day:", error);
     throw error;
   }
 
