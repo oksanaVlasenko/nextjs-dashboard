@@ -5,6 +5,15 @@ import { Level } from "@prisma/client";
 
 console.log(process.env.VERCEL_ENV, ' process.env.AUTH_SECRET', process.env.NODE_ENV)
 
+const getBaseUrl = () => {
+  console.log(process.env.VERCEL_URL, ' process.env.VERCEL_URL getBaseUrl')
+  if (process.env.NODE_ENV === "production") {
+    return `https://${process.env.VERCEL_URL}`
+  } 
+  
+  return "http://localhost:3000";
+};
+
 export const authConfig = {
   secret: process.env.AUTH_SECRET,
   debug: true,
@@ -27,12 +36,14 @@ export const authConfig = {
       const protectedPaths = ['/dashboard', '/learning', '/settings', '/add-word']
 
       const isOnDashboard = protectedPaths.some(p => nextUrl.pathname.startsWith(p))
+
+      const baseUrl = getBaseUrl()
       
       if (isOnDashboard) {
         if (isLoggedIn) return true;
         return false; // Redirect unauthenticated users to login page
       } else if (isLoggedIn) {
-        return Response.redirect(new URL('/dashboard', nextUrl));
+        return Response.redirect(`${baseUrl}/dashboard`);
       }
       return true;
     },
