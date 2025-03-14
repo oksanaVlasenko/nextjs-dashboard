@@ -38,6 +38,8 @@ export const authConfig = {
       const isOnDashboard = protectedPaths.some(p => nextUrl.pathname.startsWith(p))
 
       const baseUrl = getBaseUrl()
+
+      console.log(baseUrl, ' AUTH BASE URL FOR CALLBACK')
       
       if (isOnDashboard) {
         if (isLoggedIn) return true;
